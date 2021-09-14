@@ -26,6 +26,7 @@
 #include "ElementDeleter.h"
 
 #include <algorithm>
+#include <cstdlib>
 #include <iterator>
 #include <map>
 
@@ -52,8 +53,15 @@ namespace {
   public:
     static const char* staticGetName() {return "random";}
   private:
+    struct URBG {
+        using result_type = int;
+        static constexpr int min() { return 0; }
+        static constexpr int max() { return RAND_MAX; }
+        int operator()() const { return std::rand(); }
+    };
     void doOrder(Ideal& ideal) const {
-      random_shuffle(ideal.begin(), ideal.end());
+      URBG g;
+      std::shuffle(ideal.begin(), ideal.end(), g);
     }
   };
 
