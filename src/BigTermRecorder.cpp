@@ -32,12 +32,12 @@ void BigTermRecorder::consumeRing(const VarNames& names) {
 
 void BigTermRecorder::consume(auto_ptr<BigIdeal> ideal) {
   consumeRing(ideal->getNames());
-  exceptionSafePushBack(_ideals, ideal);
+  exceptionSafePushBack(_ideals, std::move(ideal));
 }
 
 void BigTermRecorder::beginConsuming() {
   auto_ptr<BigIdeal> ideal(new BigIdeal(_names));
-  exceptionSafePushBack(_ideals, ideal);
+  exceptionSafePushBack(_ideals, std::move(ideal));
 }
 
 void BigTermRecorder::consume

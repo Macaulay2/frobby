@@ -140,7 +140,7 @@ void exceptionSafePushBack(Container& container, auto_ptr<Element> pointer) {
 template<class Container, class Element>
 void noThrowPushBack(Container& container, auto_ptr<Element> pointer) throw () {
   try {
-    exceptionSafePushBack(container, pointer);
+    exceptionSafePushBack(container, std::move(pointer));
   } catch (const bad_alloc&) {
     // Ignore the exception.
   }

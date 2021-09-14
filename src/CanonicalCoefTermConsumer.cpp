@@ -21,7 +21,7 @@
 
 CanonicalCoefTermConsumer::
 CanonicalCoefTermConsumer(auto_ptr<CoefTermConsumer> consumer):
-  _consumer(consumer) {
+  _consumer(std::move(consumer)) {
   ASSERT(_consumer.get() != 0);
 }
 

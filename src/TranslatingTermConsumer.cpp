@@ -32,7 +32,7 @@ TranslatingTermConsumer::TranslatingTermConsumer
   _translator(translator),
   _consumer(*consumer) {
   ASSERT(consumer.get() != 0);
-  _consumerOwner = consumer;
+  _consumerOwner = std::move(consumer);
 }
 
 void TranslatingTermConsumer::beginConsumingList() {

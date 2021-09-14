@@ -36,7 +36,7 @@ class PivotEulerAlg {
   const mpz_class& getComputedEulerCharacteristic() const {return _euler;}
 
   void setPivotStrategy(auto_ptr<PivotStrategy> strategy) {
-	_pivotStrategy = strategy;
+	_pivotStrategy = std::move(strategy);
   }
 
   void setInitialAutoTranspose(bool value) {_initialAutoTranspose = value;}

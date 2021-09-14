@@ -388,7 +388,7 @@ namespace {
   class WidenPivot : public BigattiPivotStrategy {
   public:
     WidenPivot(auto_ptr<BigattiPivotStrategy> strategy):
-      _strategy(strategy) {
+      _strategy(std::move(strategy)) {
       _name = _strategy->getName();
       _name += " (wide)";
     }
@@ -443,7 +443,7 @@ createStrategy(const string& prefix, bool widen) {
   ASSERT(strategy.get() != 0);
 
   if (widen)
-    strategy = auto_ptr<BigattiPivotStrategy>(new WidenPivot(strategy));
+    strategy = auto_ptr<BigattiPivotStrategy>(new WidenPivot(std::move(strategy)));
 
   return strategy;
 }

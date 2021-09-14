@@ -46,8 +46,8 @@ void ScarfFacade::computeMultigradedHilbertSeries() {
 
   ScarfHilbertAlgorithm alg(_helper.getTranslator(),
                             _params,
-                            _enumerationOrder,
-                            _deformationOrder);
+                            std::move(_enumerationOrder),
+                            std::move(_deformationOrder));
 
   alg.runGeneric(_helper.getIdeal(),
                  _helper.getPolyConsumer(),
@@ -62,8 +62,8 @@ void ScarfFacade::computeUnivariateHilbertSeries() {
 
   ScarfHilbertAlgorithm alg(_helper.getTranslator(),
                             _params,
-                            _enumerationOrder,
-                            _deformationOrder);
+                            std::move(_enumerationOrder),
+                            std::move(_deformationOrder));
 
   alg.runGeneric(_helper.getIdeal(),
                  _helper.getPolyConsumer(),

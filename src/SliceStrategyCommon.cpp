@@ -41,7 +41,7 @@ void SliceStrategyCommon::freeSlice(auto_ptr<Slice> slice) {
   ASSERT(debugIsValidSlice(slice.get()));
 
   slice->clearIdealAndSubtract(); // To preserve memory.
-  noThrowPushBack(_sliceCache, slice);
+  noThrowPushBack(_sliceCache, std::move(slice));
 }
 
 void SliceStrategyCommon::setUseIndependence(bool use) {
@@ -101,9 +101,9 @@ void SliceStrategyCommon::pivotSplit(auto_ptr<Slice> slice) {
       slice->getIdeal().getGeneratorCount()) {
     // std::swap() may not work correctly on auto_ptr, so we have to
     // do the swap by hand.
-    auto_ptr<Slice> tmp = slice2;
-    slice2 = slice;
-    slice = tmp;
+    auto_ptr<Slice> tmp = std::move(slice2);
+    slice2 = std::move(slice);
+    slice = std::move(tmp);
   }
 
   _tasks.addTask(slice2.release());

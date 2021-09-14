@@ -132,14 +132,14 @@ makeTranslatedIdealConsumer(bool split) {
     auto_ptr<BigTermConsumer> splitter
       (new IrreducibleIdealSplitter(*_idealConsumer));
     translated.reset
-      (new TranslatingTermConsumer(splitter, getTranslator()));
+      (new TranslatingTermConsumer(std::move(splitter), getTranslator()));
   } else
     translated.reset
       (new TranslatingTermConsumer(*_idealConsumer, getTranslator()));
 
   if (_produceCanonicalOutput) {
     return auto_ptr<TermConsumer>
-      (new CanonicalTermConsumer(translated,
+      (new CanonicalTermConsumer(std::move(translated),
                                  getIdeal().getVarCount(),
                                  &getTranslator()));
   } else
@@ -151,7 +151,7 @@ auto_ptr<CoefTermConsumer> CommonParamsHelper::makeTranslatedPolyConsumer() {
     (new TranslatingCoefTermConsumer(*_polyConsumer, getTranslator()));
   if (_produceCanonicalOutput)
     return auto_ptr<CoefTermConsumer>
-      (new CanonicalCoefTermConsumer(translated));
+      (new CanonicalCoefTermConsumer(std::move(translated)));
   else
     return translated;
 }

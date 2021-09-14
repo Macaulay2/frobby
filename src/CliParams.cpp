@@ -32,7 +32,7 @@ namespace {
   ParamNames getParamNames(vector<Parameter*> params) {
     struct HoldsFunction {
       static auto_ptr<Dummy> dummyCreate() {
-        return auto_ptr<Dummy>(0);
+        return auto_ptr<Dummy>();
       }
     };
 
@@ -88,7 +88,7 @@ void CliParams::processOption(const string& optionName,
 void CliParams::add(auto_ptr<Parameter> param) {
   ASSERT(!hasParam(param->getName()));
   Parameter& paramRef = *param;
-  exceptionSafePushBack(_ownedParams, param);
+  exceptionSafePushBack(_ownedParams, std::move(param));
   add(paramRef);
 }
 
