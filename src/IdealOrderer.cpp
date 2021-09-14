@@ -207,7 +207,7 @@ namespace {
    constructor. */
   class ReverseOrderer : public IdealOrderer {
   public:
-    ReverseOrderer(auto_ptr<IdealOrderer> orderer): _orderer(orderer) {}
+    ReverseOrderer(auto_ptr<IdealOrderer> orderer): _orderer(std::move(orderer)) {}
 
   private:
     virtual void doOrder(Ideal& ideal) const {
@@ -226,7 +226,7 @@ namespace {
     CompositeOrderer(): _orderersDeleter(_orderers) {}
 
     void refineOrderingWith(auto_ptr<IdealOrderer> orderer) {
-      exceptionSafePushBack(_orderers, orderer);
+      exceptionSafePushBack(_orderers, std::move(orderer));
     }
 
   private:
@@ -271,7 +271,7 @@ namespace {
     if (prefix.substr(0, 3) == "rev") {
       auto_ptr<IdealOrderer> orderer =
         createWithPrefix(getOrdererFactory(), prefix.substr(3));
-      return auto_ptr<IdealOrderer>(new ReverseOrderer(orderer));
+      return auto_ptr<IdealOrderer>(new ReverseOrderer(std::move(orderer)));
     } else
       return createWithPrefix(getOrdererFactory(), prefix);
   }

@@ -55,7 +55,7 @@ void ColumnPrinter::addColumn(bool flushLeft,
   col->suffix = suffix;
   col->flushLeft = flushLeft;
 
-  exceptionSafePushBack(_cols, col);
+  exceptionSafePushBack(_cols, std::move(col));
 }
 
 size_t ColumnPrinter::getColumnCount() const {

@@ -26,9 +26,7 @@
 
 IOParameters::IOParameters(const DataType& input, const DataType& output):
   _inputType(input),
-  _outputType(output),
-  _inputFormat(0),
-  _outputFormat(0) {
+  _outputType(output) {
 
   string inputFormats;
   string outputFormats;

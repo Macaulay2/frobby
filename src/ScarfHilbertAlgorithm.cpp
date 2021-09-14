@@ -96,8 +96,8 @@ ScarfHilbertAlgorithm::ScarfHilbertAlgorithm
  auto_ptr<IdealOrderer> deformationOrder):
   _translator(translator),
   _params(params),
-  _enumerationOrder(enumerationOrder),
-  _deformationOrder(deformationOrder),
+  _enumerationOrder(std::move(enumerationOrder)),
+  _deformationOrder(std::move(deformationOrder)),
   _totalStates(0),
   _totalFaces(0) {
   ASSERT(_enumerationOrder.get() != 0);

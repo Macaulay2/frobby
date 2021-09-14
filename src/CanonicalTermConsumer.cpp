@@ -28,7 +28,7 @@ CanonicalTermConsumer::CanonicalTermConsumer(auto_ptr<TermConsumer> consumer,
   _storingList(false),
   _ideals(),
   _idealsDeleter(_ideals),
-  _consumer(consumer),
+  _consumer(std::move(consumer)),
   _translator(translator) {
   ASSERT(_consumer.get() != 0);
 }
@@ -48,7 +48,7 @@ void CanonicalTermConsumer::beginConsuming() {
   ASSERT(_storingList || _ideals.empty());
 
   auto_ptr<Ideal> ideal(new Ideal(_varCount));
-  exceptionSafePushBack(_ideals, ideal);
+  exceptionSafePushBack(_ideals, std::move(ideal));
 }
 
 void CanonicalTermConsumer::consume(const Term& term) {
