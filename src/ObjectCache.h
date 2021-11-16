@@ -91,7 +91,7 @@ void ObjectCache<T>::freeObject(auto_ptr<S> object) {
   ASSERT(dynamic_cast<T*>(object.get()) != 0);
 
   auto_ptr<T> casted(static_cast<T*>(object.release()));
-  noThrowPushBack(_cache, casted);
+  noThrowPushBack(_cache, std::move(casted));
 }
 
 #endif

@@ -64,12 +64,12 @@ class CommonParamsHelper {
 
   Ideal& getIdeal() {return *_ideal;}
   const Ideal& getIdeal() const {return *_ideal;}
-  auto_ptr<Ideal> takeIdeal() {return _ideal;}
+  auto_ptr<Ideal> takeIdeal() {return std::move(_ideal);}
   bool hasIdeal() const {return _ideal.get() != 0;}
 
   TermTranslator& getTranslator() {return *_translator;}
   const TermTranslator& getTranslator() const {return *_translator;}
-  auto_ptr<TermTranslator> takeTranslator() {return _translator;}
+  auto_ptr<TermTranslator> takeTranslator() {return std::move(_translator);}
 
   BigTermConsumer& getIdealConsumer() {return *_idealConsumer;}
 

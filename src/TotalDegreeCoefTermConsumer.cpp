@@ -25,7 +25,7 @@ TotalDegreeCoefTermConsumer::
 TotalDegreeCoefTermConsumer(auto_ptr<CoefBigTermConsumer> consumer,
                             const TermTranslator& translator):
   _consumer(*consumer),
-  _consumerOwner(consumer),
+  _consumerOwner(std::move(consumer)),
   _translator(translator) {
   ASSERT(_consumerOwner.get() != 0);
 }

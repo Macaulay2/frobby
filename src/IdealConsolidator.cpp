@@ -21,7 +21,7 @@
 #include "TermTranslator.h"
 
 IdealConsolidator::IdealConsolidator(auto_ptr<BigTermConsumer> consumer):
-  _consumer(consumer),
+  _consumer(std::move(consumer)),
   _inList(false),
   _inIdeal(false) {
 }

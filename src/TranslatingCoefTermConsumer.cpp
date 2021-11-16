@@ -31,7 +31,7 @@ TranslatingCoefTermConsumer::TranslatingCoefTermConsumer
 (auto_ptr<CoefBigTermConsumer> consumer, const TermTranslator& translator):
   _translator(translator),
   _consumer(*consumer),
-  _consumerOwner(consumer) {
+  _consumerOwner(std::move(consumer)) {
   ASSERT(_consumerOwner.get() != 0);
 }
 

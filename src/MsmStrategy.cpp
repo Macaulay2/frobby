@@ -28,8 +28,7 @@
 MsmStrategy::MsmStrategy(TermConsumer* consumer,
                          const SplitStrategy* splitStrategy):
   SliceStrategyCommon(splitStrategy),
-  _consumer(consumer),
-  _initialSubtract(0) {
+  _consumer(consumer) {
   ASSERT(consumer != 0);
 }
 
@@ -69,17 +68,17 @@ bool MsmStrategy::processSlice(TaskEngine& tasks, auto_ptr<Slice> slice) {
   ASSERT(slice.get() != 0);
 
   if (slice->baseCase(getUseSimplification())) {
-    freeSlice(slice);
+    freeSlice(std::move(slice));
     return true;
   }
 
   if (getUseIndependence() && _indep.analyze(*slice))
-    independenceSplit(slice);
+    independenceSplit(std::move(slice));
   else if (_split->isLabelSplit())
-    labelSplit(slice);
+    labelSplit(std::move(slice));
   else {
     ASSERT(_split->isPivotSplit());
-    pivotSplit(auto_ptr<Slice>(slice));
+    pivotSplit(std::move(slice));
   }
 
   return false;
@@ -280,7 +279,7 @@ void MsmStrategy::independenceSplit(auto_ptr<Slice> sliceParam) {
   _tasks.addTask(rightSlice.release());
 
   // Deal with slice.
-  freeSlice(auto_ptr<Slice>(slice));
+  freeSlice(std::move(slice));
 }
 
 void MsmStrategy::getPivot(Term& pivot, Slice& slice) {

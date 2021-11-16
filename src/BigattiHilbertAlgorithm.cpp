@@ -32,7 +32,7 @@ BigattiHilbertAlgorithm
  _translator(translator),
  _consumer(&consumer),
  _baseCase(translator),
- _pivot(pivot),
+ _pivot(std::move(pivot)),
  _computeUnivariate(false),
  _params(params) {
 
@@ -85,7 +85,7 @@ void BigattiHilbertAlgorithm::processState(auto_ptr<BigattiState> state) {
     _baseCase.genericBaseCase(*state) :
     _baseCase.baseCase(*state);
   if (isBaseCase) {
-    freeState(state);
+    freeState(std::move(state));
     return;
   }
 
@@ -124,5 +124,5 @@ void BigattiHilbertAlgorithm::simplify(BigattiState& state) {
 
 void BigattiHilbertAlgorithm::freeState(auto_ptr<BigattiState> state) {
   state->getIdeal().clear(); // To preserve memory
-  _stateCache.freeObject(state);
+  _stateCache.freeObject(std::move(state));
 }

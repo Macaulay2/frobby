@@ -192,9 +192,9 @@ void InputConsumer::endIdeal() {
   ASSERT(_inIdeal);
   _inIdeal = false;
   auto_ptr<Entry> entry(new Entry());
-  entry->_big = _bigIdeal;
-  entry->_sqf = _sqfIdeal;
-  exceptionSafePushBack(_ideals, entry);
+  entry->_big = std::move(_bigIdeal);
+  entry->_sqf = std::move(_sqfIdeal);
+  exceptionSafePushBack(_ideals, std::move(entry));
 }
 
 void InputConsumer::releaseIdeal(auto_ptr<SquareFreeIdeal>& sqf, auto_ptr<BigIdeal>& big) {
@@ -202,8 +202,8 @@ void InputConsumer::releaseIdeal(auto_ptr<SquareFreeIdeal>& sqf, auto_ptr<BigIde
   ASSERT(!empty());
   Entry entry;
   releaseIdeal(entry);
-  sqf = entry._sqf;
-  big = entry._big;
+  sqf = std::move(entry._sqf);
+  big = std::move(entry._big);
 }
 
 auto_ptr<BigIdeal> InputConsumer::releaseBigIdeal() {
@@ -212,7 +212,7 @@ auto_ptr<BigIdeal> InputConsumer::releaseBigIdeal() {
   Entry entry;
   releaseIdeal(entry);
   toBigIdeal(entry._sqf, entry._big);
-  return entry._big;
+  return std::move(entry._big);
 }
 
 auto_ptr<SquareFreeIdeal> InputConsumer::releaseSquareFreeIdeal() {
@@ -221,13 +221,13 @@ auto_ptr<SquareFreeIdeal> InputConsumer::releaseSquareFreeIdeal() {
   ASSERT(_ideals.front()->_sqf.get() != 0);
   Entry entry;
   releaseIdeal(entry);
-  return entry._sqf;
+  return std::move(entry._sqf);
 }
 
 void InputConsumer::releaseIdeal(Entry& entry) {
   ASSERT(!_inIdeal);
   ASSERT(!empty());
-  entry = *_ideals.front();
+  entry = std::move(*_ideals.front());
   _ideals.pop_front();
 }
 

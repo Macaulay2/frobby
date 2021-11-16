@@ -69,15 +69,15 @@ bool HilbertStrategy::processSlice
   ASSERT(debugIsValidSlice(slice.get()));
 
   if (slice->baseCase(getUseSimplification())) {
-    freeSlice(slice);
+    freeSlice(std::move(slice));
     return true;
   }
 
   if (getUseIndependence() && _indepSplitter.analyze(*slice)) {
-    independenceSplit(slice);
+    independenceSplit(std::move(slice));
   } else {
     ASSERT(_split->isPivotSplit());
-    pivotSplit(auto_ptr<Slice>(slice));
+    pivotSplit(std::move(slice));
   }
 
   return false;
@@ -113,7 +113,7 @@ void HilbertStrategy::freeConsumer(auto_ptr<HilbertIndependenceConsumer>
          _consumerCache.end());
 
   consumer->clear();
-  noThrowPushBack(_consumerCache, consumer);
+  noThrowPushBack(_consumerCache, std::move(consumer));
 }
 
 void HilbertStrategy::independenceSplit(auto_ptr<Slice> sliceParam) {
@@ -141,7 +141,7 @@ void HilbertStrategy::independenceSplit(auto_ptr<Slice> sliceParam) {
   _tasks.addTask(rightSlice.release());
 
   // Deal with slice.
-  freeSlice(auto_ptr<Slice>(slice));
+  freeSlice(std::move(slice));
 }
 
 auto_ptr<HilbertIndependenceConsumer> HilbertStrategy::newConsumer() {

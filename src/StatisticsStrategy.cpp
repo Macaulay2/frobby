@@ -45,7 +45,7 @@ bool StatisticsStrategy::processSlice
   _internalTracker.preliminaryRecord(*slice);
   _leafTracker.preliminaryRecord(*slice);
 
-  bool wasBaseCase = _strategy->processSlice(tasks, slice);
+  bool wasBaseCase = _strategy->processSlice(tasks, std::move(slice));
 
   if (wasBaseCase)
     _leafTracker.commitRecord();
@@ -68,7 +68,7 @@ bool StatisticsStrategy::getUseSimplification() const {
 }
 
 void StatisticsStrategy::freeSlice(auto_ptr<Slice> slice) {
-  _strategy->freeSlice(slice);
+  _strategy->freeSlice(std::move(slice));
 }
 
 StatisticsStrategy::StatTracker::StatTracker(const string& title):

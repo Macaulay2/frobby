@@ -58,7 +58,7 @@ auto_ptr<BigIdeal> IntersectFacade::intersect(const vector<BigIdeal*>& ideals,
     ::intersect(tmp.get(), intersection.get(), ideals2[i]);
 
     // Handle bookkeeping
-    intersection = tmp;
+    intersection = std::move(tmp);
   }
 
   auto_ptr<BigIdeal> bigIdeal(new BigIdeal(names));

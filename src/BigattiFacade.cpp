@@ -41,7 +41,7 @@ void BigattiFacade::computeMultigradedHilbertSeries() {
   BigattiHilbertAlgorithm alg(_common.takeIdeal(),
                               _common.getTranslator(),
                               _params,
-                              _pivot,
+                              std::move(_pivot),
                               _common.getPolyConsumer());
   alg.setComputeUnivariate(false);
   alg.run();
@@ -55,7 +55,7 @@ void BigattiFacade::computeUnivariateHilbertSeries() {
   BigattiHilbertAlgorithm alg(_common.takeIdeal(),
                               _common.getTranslator(),
                               _params,
-                              _pivot,
+                              std::move(_pivot),
                               _common.getPolyConsumer());
   alg.setComputeUnivariate(true);
   alg.run();

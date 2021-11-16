@@ -41,7 +41,7 @@ void DebugStrategy::run(const Ideal& ideal) {
 bool DebugStrategy::processSlice(TaskEngine& tasks, auto_ptr<Slice> slice) {
   fputs("DEBUG: Processing slice.\n", _out);
   slice->print(stderr);
-  bool wasBaseCase = _strategy->processSlice(tasks, slice);
+  bool wasBaseCase = _strategy->processSlice(tasks, std::move(slice));
   if (wasBaseCase)
     fputs("DEBUG: Determined that slice is base case.\n", _out);
   else
@@ -71,5 +71,5 @@ bool DebugStrategy::getUseSimplification() const {
 
 void DebugStrategy::freeSlice(auto_ptr<Slice> slice) {
   fputs("DEBUG: Freeing slice.\n", _out);
-  _strategy->freeSlice(slice);
+  _strategy->freeSlice(std::move(slice));
 }

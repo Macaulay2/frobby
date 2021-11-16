@@ -166,7 +166,7 @@ void HilbertBasecase::computeCoefficient(Ideal& originalIdeal) {
         break;
 
       if (entryIdealDeleter.get() != 0)
-        freeIdeal(entryIdealDeleter);
+        freeIdeal(std::move(entryIdealDeleter));
       entry = _todo.back();
       _todo.pop_back();
 
@@ -286,5 +286,5 @@ void HilbertBasecase::freeIdeal(auto_ptr<Ideal> ideal) {
   ASSERT(ideal.get() != 0);
 
   ideal->clear();
-  exceptionSafePushBack(_idealCache, ideal);
+  exceptionSafePushBack(_idealCache, std::move(ideal));
 }

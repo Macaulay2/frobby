@@ -172,7 +172,7 @@ void TransformAction::perform() {
     idealFacade.takeProducts(ideals, *ideal);
 
     idealsDeleter.deleteElements();
-    exceptionSafePushBack(ideals, ideal);
+    exceptionSafePushBack(ideals, std::move(ideal));
   }
 
   for (size_t i = 0; i < ideals.size(); ++i) {

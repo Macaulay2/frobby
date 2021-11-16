@@ -19,7 +19,7 @@
 
 PolynomialConsolidator::PolynomialConsolidator
 (auto_ptr<CoefBigTermConsumer> consumer):
-  _consumer(consumer) {
+  _consumer(std::move(consumer)) {
 }
 
 void PolynomialConsolidator::consumeRing(const VarNames& names) {

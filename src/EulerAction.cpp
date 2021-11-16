@@ -180,22 +180,22 @@ void EulerAction::perform() {
   auto_ptr<PivotStrategy> genStrat = newGenPivotStrategy(_genPivot.getValue());
   auto_ptr<PivotStrategy> strat;
   if (_pivot == "std")
-	strat = stdStrat;
+	strat = std::move(stdStrat);
   else if (_pivot == "gen")
-	strat = genStrat;
+	strat = std::move(genStrat);
   else if (_pivot == "hybrid")
-	strat = newHybridPivotStrategy(stdStrat, genStrat);
+	strat = newHybridPivotStrategy(std::move(stdStrat), std::move(genStrat));
   else
     reportError("Unknown kind of pivot strategy \"" +
 				_pivot.getValue() + "\".");
 
   if (_printDebug)
-	strat = newDebugPivotStrategy(strat, stderr);
+	strat = newDebugPivotStrategy(std::move(strat), stderr);
   if (_printStatistics)
-	strat = newStatisticsPivotStrategy(strat, stderr);
+	strat = newStatisticsPivotStrategy(std::move(strat), stderr);
 
   PivotEulerAlg alg;
-  alg.setPivotStrategy(strat);
+  alg.setPivotStrategy(std::move(strat));
   alg.setUseUniqueDivSimplify(_useUniqueDivSimplify);
   alg.setUseManyDivSimplify(_useManyDivSimplify);
   alg.setUseAllPairsSimplify(_useAllPairsSimplify);
