@@ -210,6 +210,11 @@ set_target_properties(frobby PROPERTIES PUBLIC_HEADER src/frobby.h)
 install(TARGETS frobby LIBRARY DESTINATION lib)
 install(FILES GPL-header COPYING DESTINATION licenses/frobby)
 
+add_executable(frobby-executable src/main.cpp)
+set_target_properties(frobby-executable PROPERTIES OUTPUT_NAME frobby)
+target_link_libraries(frobby-executable frobby)
+install(TARGETS frobby-executable)
+
 include(CTest)
 if(BUILD_TESTING)
   add_executable(frobby-tests
