@@ -46,6 +46,11 @@ namespace TestInternal {
   template<class T>
 	string toStr(const T& t) {stringstream out;out << t;return out.str();}
 
+  // Forward-declaration due to new behaviour in GCC 12
+  // see https://stackoverflow.com/a/77928633/5894824
+  template<class T>
+	ostream& operator<<(ostream& out, const vector<T>& v);
+
   void assertOK(const StdData&);
   void assertFail(const char* cond, const char* expected, const StdData&);
   void assertFail1(const char* cond, const char* expected, const StdData&,
