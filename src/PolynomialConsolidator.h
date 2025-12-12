@@ -24,7 +24,7 @@
 // a polynomial and then passes the polynomial along in one piece.
 class PolynomialConsolidator : public CoefBigTermConsumer {
  public:
-  PolynomialConsolidator(auto_ptr<CoefBigTermConsumer> consumer);
+  PolynomialConsolidator(unique_ptr<CoefBigTermConsumer> consumer);
 
   virtual void consumeRing(const VarNames& names);
 
@@ -40,7 +40,7 @@ class PolynomialConsolidator : public CoefBigTermConsumer {
   virtual void consume(const BigPolynomial& poly);
 
  private:
-  const auto_ptr<CoefBigTermConsumer> _consumer;
+  const unique_ptr<CoefBigTermConsumer> _consumer;
   BigPolynomial _poly;
 };
 

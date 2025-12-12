@@ -35,10 +35,10 @@ public:
    ideal. Both translator and consumer must remain valid for the
    lifetime of this object.
   */
-  BigattiHilbertAlgorithm(auto_ptr<Ideal> ideal,
+  BigattiHilbertAlgorithm(unique_ptr<Ideal> ideal,
                           const TermTranslator& translator,
                           const BigattiParams& params,
-                          auto_ptr<BigattiPivotStrategy> pivot,
+                          unique_ptr<BigattiPivotStrategy> pivot,
                           CoefBigTermConsumer& consumer);
 
   void setPrintStatistics(bool value);
@@ -50,11 +50,11 @@ public:
   void run();
 
 private:
-    void processState(auto_ptr<BigattiState> state);
+    void processState(unique_ptr<BigattiState> state);
     void getPivot(BigattiState& state, size_t& var, Exponent& e);
     void simplify(BigattiState& state);
 
-    void freeState(auto_ptr<BigattiState> state);
+    void freeState(unique_ptr<BigattiState> state);
 
     size_t _varCount;
     const TermTranslator& _translator;
@@ -67,7 +67,7 @@ private:
 
     BigattiBaseCase _baseCase;
 
-    auto_ptr<BigattiPivotStrategy>  _pivot;
+    unique_ptr<BigattiPivotStrategy>  _pivot;
 
     bool _computeUnivariate;
     BigattiParams _params;

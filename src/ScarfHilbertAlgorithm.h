@@ -33,8 +33,8 @@ class ScarfHilbertAlgorithm {
  public:
   ScarfHilbertAlgorithm(const TermTranslator& translator,
                         const ScarfParams& params,
-                        auto_ptr<IdealOrderer> enumerationOrder,
-                        auto_ptr<IdealOrderer> deformationOrder);
+                        unique_ptr<IdealOrderer> enumerationOrder,
+                        unique_ptr<IdealOrderer> deformationOrder);
   ~ScarfHilbertAlgorithm();
 
   void runGeneric(const Ideal& ideal,
@@ -64,8 +64,8 @@ class ScarfHilbertAlgorithm {
 
   const TermTranslator& _translator;
   const ScarfParams& _params;
-  const auto_ptr<IdealOrderer> _enumerationOrder;
-  const auto_ptr<IdealOrderer> _deformationOrder;
+  const unique_ptr<IdealOrderer> _enumerationOrder;
+  const unique_ptr<IdealOrderer> _deformationOrder;
 
   size_t _totalStates;
   size_t _totalFaces;

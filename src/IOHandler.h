@@ -63,9 +63,9 @@ class IOHandler {
   const char* getName() const;
   const char* getDescription() const;
 
-  auto_ptr<BigTermConsumer> createIdealWriter(FILE* out);
-  auto_ptr<BigTermConsumer> createIdealListWriter(FILE* out);
-  auto_ptr<CoefBigTermConsumer> createPolynomialWriter(FILE* out);
+  unique_ptr<BigTermConsumer> createIdealWriter(FILE* out);
+  unique_ptr<BigTermConsumer> createIdealListWriter(FILE* out);
+  unique_ptr<CoefBigTermConsumer> createPolynomialWriter(FILE* out);
 
   bool supportsInput(const DataType& type) const;
   bool supportsOutput(const DataType& type) const;
@@ -94,12 +94,12 @@ class IOHandler {
 
 /** Returns an IOHandler for the format whose name has the given
  prefix. */
-auto_ptr<IOHandler> createIOHandler(const string& prefix);
+unique_ptr<IOHandler> createIOHandler(const string& prefix);
 
 /** Returns an IOHandler for the output format. This can depend on the
  input format since the output name can specify to let the output
  format be the input format. */
-auto_ptr<IOHandler> createOHandler(const string& input, const string& output);
+unique_ptr<IOHandler> createOHandler(const string& input, const string& output);
 
 /** Add the name of each fomat to names. */
 void getIOHandlerNames(vector<string>& names);

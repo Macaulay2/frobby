@@ -154,7 +154,7 @@ const string& SliceParameters::getSplit() const {
 
 void SliceParameters::validateSplit(bool allowLabel,
                                     bool allowDegree) {
-  auto_ptr<SplitStrategy>
+  unique_ptr<SplitStrategy>
     split(SplitStrategy::createStrategy(_split.getValue().c_str()));
 
   if (split.get() == 0)
@@ -179,7 +179,7 @@ void SliceParameters::validateSplit(bool allowLabel,
 }
 
 void SliceParameters::validateSplitHilbert() {
-  auto_ptr<BigattiPivotStrategy> split = BigattiPivotStrategy::createStrategy
+  unique_ptr<BigattiPivotStrategy> split = BigattiPivotStrategy::createStrategy
      (_split.getValue().c_str(), _widenPivot);
 
   if (split.get() == 0)

@@ -71,7 +71,7 @@ class StlTermPredicate {
 };
 
 /** Returns the predicate whose name has the given prefix. */
-auto_ptr<TermPredicate> createTermPredicate(const string& prefix,
+unique_ptr<TermPredicate> createTermPredicate(const string& prefix,
                                             size_t varCount = 0);
 
 

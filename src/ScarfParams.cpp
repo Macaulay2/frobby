@@ -43,7 +43,7 @@ ScarfParams::ScarfParams(CliParams& cli):
 void addScarfParams(CliParams& params) {
   ASSERT(!params.hasParam(DeformToStrongName));
   params.add
-    (auto_ptr<Parameter>
+    (unique_ptr<Parameter>
      (new BoolParameter
       (DeformToStrongName,
        "Deform to a strongly generic ideal if true. "
@@ -52,7 +52,7 @@ void addScarfParams(CliParams& params) {
 
   ASSERT(!params.hasParam(EnumerationOrderName));
   params.add
-    (auto_ptr<Parameter>
+    (unique_ptr<Parameter>
      (new StringParameter
       (EnumerationOrderName,
        "The enumeration order used for the deformation algorithm.",
@@ -60,7 +60,7 @@ void addScarfParams(CliParams& params) {
 
   ASSERT(!params.hasParam(DeformationOrderName));
   params.add
-    (auto_ptr<Parameter>
+    (unique_ptr<Parameter>
      (new StringParameter
       (DeformationOrderName,
        "The deformation order used for the deformation algorithm.",

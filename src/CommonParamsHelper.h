@@ -64,20 +64,20 @@ class CommonParamsHelper {
 
   Ideal& getIdeal() {return *_ideal;}
   const Ideal& getIdeal() const {return *_ideal;}
-  auto_ptr<Ideal> takeIdeal() {return std::move(_ideal);}
+  unique_ptr<Ideal> takeIdeal() {return std::move(_ideal);}
   bool hasIdeal() const {return _ideal.get() != 0;}
 
   TermTranslator& getTranslator() {return *_translator;}
   const TermTranslator& getTranslator() const {return *_translator;}
-  auto_ptr<TermTranslator> takeTranslator() {return std::move(_translator);}
+  unique_ptr<TermTranslator> takeTranslator() {return std::move(_translator);}
 
   BigTermConsumer& getIdealConsumer() {return *_idealConsumer;}
 
-  auto_ptr<TermConsumer> makeTranslatedIdealConsumer(bool split = false);
+  unique_ptr<TermConsumer> makeTranslatedIdealConsumer(bool split = false);
 
   CoefBigTermConsumer& getPolyConsumer() {return *_polyConsumer;}
-  auto_ptr<CoefTermConsumer> makeTranslatedPolyConsumer();
-  auto_ptr<CoefTermConsumer> makeToUnivariatePolyConsumer();
+  unique_ptr<CoefTermConsumer> makeTranslatedPolyConsumer();
+  unique_ptr<CoefTermConsumer> makeToUnivariatePolyConsumer();
 
   void addPurePowersAtInfinity();
 
@@ -89,14 +89,14 @@ class CommonParamsHelper {
   void readIdeal(const CommonParams& params, Scanner& in);
   void setIdeal(const CommonParams& params, const BigIdeal& ideal);
 
-  auto_ptr<Ideal> _ideal;
-  auto_ptr<TermTranslator> _translator;
+  unique_ptr<Ideal> _ideal;
+  unique_ptr<TermTranslator> _translator;
 
   BigTermConsumer* _idealConsumer;
-  auto_ptr<BigTermConsumer> _idealConsumerDeleter;
+  unique_ptr<BigTermConsumer> _idealConsumerDeleter;
 
   CoefBigTermConsumer* _polyConsumer;
-  auto_ptr<CoefBigTermConsumer> _polyConsumerDeleter;
+  unique_ptr<CoefBigTermConsumer> _polyConsumerDeleter;
 
   bool _produceCanonicalOutput;
 };

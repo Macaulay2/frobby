@@ -31,8 +31,8 @@ namespace {
 
   ParamNames getParamNames(vector<Parameter*> params) {
     struct HoldsFunction {
-      static auto_ptr<Dummy> dummyCreate() {
-        return auto_ptr<Dummy>();
+      static unique_ptr<Dummy> dummyCreate() {
+        return unique_ptr<Dummy>();
       }
     };
 
@@ -85,7 +85,7 @@ void CliParams::processOption(const string& optionName,
   reportInternalError("Processing non-existent option \"" + optionName + "\".");
 }
 
-void CliParams::add(auto_ptr<Parameter> param) {
+void CliParams::add(unique_ptr<Parameter> param) {
   ASSERT(!hasParam(param->getName()));
   Parameter& paramRef = *param;
   exceptionSafePushBack(_ownedParams, std::move(param));

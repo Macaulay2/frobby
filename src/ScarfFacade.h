@@ -42,8 +42,8 @@ class ScarfFacade : public Facade {
  private:
   ScarfParams _params;
   CommonParamsHelper _helper;
-  auto_ptr<IdealOrderer> _enumerationOrder;
-  auto_ptr<IdealOrderer> _deformationOrder;
+  unique_ptr<IdealOrderer> _enumerationOrder;
+  unique_ptr<IdealOrderer> _deformationOrder;
 };
 
 #endif

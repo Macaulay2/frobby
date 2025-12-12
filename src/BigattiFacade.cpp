@@ -31,7 +31,7 @@ BigattiFacade::BigattiFacade(const BigattiParams& params):
 }
 
 BigattiFacade::~BigattiFacade() {
-  // Destructor defined so auto_ptr<T> in the header does not need
+  // Destructor defined so unique_ptr<T> in the header does not need
   // definition of T.
 }
 

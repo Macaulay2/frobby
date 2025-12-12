@@ -36,7 +36,7 @@ SliceStrategyCommon::~SliceStrategyCommon() {
   }
 }
 
-void SliceStrategyCommon::freeSlice(auto_ptr<Slice> slice) {
+void SliceStrategyCommon::freeSlice(unique_ptr<Slice> slice) {
   ASSERT(slice.get() != 0);
   ASSERT(debugIsValidSlice(slice.get()));
 
@@ -62,8 +62,8 @@ bool SliceStrategyCommon::simplify(Slice& slice) {
   return false;
 }
 
-auto_ptr<Slice> SliceStrategyCommon::newSlice() {
-  auto_ptr<Slice> slice;
+unique_ptr<Slice> SliceStrategyCommon::newSlice() {
+  unique_ptr<Slice> slice;
   if (!_sliceCache.empty()) {
     slice.reset(_sliceCache.back());
     _sliceCache.pop_back();
@@ -74,7 +74,7 @@ auto_ptr<Slice> SliceStrategyCommon::newSlice() {
   return slice;
 }
 
-void SliceStrategyCommon::pivotSplit(auto_ptr<Slice> slice) {
+void SliceStrategyCommon::pivotSplit(unique_ptr<Slice> slice) {
   ASSERT(slice.get() != 0);
 
   _pivotTmp.reset(slice->getVarCount());
@@ -87,7 +87,7 @@ void SliceStrategyCommon::pivotSplit(auto_ptr<Slice> slice) {
   ASSERT(!slice->getSubtract().contains(_pivotTmp));
 
   // Set slice2 to the inner slice.
-  auto_ptr<Slice> slice2 = newSlice();
+  unique_ptr<Slice> slice2 = newSlice();
   *slice2 = *slice;
   slice2->innerSlice(_pivotTmp);
   simplify(*slice2);
@@ -99,9 +99,9 @@ void SliceStrategyCommon::pivotSplit(auto_ptr<Slice> slice) {
   // Process the smaller slice first to preserve memory.
   if (slice2->getIdeal().getGeneratorCount() <
       slice->getIdeal().getGeneratorCount()) {
-    // std::swap() may not work correctly on auto_ptr, so we have to
+    // std::swap() may not work correctly on unique_ptr, so we have to
     // do the swap by hand.
-    auto_ptr<Slice> tmp = std::move(slice2);
+    unique_ptr<Slice> tmp = std::move(slice2);
     slice2 = std::move(slice);
     slice = std::move(tmp);
   }

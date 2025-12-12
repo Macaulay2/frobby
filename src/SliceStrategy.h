@@ -39,7 +39,7 @@ class SliceStrategy {
 
   /** Process the parameter slice. Returns true if this is a base
    case and false otherwise. */
-  virtual bool processSlice(TaskEngine& tasks, auto_ptr<Slice> slice) = 0;
+  virtual bool processSlice(TaskEngine& tasks, unique_ptr<Slice> slice) = 0;
 
   /** This method should only be called before calling run(). */
   virtual void setUseIndependence(bool use) = 0;
@@ -54,7 +54,7 @@ class SliceStrategy {
    obtained from a method of the same strategy. This allows caching of
    slices to avoid frequent allocation and deallocation.
   */
-  virtual void freeSlice(auto_ptr<Slice> slice) = 0;
+  virtual void freeSlice(unique_ptr<Slice> slice) = 0;
 };
 
 #endif

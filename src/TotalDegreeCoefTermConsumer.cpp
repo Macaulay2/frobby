@@ -22,7 +22,7 @@
 #include "Term.h"
 
 TotalDegreeCoefTermConsumer::
-TotalDegreeCoefTermConsumer(auto_ptr<CoefBigTermConsumer> consumer,
+TotalDegreeCoefTermConsumer(unique_ptr<CoefBigTermConsumer> consumer,
                             const TermTranslator& translator):
   _consumer(*consumer),
   _consumerOwner(std::move(consumer)),

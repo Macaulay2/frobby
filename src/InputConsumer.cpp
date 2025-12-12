@@ -191,13 +191,13 @@ void InputConsumer::endTerm() {
 void InputConsumer::endIdeal() {
   ASSERT(_inIdeal);
   _inIdeal = false;
-  auto_ptr<Entry> entry(new Entry());
+  unique_ptr<Entry> entry(new Entry());
   entry->_big = std::move(_bigIdeal);
   entry->_sqf = std::move(_sqfIdeal);
   exceptionSafePushBack(_ideals, std::move(entry));
 }
 
-void InputConsumer::releaseIdeal(auto_ptr<SquareFreeIdeal>& sqf, auto_ptr<BigIdeal>& big) {
+void InputConsumer::releaseIdeal(unique_ptr<SquareFreeIdeal>& sqf, unique_ptr<BigIdeal>& big) {
   ASSERT(!_inIdeal);
   ASSERT(!empty());
   Entry entry;
@@ -206,7 +206,7 @@ void InputConsumer::releaseIdeal(auto_ptr<SquareFreeIdeal>& sqf, auto_ptr<BigIde
   big = std::move(entry._big);
 }
 
-auto_ptr<BigIdeal> InputConsumer::releaseBigIdeal() {
+unique_ptr<BigIdeal> InputConsumer::releaseBigIdeal() {
   ASSERT(!_inIdeal);
   ASSERT(!empty());
   Entry entry;
@@ -215,7 +215,7 @@ auto_ptr<BigIdeal> InputConsumer::releaseBigIdeal() {
   return std::move(entry._big);
 }
 
-auto_ptr<SquareFreeIdeal> InputConsumer::releaseSquareFreeIdeal() {
+unique_ptr<SquareFreeIdeal> InputConsumer::releaseSquareFreeIdeal() {
   ASSERT(!_inIdeal);
   ASSERT(!empty());
   ASSERT(_ideals.front()->_sqf.get() != 0);
@@ -244,7 +244,7 @@ void InputConsumer::idealNotSquareFree() {
   toBigIdeal(_sqfIdeal, _bigIdeal);
 }
 
-void InputConsumer::toBigIdeal(std::auto_ptr<SquareFreeIdeal>& sqf, std::auto_ptr<BigIdeal>& big) {
+void InputConsumer::toBigIdeal(std::unique_ptr<SquareFreeIdeal>& sqf, std::unique_ptr<BigIdeal>& big) {
   if (big.get() != 0)
     return;
   ASSERT(sqf.get() != 0);

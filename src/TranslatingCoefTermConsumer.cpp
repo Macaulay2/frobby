@@ -28,7 +28,7 @@ TranslatingCoefTermConsumer::TranslatingCoefTermConsumer
 }
 
 TranslatingCoefTermConsumer::TranslatingCoefTermConsumer
-(auto_ptr<CoefBigTermConsumer> consumer, const TermTranslator& translator):
+(unique_ptr<CoefBigTermConsumer> consumer, const TermTranslator& translator):
   _translator(translator),
   _consumer(*consumer),
   _consumerOwner(std::move(consumer)) {

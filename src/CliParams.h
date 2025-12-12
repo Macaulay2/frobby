@@ -36,7 +36,7 @@ class CliParams {
   const_iterator end() const {return _params.end();}
 
   /** @todo: fix that this doesn't actually take over ownership */
-  void add(auto_ptr<Parameter> param);
+  void add(unique_ptr<Parameter> param);
 
   void add(Parameter& param);
   void add(ParameterGroup& params);

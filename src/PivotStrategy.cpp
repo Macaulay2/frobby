@@ -264,7 +264,7 @@ namespace {
 
   class StdWiden  : public WithPivotTerm {
   public:
-	StdWiden(auto_ptr<StdStrategy> strat):
+	StdWiden(unique_ptr<StdStrategy> strat):
 	  _strat(std::move(strat)) {
 	  ASSERT(_strat.get() != 0);
 	}
@@ -291,7 +291,7 @@ namespace {
     }
 
   private:
-	auto_ptr<StdStrategy> _strat;
+	unique_ptr<StdStrategy> _strat;
   };
 
   class GenStrategy : public WithPivotTerm {
@@ -443,7 +443,7 @@ namespace {
 
 	typedef RawSquareFreeIdeal::iterator iterator;
 
-	void addStrategy(auto_ptr<GenStrategy> strat) {
+	void addStrategy(unique_ptr<GenStrategy> strat) {
 	  exceptionSafePushBack(_filters, std::move(strat));
 	}
 
@@ -739,8 +739,8 @@ namespace {
 
   class HybridPivotStrategy : public PivotStrategy {
   public:
-	HybridPivotStrategy(auto_ptr<PivotStrategy> stdStrat,
-						auto_ptr<PivotStrategy> genStrat):
+	HybridPivotStrategy(unique_ptr<PivotStrategy> stdStrat,
+						unique_ptr<PivotStrategy> genStrat):
 	  _stdStrat(std::move(stdStrat)), _genStrat(std::move(genStrat)) {}
 
 	virtual EulerState* doPivot(EulerState& state, const size_t* divCounts) {
@@ -769,13 +769,13 @@ namespace {
     }
 
   private:
-	auto_ptr<PivotStrategy> _stdStrat;
-	auto_ptr<PivotStrategy> _genStrat;
+	unique_ptr<PivotStrategy> _stdStrat;
+	unique_ptr<PivotStrategy> _genStrat;
   };
 
   class DebugStrategy : public PivotStrategy {
   public:
-	DebugStrategy(auto_ptr<PivotStrategy> strat, FILE* out):
+	DebugStrategy(unique_ptr<PivotStrategy> strat, FILE* out):
 	  _strat(std::move(strat)), _out(out) {}
 
 	virtual EulerState* doPivot(EulerState& state,
@@ -818,13 +818,13 @@ namespace {
     }
 
   private:
-	auto_ptr<PivotStrategy> _strat;
+	unique_ptr<PivotStrategy> _strat;
 	FILE* _out;
   };
 
   class StatisticsStrategy : public PivotStrategy {
   public:
-	StatisticsStrategy(auto_ptr<PivotStrategy> strat, FILE* out):
+	StatisticsStrategy(unique_ptr<PivotStrategy> strat, FILE* out):
 	  _strat(std::move(strat)), _out(out), _statesSplit(0), _transposes(0) {}
 
 	virtual EulerState* doPivot(EulerState& state, const size_t* divCounts) {
@@ -870,7 +870,7 @@ namespace {
     }
 
   private:
-	auto_ptr<PivotStrategy> _strat;
+	unique_ptr<PivotStrategy> _strat;
 	FILE* _out;
 	unsigned long _statesSplit;
     mutable unsigned long _transposes;
@@ -902,25 +902,25 @@ namespace {
   }
 }
 
-auto_ptr<PivotStrategy> newStdPivotStrategy(const string& name) {
+unique_ptr<PivotStrategy> newStdPivotStrategy(const string& name) {
   if (name.compare(0, 6, "widen_") != 0) {
-	auto_ptr<StdStrategy> strat = getStdStratFactory().create(name);
-	return auto_ptr<PivotStrategy>(strat.release());
+	unique_ptr<StdStrategy> strat = getStdStratFactory().create(name);
+	return unique_ptr<PivotStrategy>(strat.release());
   }
 
-  auto_ptr<StdStrategy> subStrat =
+  unique_ptr<StdStrategy> subStrat =
 	getStdStratFactory().create(name.substr(6, name.size() - 6));
-  return auto_ptr<PivotStrategy>(new StdWiden(std::move(subStrat)));
+  return unique_ptr<PivotStrategy>(new StdWiden(std::move(subStrat)));
 }
 
-auto_ptr<PivotStrategy> newGenPivotStrategy(const string& name) {
+unique_ptr<PivotStrategy> newGenPivotStrategy(const string& name) {
   GenFactory factory = getGenStratFactory();
   if (name.find('_') == string::npos) {
-	auto_ptr<GenStrategy> strat = factory.create(name);
-	return auto_ptr<PivotStrategy>(strat.release());
+	unique_ptr<GenStrategy> strat = factory.create(name);
+	return unique_ptr<PivotStrategy>(strat.release());
   }
 
-  auto_ptr<GenComposite> composite(new GenComposite());
+  unique_ptr<GenComposite> composite(new GenComposite());
 
   size_t pos = 0;
   string part;
@@ -934,28 +934,28 @@ auto_ptr<PivotStrategy> newGenPivotStrategy(const string& name) {
 	  pos = nextPos + 1;
 	}
 
-	auto_ptr<GenStrategy> strat = factory.create(part);
+	unique_ptr<GenStrategy> strat = factory.create(part);
 	composite->addStrategy(std::move(strat));
   } while (pos != string::npos);
-  return auto_ptr<PivotStrategy>(composite.release());
+  return unique_ptr<PivotStrategy>(composite.release());
 }
 
-auto_ptr<PivotStrategy> newHybridPivotStrategy
-(auto_ptr<PivotStrategy> stdStrat, auto_ptr<PivotStrategy> genStrat) {
+unique_ptr<PivotStrategy> newHybridPivotStrategy
+(unique_ptr<PivotStrategy> stdStrat, unique_ptr<PivotStrategy> genStrat) {
   PivotStrategy* strat = new HybridPivotStrategy(std::move(stdStrat), std::move(genStrat));
-  return auto_ptr<PivotStrategy>(strat);
+  return unique_ptr<PivotStrategy>(strat);
 }
 
-auto_ptr<PivotStrategy> newDebugPivotStrategy(auto_ptr<PivotStrategy> strat,
+unique_ptr<PivotStrategy> newDebugPivotStrategy(unique_ptr<PivotStrategy> strat,
 											  FILE* out) {
-  return auto_ptr<PivotStrategy>(new DebugStrategy(std::move(strat), out));
+  return unique_ptr<PivotStrategy>(new DebugStrategy(std::move(strat), out));
 }
 
-auto_ptr<PivotStrategy> newStatisticsPivotStrategy
-(auto_ptr<PivotStrategy> strat, FILE* out) {
-  return auto_ptr<PivotStrategy>(new StatisticsStrategy(std::move(strat), out));
+unique_ptr<PivotStrategy> newStatisticsPivotStrategy
+(unique_ptr<PivotStrategy> strat, FILE* out) {
+  return unique_ptr<PivotStrategy>(new StatisticsStrategy(std::move(strat), out));
 }
 
-auto_ptr<PivotStrategy> newDefaultPivotStrategy() {
+unique_ptr<PivotStrategy> newDefaultPivotStrategy() {
   return newStdPivotStrategy("pivot");
 }

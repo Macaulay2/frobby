@@ -90,7 +90,7 @@ void GenerateIdealAction::perform() {
     reportError("Unknown ideal type \"" + type + "\".");
 
   IOFacade ioFacade(_printActions);
-  auto_ptr<IOHandler> output = _io.createOutputHandler();
+  unique_ptr<IOHandler> output = _io.createOutputHandler();
 
   ioFacade.writeIdeal(ideal, output.get(), stdout);
 }

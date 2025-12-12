@@ -47,7 +47,7 @@ class BigattiPivotStrategy {
       improvement for the state with colon while being almost as good
       for the state with add.
   */
-  static auto_ptr<BigattiPivotStrategy> createStrategy
+  static unique_ptr<BigattiPivotStrategy> createStrategy
     (const string& prefix, bool widen);
 
  protected:

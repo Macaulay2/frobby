@@ -176,9 +176,9 @@ void EulerAction::obtainParameters(vector<Parameter*>& parameters) {
 }
 
 void EulerAction::perform() {
-  auto_ptr<PivotStrategy> stdStrat = newStdPivotStrategy(_stdPivot.getValue());
-  auto_ptr<PivotStrategy> genStrat = newGenPivotStrategy(_genPivot.getValue());
-  auto_ptr<PivotStrategy> strat;
+  unique_ptr<PivotStrategy> stdStrat = newStdPivotStrategy(_stdPivot.getValue());
+  unique_ptr<PivotStrategy> genStrat = newGenPivotStrategy(_genPivot.getValue());
+  unique_ptr<PivotStrategy> strat;
   if (_pivot == "std")
 	strat = std::move(stdStrat);
   else if (_pivot == "gen")

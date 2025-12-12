@@ -63,7 +63,7 @@ void AlexanderDualAction::perform() {
     in.expectEOF();
   }
 
-  auto_ptr<BigTermConsumer> output =
+  unique_ptr<BigTermConsumer> output =
     _io.createOutputHandler()->createIdealWriter(stdout);
   SliceFacade facade(params, ideal, *output);
 

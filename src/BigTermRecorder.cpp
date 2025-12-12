@@ -30,13 +30,13 @@ void BigTermRecorder::consumeRing(const VarNames& names) {
   _names = names;
 }
 
-void BigTermRecorder::consume(auto_ptr<BigIdeal> ideal) {
+void BigTermRecorder::consume(unique_ptr<BigIdeal> ideal) {
   consumeRing(ideal->getNames());
   exceptionSafePushBack(_ideals, std::move(ideal));
 }
 
 void BigTermRecorder::beginConsuming() {
-  auto_ptr<BigIdeal> ideal(new BigIdeal(_names));
+  unique_ptr<BigIdeal> ideal(new BigIdeal(_names));
   exceptionSafePushBack(_ideals, std::move(ideal));
 }
 
@@ -71,9 +71,9 @@ bool BigTermRecorder::empty() const {
   return _ideals.empty();
 }
 
-auto_ptr<BigIdeal> BigTermRecorder::releaseIdeal() {
+unique_ptr<BigIdeal> BigTermRecorder::releaseIdeal() {
   ASSERT(!empty());
-  auto_ptr<BigIdeal> ideal(_ideals.front());
+  unique_ptr<BigIdeal> ideal(_ideals.front());
   _ideals.pop_front();
   return ideal;
 }

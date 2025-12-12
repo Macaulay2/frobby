@@ -41,7 +41,7 @@ void StatisticsStrategy::run(const Ideal& ideal) {
 }
 
 bool StatisticsStrategy::processSlice
-(TaskEngine& tasks, auto_ptr<Slice> slice) {
+(TaskEngine& tasks, unique_ptr<Slice> slice) {
   _internalTracker.preliminaryRecord(*slice);
   _leafTracker.preliminaryRecord(*slice);
 
@@ -67,7 +67,7 @@ bool StatisticsStrategy::getUseSimplification() const {
   return _strategy->getUseSimplification();
 }
 
-void StatisticsStrategy::freeSlice(auto_ptr<Slice> slice) {
+void StatisticsStrategy::freeSlice(unique_ptr<Slice> slice) {
   _strategy->freeSlice(std::move(slice));
 }
 

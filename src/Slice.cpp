@@ -319,9 +319,9 @@ bool Slice::applyLowerBound() {
 }
 
 void Slice::run(TaskEngine& tasks) {
-  _strategy.processSlice(tasks, auto_ptr<Slice>(this));
+  _strategy.processSlice(tasks, unique_ptr<Slice>(this));
 }
 
 void Slice::dispose() {
-  _strategy.freeSlice(auto_ptr<Slice>(this));
+  _strategy.freeSlice(unique_ptr<Slice>(this));
 }

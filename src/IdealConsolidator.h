@@ -28,7 +28,7 @@
 // store the ideal and pass it along as one big ideal.
 class IdealConsolidator : public BigTermConsumer {
  public:
-  IdealConsolidator(auto_ptr<BigTermConsumer> consumer);
+  IdealConsolidator(unique_ptr<BigTermConsumer> consumer);
 
   virtual void beginConsumingList();
   virtual void consumeRing(const VarNames& names);
@@ -44,7 +44,7 @@ class IdealConsolidator : public BigTermConsumer {
   virtual void doneConsumingList();
 
 private:
-  const auto_ptr<BigTermConsumer> _consumer;
+  const unique_ptr<BigTermConsumer> _consumer;
   BigIdeal _ideal;
   VarNames _names;
   bool _inList;

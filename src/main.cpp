@@ -40,7 +40,7 @@ int frobbyMain(int argc, const char** argv) {
   } else
     prefix = "help";
 
-  const auto_ptr<Action> action(Action::createActionWithPrefix(prefix));
+  const unique_ptr<Action> action(Action::createActionWithPrefix(prefix));
   action->parseCommandLine(argc - 1, argv + 1);
   action->perform();
 

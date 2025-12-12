@@ -115,7 +115,7 @@ void HelpAction::displayIOHelp() {
   getIOHandlerNames(names);
   for (vector<string>::const_iterator name = names.begin();
        name != names.end(); ++name) {
-    auto_ptr<IOHandler> handler = createIOHandler(*name);
+    unique_ptr<IOHandler> handler = createIOHandler(*name);
     ASSERT(handler.get() != 0);
 
     fprintf(stderr, "\n* The format %s: %s\n",
@@ -172,7 +172,7 @@ void HelpAction::perform() {
   Action::getActionNames(names);
   for (vector<string>::const_iterator it = names.begin();
        it != names.end(); ++it) {
-    auto_ptr<Action> action(Action::createActionWithPrefix(*it));
+    unique_ptr<Action> action(Action::createActionWithPrefix(*it));
     if (action->displayAction()) {
 	  printer[0] << action->getName() << '\n';
 	  printer[1] << action->getShortDescription() << '\n';

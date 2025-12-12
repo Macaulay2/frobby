@@ -51,15 +51,15 @@ public:
   void operator=(const PivotStrategy&); // not available
 };
 
-auto_ptr<PivotStrategy> newDefaultPivotStrategy();
+unique_ptr<PivotStrategy> newDefaultPivotStrategy();
 
-auto_ptr<PivotStrategy> newStdPivotStrategy(const string& name);
-auto_ptr<PivotStrategy> newGenPivotStrategy(const string& name);
-auto_ptr<PivotStrategy> newHybridPivotStrategy
-  (auto_ptr<PivotStrategy> stdStrat, auto_ptr<PivotStrategy> genStrat);
-auto_ptr<PivotStrategy> newDebugPivotStrategy(auto_ptr<PivotStrategy> strat,
+unique_ptr<PivotStrategy> newStdPivotStrategy(const string& name);
+unique_ptr<PivotStrategy> newGenPivotStrategy(const string& name);
+unique_ptr<PivotStrategy> newHybridPivotStrategy
+  (unique_ptr<PivotStrategy> stdStrat, unique_ptr<PivotStrategy> genStrat);
+unique_ptr<PivotStrategy> newDebugPivotStrategy(unique_ptr<PivotStrategy> strat,
 											  FILE* out);
-auto_ptr<PivotStrategy> newStatisticsPivotStrategy
-(auto_ptr<PivotStrategy> strat, FILE* out);
+unique_ptr<PivotStrategy> newStatisticsPivotStrategy
+(unique_ptr<PivotStrategy> strat, FILE* out);
 
 #endif

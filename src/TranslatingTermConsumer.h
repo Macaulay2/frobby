@@ -32,13 +32,13 @@ class TranslatingTermConsumer : public BigTermConsumer {
   // Does not copy the consumer or translator, so they need to remain
   // valid for the lifetime of this object. Does not take over
   // ownership of consumer, as is strongly indicated by it being a
-  // reference as opposed to an auto_ptr.
+  // reference as opposed to an unique_ptr.
   TranslatingTermConsumer(BigTermConsumer& consumer,
                           const TermTranslator& translator);
 
   // Does not copy the translator, so it needs to remain valid for the
   // lifetime of this object. Takes over ownership of consumer.
-  TranslatingTermConsumer(auto_ptr<BigTermConsumer> consumer,
+  TranslatingTermConsumer(unique_ptr<BigTermConsumer> consumer,
                           const TermTranslator& translator);
 
   virtual void beginConsumingList();
@@ -57,7 +57,7 @@ class TranslatingTermConsumer : public BigTermConsumer {
  private:
   const TermTranslator& _translator;
   BigTermConsumer& _consumer;
-  auto_ptr<BigTermConsumer> _consumerOwner;
+  unique_ptr<BigTermConsumer> _consumerOwner;
 };
 
 #endif

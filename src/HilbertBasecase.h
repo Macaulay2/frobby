@@ -45,8 +45,8 @@ class HilbertBasecase {
 
   bool stepComputation(Entry& entry, Entry& newEntry);
 
-  auto_ptr<Ideal> getNewIdeal();
-  void freeIdeal(auto_ptr<Ideal> ideal);
+  unique_ptr<Ideal> getNewIdeal();
+  void freeIdeal(unique_ptr<Ideal> ideal);
   vector<Ideal*> _idealCache;
   ElementDeleter<vector<Ideal*> > _idealCacheDeleter;
 

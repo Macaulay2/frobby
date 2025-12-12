@@ -191,7 +191,7 @@ void AnalyzeAction::analyzeStreaming(AnalyzeConsumer& consumer) const {
   IOFacade ioFacade(_printActions);
 
   if (_printLcm) {
-    auto_ptr<IOHandler> output = _io.createOutputHandler();
+    unique_ptr<IOHandler> output = _io.createOutputHandler();
     ioFacade.writeTerm(consumer.getLcm(), consumer.getNames(),
                        output.get(), stdout);
     fputc('\n', stdout);

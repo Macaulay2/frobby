@@ -55,7 +55,7 @@ void IOHandler::readTerm
   doReadTerm(in, consumer);
   consumer.endIdeal();
   ASSERT(!consumer.empty());
-  auto_ptr<BigIdeal> ideal = consumer.releaseBigIdeal();
+  unique_ptr<BigIdeal> ideal = consumer.releaseBigIdeal();
   ASSERT(consumer.empty());
   ASSERT(ideal->getGeneratorCount() == 1);
   term = (*ideal)[0];
@@ -86,16 +86,16 @@ const char* IOHandler::getDescription() const {
   return doGetDescription();
 }
 
-auto_ptr<BigTermConsumer> IOHandler::createIdealWriter(FILE* out) {
+unique_ptr<BigTermConsumer> IOHandler::createIdealWriter(FILE* out) {
   if (!supportsOutput(DataType::getMonomialIdealType())) {
     throwError<UnsupportedException>
       ("The " + string(getName()) +
        " format does not support output of a monomial ideal.");
   }
-  return auto_ptr<BigTermConsumer>(doCreateIdealWriter(out));
+  return unique_ptr<BigTermConsumer>(doCreateIdealWriter(out));
 }
 
-auto_ptr<BigTermConsumer> IOHandler::createIdealListWriter(FILE* out) {
+unique_ptr<BigTermConsumer> IOHandler::createIdealListWriter(FILE* out) {
   if (!supportsOutput(DataType::getMonomialIdealListType())) {
     throwError<UnsupportedException>
       ("The " + string(getName()) +
@@ -104,16 +104,16 @@ auto_ptr<BigTermConsumer> IOHandler::createIdealListWriter(FILE* out) {
   // This is the same kind of object as for a non-list ideal
   // writer. The only difference is that we checked for support for
   // output of lists above.
-  return auto_ptr<BigTermConsumer>(doCreateIdealWriter(out));
+  return unique_ptr<BigTermConsumer>(doCreateIdealWriter(out));
 }
 
-auto_ptr<CoefBigTermConsumer> IOHandler::createPolynomialWriter(FILE* out) {
+unique_ptr<CoefBigTermConsumer> IOHandler::createPolynomialWriter(FILE* out) {
   if (!supportsOutput(DataType::getPolynomialType())) {
     throwError<UnsupportedException>
       ("The " + string(getName()) +
        " format does not support output of a polynomial.");
   }
-  return auto_ptr<CoefBigTermConsumer>(doCreatePolynomialWriter(out));
+  return unique_ptr<CoefBigTermConsumer>(doCreatePolynomialWriter(out));
 }
 
 bool IOHandler::supportsInput(const DataType& type) const {
@@ -142,11 +142,11 @@ namespace {
   }
 }
 
-auto_ptr<IOHandler> createIOHandler(const string& prefix) {
+unique_ptr<IOHandler> createIOHandler(const string& prefix) {
   return createWithPrefix(getIOHandlerFactory(), prefix);
 }
 
-auto_ptr<IOHandler> createOHandler(const string& input, const string& output) {
+unique_ptr<IOHandler> createOHandler(const string& input, const string& output) {
   if (output == getFormatNameIndicatingToUseInputFormatAsOutputFormat())
     return createIOHandler(input);
   else

@@ -18,7 +18,7 @@
 #include "PolynomialConsolidator.h"
 
 PolynomialConsolidator::PolynomialConsolidator
-(auto_ptr<CoefBigTermConsumer> consumer):
+(unique_ptr<CoefBigTermConsumer> consumer):
   _consumer(std::move(consumer)) {
 }
 

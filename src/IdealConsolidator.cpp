@@ -20,7 +20,7 @@
 #include "Term.h"
 #include "TermTranslator.h"
 
-IdealConsolidator::IdealConsolidator(auto_ptr<BigTermConsumer> consumer):
+IdealConsolidator::IdealConsolidator(unique_ptr<BigTermConsumer> consumer):
   _consumer(std::move(consumer)),
   _inList(false),
   _inIdeal(false) {

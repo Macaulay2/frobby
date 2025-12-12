@@ -45,7 +45,7 @@ namespace {
 void addDebugParam(CliParams& params) {
   ASSERT(!params.hasParam(PrintDebugName));
   params.add
-    (auto_ptr<Parameter>
+    (unique_ptr<Parameter>
      (new BoolParameter
       ("debug",
        "Print what the algorithm does at each step.",

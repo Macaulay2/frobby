@@ -45,7 +45,7 @@ class BigattiFacade : public Facade {
   void computeUnivariateHilbertSeries();
 
  private:
-  auto_ptr<BigattiPivotStrategy> _pivot;
+  unique_ptr<BigattiPivotStrategy> _pivot;
   BigattiParams _params;
   CommonParamsHelper _common;
 };

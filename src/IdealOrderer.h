@@ -30,6 +30,6 @@ class IdealOrderer {
   virtual void doOrder(Ideal& ideal) const = 0;
 };
 
-auto_ptr<IdealOrderer> createIdealOrderer(const string& name);
+unique_ptr<IdealOrderer> createIdealOrderer(const string& name);
 
 #endif

@@ -21,7 +21,7 @@
 
 #include "Term.h"
 
-CanonicalTermConsumer::CanonicalTermConsumer(auto_ptr<TermConsumer> consumer,
+CanonicalTermConsumer::CanonicalTermConsumer(unique_ptr<TermConsumer> consumer,
                                              size_t varCount,
                                              TermTranslator* translator):
   _varCount(varCount),
@@ -47,7 +47,7 @@ void CanonicalTermConsumer::beginConsumingList() {
 void CanonicalTermConsumer::beginConsuming() {
   ASSERT(_storingList || _ideals.empty());
 
-  auto_ptr<Ideal> ideal(new Ideal(_varCount));
+  unique_ptr<Ideal> ideal(new Ideal(_varCount));
   exceptionSafePushBack(_ideals, std::move(ideal));
 }
 
@@ -93,7 +93,7 @@ void CanonicalTermConsumer::passLastIdeal() {
   ASSERT(!_ideals.empty());
   ASSERT(_ideals.back() != 0);
 
-  auto_ptr<Ideal> ideal(_ideals.back());
+  unique_ptr<Ideal> ideal(_ideals.back());
   _ideals.pop_back();
 
   canonicalizeIdeal(*ideal);

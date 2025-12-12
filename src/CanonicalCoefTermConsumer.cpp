@@ -20,7 +20,7 @@
 #include "Term.h"
 
 CanonicalCoefTermConsumer::
-CanonicalCoefTermConsumer(auto_ptr<CoefTermConsumer> consumer):
+CanonicalCoefTermConsumer(unique_ptr<CoefTermConsumer> consumer):
   _consumer(std::move(consumer)) {
   ASSERT(_consumer.get() != 0);
 }

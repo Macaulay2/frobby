@@ -38,14 +38,14 @@ public:
   virtual void consume(const vector<mpz_class>& term);
   virtual void doneConsuming();
 
-  virtual void consume(auto_ptr<BigIdeal> ideal);
+  virtual void consume(unique_ptr<BigIdeal> ideal);
 
   // Returns true if this object currently stores no ideals.
   bool empty() const;
 
   // Returns the least recently consumed ideal from this and returns it.
   // It is a precondition that empty() is false.
-  auto_ptr<BigIdeal> releaseIdeal();
+  unique_ptr<BigIdeal> releaseIdeal();
 
   // Returns the most recently consumed ring.
   const VarNames& getRing();

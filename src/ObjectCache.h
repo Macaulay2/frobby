@@ -39,18 +39,18 @@ class ObjectCache {
   /** Returns an object. The new object is constructed using the
    standard constructor, or it is an object previously passed to freeObject().
   */
-  auto_ptr<T> newObject();
+  unique_ptr<T> newObject();
 
   /** Returns a copy of copyOf. The new object is constructed using
    the copy constructor, or it is an object previously passed to
    freeObject() that has copyOf assigned to it.
   */
   template<class S>
-  auto_ptr<T> newObjectCopy(const S& copyOf);
+  unique_ptr<T> newObjectCopy(const S& copyOf);
 
   /** Insert an object into the cache. */
   template<class S>
-  void freeObject(auto_ptr<S> object);
+  void freeObject(unique_ptr<S> object);
 
  private:
   vector<T*> _cache;
@@ -66,31 +66,31 @@ inline ObjectCache<T>::ObjectCache():
 }
 
 template<class T>
-auto_ptr<T> ObjectCache<T>::newObject() {
+unique_ptr<T> ObjectCache<T>::newObject() {
   if (_cache.empty())
-    return auto_ptr<T>(new T());
+    return unique_ptr<T>(new T());
 
-  auto_ptr<T> object(_cache.back());
+  unique_ptr<T> object(_cache.back());
   _cache.pop_back();
   return object;
 }
 
 template<class T> template<class S>
-auto_ptr<T> ObjectCache<T>::newObjectCopy(const S& copyOf) {
+unique_ptr<T> ObjectCache<T>::newObjectCopy(const S& copyOf) {
   if (_cache.empty())
-    return auto_ptr<T>(new T(copyOf));
+    return unique_ptr<T>(new T(copyOf));
 
-  auto_ptr<T> object(_cache.back());
+  unique_ptr<T> object(_cache.back());
   _cache.pop_back();
   *object = copyOf;
   return object;
 }
 
 template<class T> template<class S>
-void ObjectCache<T>::freeObject(auto_ptr<S> object) {
+void ObjectCache<T>::freeObject(unique_ptr<S> object) {
   ASSERT(dynamic_cast<T*>(object.get()) != 0);
 
-  auto_ptr<T> casted(static_cast<T*>(object.release()));
+  unique_ptr<T> casted(static_cast<T*>(object.release()));
   noThrowPushBack(_cache, std::move(casted));
 }
 

@@ -50,8 +50,8 @@ public:
   size_t getVarCount() const {return _varCount;}
 
 private:
-  auto_ptr<Node> _lessOrEqual;
-  auto_ptr<Node> _greater;
+  unique_ptr<Node> _lessOrEqual;
+  unique_ptr<Node> _greater;
   Ideal::iterator _begin;
   Ideal::iterator _end;
   size_t _varCount;
@@ -154,7 +154,7 @@ IdealTree::IdealTree(const Ideal& ideal) {
 }
 
 IdealTree::~IdealTree() {
-  // Destructor defined so auto_ptr<T> in the header does not need
+  // Destructor defined so unique_ptr<T> in the header does not need
   // definition of T.
 }
 
