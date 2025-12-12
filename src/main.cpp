@@ -59,18 +59,6 @@ void frobbyTerminate() {
   abort();
 }
 
-/** A replacement for the default C++ built-in unexpected()
- function. Do not call this method or cause it to be called.
-*/
-void frobbyUnexpected() {
-  fputs("INTERNAL ERROR: Something caused unexpected() to be called. "
-        "This should never happen.\nPlease contact the Frobby developers.\n",
-        stderr);
-  fflush(stderr);
-  ASSERT(false);
-  abort();
-}
-
 /** This function is the entry point for Frobby as a console
     program. It does some DEBUG-specific things, sets the random seed
     and so on before calling ::frobbyMain.
@@ -78,9 +66,6 @@ void frobbyUnexpected() {
 int main(int argc, const char** argv) {
   try {
     std::set_terminate(frobbyTerminate);
-#if __cplusplus < 201700L
-    std::set_unexpected(frobbyUnexpected);
-#endif
 
     srand((unsigned int)time(0) +
 #ifdef __GNUC__ // Only GCC defines this macro.
