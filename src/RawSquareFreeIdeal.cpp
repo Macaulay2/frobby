@@ -611,7 +611,7 @@ bool RSFIdeal::operator==(const RawSquareFreeIdeal& ideal) const {
 }
 
 namespace {
-  struct CmpForSortLexAscending : std::binary_function<size_t, size_t, bool> {
+  struct CmpForSortLexAscending {
 	bool operator()(size_t a, size_t b) const {
 	  return Ops::lexLess(ideal->getGenerator(a), ideal->getGenerator(b),
 						  ideal->getVarCount());
