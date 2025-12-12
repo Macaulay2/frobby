@@ -166,7 +166,7 @@ void TransformAction::perform() {
   }
 
   if (_product) {
-    auto_ptr<BigIdeal> ideal;
+    unique_ptr<BigIdeal> ideal;
     ideal.reset(new BigIdeal(names));
 
     idealFacade.takeProducts(ideals, *ideal);
@@ -216,7 +216,7 @@ void TransformAction::perform() {
     sort(ideals.begin(), ideals.end(), compareIdeals);
   }
 
-  auto_ptr<IOHandler> output(_io.createOutputHandler());
+  unique_ptr<IOHandler> output(_io.createOutputHandler());
   facade.writeIdeals(ideals, names, output.get(), stdout);
 }
 

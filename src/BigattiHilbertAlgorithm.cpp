@@ -24,10 +24,10 @@
 
 BigattiHilbertAlgorithm::
 BigattiHilbertAlgorithm
-(auto_ptr<Ideal> ideal,
+(unique_ptr<Ideal> ideal,
  const TermTranslator& translator,
  const BigattiParams& params,
- auto_ptr<BigattiPivotStrategy> pivot,
+ unique_ptr<BigattiPivotStrategy> pivot,
  CoefBigTermConsumer& consumer):
  _translator(translator),
  _consumer(&consumer),
@@ -72,7 +72,7 @@ void BigattiHilbertAlgorithm::run() {
   }
 }
 
-void BigattiHilbertAlgorithm::processState(auto_ptr<BigattiState> state) {
+void BigattiHilbertAlgorithm::processState(unique_ptr<BigattiState> state) {
   if (_params.getUseSimplification())
     simplify(*state);
 
@@ -98,7 +98,7 @@ void BigattiHilbertAlgorithm::processState(auto_ptr<BigattiState> state) {
   ASSERT(!pivot.isIdentity());
   ASSERT(!state->getIdeal().contains(pivot));
 
-  auto_ptr<BigattiState> colonState(_stateCache.newObjectCopy(*state));
+  unique_ptr<BigattiState> colonState(_stateCache.newObjectCopy(*state));
   colonState->colonStep(pivot);
   _tasks.addTask(colonState.release());
 
@@ -122,7 +122,7 @@ void BigattiHilbertAlgorithm::simplify(BigattiState& state) {
   ASSERT(gcd.isIdentity());
 }
 
-void BigattiHilbertAlgorithm::freeState(auto_ptr<BigattiState> state) {
+void BigattiHilbertAlgorithm::freeState(unique_ptr<BigattiState> state) {
   state->getIdeal().clear(); // To preserve memory
   _stateCache.freeObject(std::move(state));
 }

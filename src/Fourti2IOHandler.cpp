@@ -165,13 +165,13 @@ namespace IO {
 
   BigTermConsumer* Fourti2IOHandler::doCreateIdealWriter(FILE* out) {
     F::display4ti2Warning();
-    auto_ptr<BigTermConsumer> writer(new Fourti2IdealWriter(out));
+    unique_ptr<BigTermConsumer> writer(new Fourti2IdealWriter(out));
     return new IdealConsolidator(std::move(writer));
   }
 
   CoefBigTermConsumer* Fourti2IOHandler::doCreatePolynomialWriter(FILE* out) {
     F::display4ti2Warning();
-    auto_ptr<CoefBigTermConsumer> writer(new Fourti2PolyWriter(out));
+    unique_ptr<CoefBigTermConsumer> writer(new Fourti2PolyWriter(out));
     return new PolynomialConsolidator(std::move(writer));
   }
 

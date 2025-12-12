@@ -28,7 +28,7 @@ class TranslatingCoefTermConsumer : public CoefBigTermConsumer {
   TranslatingCoefTermConsumer
     (CoefBigTermConsumer& consumer, const TermTranslator& translator);
   TranslatingCoefTermConsumer
-    (auto_ptr<CoefBigTermConsumer> consumer, const TermTranslator& translator);
+    (unique_ptr<CoefBigTermConsumer> consumer, const TermTranslator& translator);
 
   virtual void consumeRing(const VarNames& names);
 
@@ -46,7 +46,7 @@ class TranslatingCoefTermConsumer : public CoefBigTermConsumer {
  private:
   const TermTranslator& _translator;
   CoefBigTermConsumer& _consumer;
-  auto_ptr<CoefBigTermConsumer> _consumerOwner;
+  unique_ptr<CoefBigTermConsumer> _consumerOwner;
 };
 
 #endif

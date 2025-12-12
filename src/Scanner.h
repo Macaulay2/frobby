@@ -60,7 +60,7 @@ public:
 
   const string& getFormat() const {return _formatName;}
   void setFormat(const string& format) {_formatName = format;}
-  auto_ptr<IOHandler> createIOHandler() const;
+  unique_ptr<IOHandler> createIOHandler() const;
 
   /** Return true if the next character is c, and in that case skip
       past it. */

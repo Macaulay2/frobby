@@ -77,35 +77,35 @@ class InputConsumer {
 
   /** Assigns the least recently read ideal that has not been released
    to the parameter of the type that the ideal was read as. */
-  void releaseIdeal(auto_ptr<SquareFreeIdeal>& sqf, auto_ptr<BigIdeal>& big);
+  void releaseIdeal(unique_ptr<SquareFreeIdeal>& sqf, unique_ptr<BigIdeal>& big);
 
   /** Returns the least recently read ideal that has not been released.
    Converts the ideal to a BigIdeal if it had been read as something else. */
-  auto_ptr<BigIdeal> releaseBigIdeal();
+  unique_ptr<BigIdeal> releaseBigIdeal();
 
   /** Returns the least recently read ideal that has not been released.
    That ideal must have been read as a SquareFreeIdeal. */
-  auto_ptr<SquareFreeIdeal> releaseSquareFreeIdeal();
+  unique_ptr<SquareFreeIdeal> releaseSquareFreeIdeal();
 
   /** Returns the current ring. */
   const VarNames& getRing() const {return _names;}
 
  private:
   struct Entry {
-	auto_ptr<BigIdeal> _big;
-	auto_ptr<SquareFreeIdeal> _sqf;
+	unique_ptr<BigIdeal> _big;
+	unique_ptr<SquareFreeIdeal> _sqf;
   };
   void releaseIdeal(Entry& e);
 
   void errorVariableAppearsTwice(const Scanner& in, size_t var);
   void idealNotSquareFree();
   static void toBigIdeal
-    (auto_ptr<SquareFreeIdeal>& sqf, auto_ptr<BigIdeal>& big);
+    (unique_ptr<SquareFreeIdeal>& sqf, unique_ptr<BigIdeal>& big);
 
   string _tmpString;
   VarNames _names;
-  auto_ptr<BigIdeal> _bigIdeal;
-  auto_ptr<SquareFreeIdeal> _sqfIdeal;
+  unique_ptr<BigIdeal> _bigIdeal;
+  unique_ptr<SquareFreeIdeal> _sqfIdeal;
   vector<string> _term;
 
   std::list<Entry*> _ideals;

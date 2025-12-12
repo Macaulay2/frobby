@@ -33,13 +33,13 @@ class StatisticsStrategy : public SliceStrategy {
 
   virtual void run(const Ideal& ideal);
 
-  virtual bool processSlice(TaskEngine& tasks, auto_ptr<Slice> slice);
+  virtual bool processSlice(TaskEngine& tasks, unique_ptr<Slice> slice);
 
   virtual void setUseIndependence(bool use);
   virtual void setUseSimplification(bool use);
   virtual bool getUseSimplification() const;
 
-  virtual void freeSlice(auto_ptr<Slice> slice);
+  virtual void freeSlice(unique_ptr<Slice> slice);
 
  private:
   SliceStrategy* _strategy;

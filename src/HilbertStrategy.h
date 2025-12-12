@@ -37,21 +37,21 @@ class HilbertStrategy : public SliceStrategyCommon {
 
   virtual void run(const Ideal& ideal);
 
-  virtual bool processSlice(TaskEngine& tasks, auto_ptr<Slice> slice);
+  virtual bool processSlice(TaskEngine& tasks, unique_ptr<Slice> slice);
 
-  void freeConsumer(auto_ptr<HilbertIndependenceConsumer> consumer);
+  void freeConsumer(unique_ptr<HilbertIndependenceConsumer> consumer);
 
  private:
-  auto_ptr<HilbertIndependenceConsumer> newConsumer();
+  unique_ptr<HilbertIndependenceConsumer> newConsumer();
 
-  auto_ptr<HilbertSlice> newHilbertSlice();
-  virtual auto_ptr<Slice> allocateSlice();
+  unique_ptr<HilbertSlice> newHilbertSlice();
+  virtual unique_ptr<Slice> allocateSlice();
   virtual bool debugIsValidSlice(Slice* slice);
 
   virtual void getPivot(Term& term, Slice& slice);
 
   IndependenceSplitter _indepSplitter;
-  void independenceSplit(auto_ptr<Slice> slice);
+  void independenceSplit(unique_ptr<Slice> slice);
 
   vector<HilbertIndependenceConsumer*> _consumerCache;
   ElementDeleter<vector<HilbertIndependenceConsumer*> > _consumerCacheDeleter;

@@ -494,8 +494,8 @@ namespace {
   }
 }
 
-auto_ptr<SplitStrategy> SplitStrategy::createStrategy(const string& prefix) {
-  auto_ptr<SplitStrategy> split = createWithPrefix(getSplitFactory(), prefix);
+unique_ptr<SplitStrategy> SplitStrategy::createStrategy(const string& prefix) {
+  unique_ptr<SplitStrategy> split = createWithPrefix(getSplitFactory(), prefix);
   ASSERT(split.get() != 0);
   return split;
 }

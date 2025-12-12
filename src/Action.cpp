@@ -106,7 +106,7 @@ void Action::getActionNames(vector<string>& names) {
   getActionFactory().getNamesWithPrefix("", names);
 }
 
-auto_ptr<Action> Action::createActionWithPrefix(const string& prefix) {
+unique_ptr<Action> Action::createActionWithPrefix(const string& prefix) {
   return createWithPrefix(getActionFactory(), prefix);
 }
 

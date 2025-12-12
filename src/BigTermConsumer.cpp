@@ -60,6 +60,6 @@ void BigTermConsumer::consume(const BigIdeal& ideal) {
   doneConsuming();
 }
 
-void BigTermConsumer::consume(auto_ptr<BigIdeal> ideal) {
+void BigTermConsumer::consume(unique_ptr<BigIdeal> ideal) {
   consume(*ideal);
 }

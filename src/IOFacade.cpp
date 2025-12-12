@@ -57,7 +57,7 @@ bool IOFacade::isValidMonomialIdealFormat(const string& format) {
 void IOFacade::readSatBinomIdeal(Scanner& in, SatBinomConsumer& consumer) {
   beginAction("Reading saturated binomial ideal.");
 
-  auto_ptr<IOHandler> handler(in.createIOHandler());
+  unique_ptr<IOHandler> handler(in.createIOHandler());
   ASSERT(handler.get() != 0);
 
   handler->readSatBinomIdeal(in, consumer);
@@ -68,7 +68,7 @@ void IOFacade::readSatBinomIdeal(Scanner& in, SatBinomConsumer& consumer) {
 void IOFacade::readSatBinomIdeal(Scanner& in, SatBinomIdeal& ideal) {
   beginAction("Reading saturated binomial ideal.");
 
-  auto_ptr<IOHandler> handler(in.createIOHandler());
+  unique_ptr<IOHandler> handler(in.createIOHandler());
   ASSERT(handler.get() != 0);
 
   ideal.clear();
@@ -81,7 +81,7 @@ void IOFacade::readSatBinomIdeal(Scanner& in, SatBinomIdeal& ideal) {
 void IOFacade::readIdeal(Scanner& in, BigTermConsumer& consumer) {
   beginAction("Reading monomial ideal.");
 
-  auto_ptr<IOHandler> handler(in.createIOHandler());
+  unique_ptr<IOHandler> handler(in.createIOHandler());
   ASSERT(handler.get() != 0);
 
   InputConsumer middleman;
@@ -98,7 +98,7 @@ void IOFacade::readIdeal(Scanner& in, BigTermConsumer& consumer) {
 void IOFacade::readIdeal(Scanner& in, BigIdeal& ideal) {
   beginAction("Reading monomial ideal.");
 
-  auto_ptr<IOHandler> handler(in.createIOHandler());
+  unique_ptr<IOHandler> handler(in.createIOHandler());
   ASSERT(handler.get() != 0);
 
   InputConsumer recorder;
@@ -116,7 +116,7 @@ void IOFacade::readIdeal(Scanner& in, BigIdeal& ideal) {
 void IOFacade::readSquareFreeIdeal(Scanner& in, SquareFreeIdeal& ideal) {
   beginAction("Reading square free ideal.");
 
-  auto_ptr<IOHandler> handler(in.createIOHandler());
+  unique_ptr<IOHandler> handler(in.createIOHandler());
   ASSERT(handler.get() != 0);
 
   InputConsumer consumer;
@@ -138,7 +138,7 @@ void IOFacade::readIdeals(Scanner& in,
   ASSERT(ideals.empty());
   ElementDeleter<vector<BigIdeal*> > idealsDeleter(ideals);
 
-  auto_ptr<IOHandler> handler(in.createIOHandler());
+  unique_ptr<IOHandler> handler(in.createIOHandler());
 
   //BigTermRecorder recorder;
   InputConsumer recorder;
@@ -174,7 +174,7 @@ void IOFacade::writeIdeals(const vector<BigIdeal*>& ideals,
   beginAction("Writing monomial ideals.");
 
   {
-    auto_ptr<BigTermConsumer> consumer = handler->createIdealWriter(out);
+    unique_ptr<BigTermConsumer> consumer = handler->createIdealWriter(out);
 
     consumer->beginConsumingList();
     consumer->consumeRing(names);
@@ -193,7 +193,7 @@ void IOFacade::readPolynomial(Scanner& in, BigPolynomial& polynomial) {
 
   beginAction("Reading polynomial.");
 
-  auto_ptr<IOHandler> handler(in.createIOHandler());
+  unique_ptr<IOHandler> handler(in.createIOHandler());
   ASSERT(handler.get() != 0);
 
   CoefBigTermRecorder recorder(&polynomial);
@@ -230,7 +230,7 @@ bool IOFacade::readAlexanderDualInstance
 (Scanner& in, BigIdeal& ideal, vector<mpz_class>& term) {
   beginAction("Reading Alexander dual input.");
 
-  auto_ptr<IOHandler> handler(in.createIOHandler());
+  unique_ptr<IOHandler> handler(in.createIOHandler());
   ASSERT(handler.get() != 0);
 
   InputConsumer recorder;

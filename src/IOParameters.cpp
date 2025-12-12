@@ -43,7 +43,7 @@ IOParameters::IOParameters(const DataType& input, const DataType& output):
   getIOHandlerNames(names);
   for (vector<string>::const_iterator name = names.begin();
        name != names.end(); ++name) {
-    auto_ptr<IOHandler> handler = createIOHandler(*name);
+    unique_ptr<IOHandler> handler = createIOHandler(*name);
     ASSERT(handler.get() != 0);
 
     if (handler->supportsInput(_inputType)) {
@@ -124,14 +124,14 @@ const string& IOParameters::getOutputFormat() const {
   return *_outputFormat;
 }
 
-auto_ptr<IOHandler> IOParameters::createInputHandler() const {
-  auto_ptr<IOHandler> handler(createIOHandler(getInputFormat()));
+unique_ptr<IOHandler> IOParameters::createInputHandler() const {
+  unique_ptr<IOHandler> handler(createIOHandler(getInputFormat()));
   ASSERT(handler.get() != 0);
   return handler;
 }
 
-auto_ptr<IOHandler> IOParameters::createOutputHandler() const {
-  auto_ptr<IOHandler> handler(createIOHandler(getOutputFormat()));
+unique_ptr<IOHandler> IOParameters::createOutputHandler() const {
+  unique_ptr<IOHandler> handler(createIOHandler(getOutputFormat()));
   ASSERT(handler.get() != 0);
   return handler;
 }
@@ -153,7 +153,7 @@ void IOParameters::validateFormats() const {
   IOFacade facade(false);
 
   if (!_inputType.isNull()) {
-    auto_ptr<IOHandler> handler(createIOHandler(getInputFormat()));
+    unique_ptr<IOHandler> handler(createIOHandler(getInputFormat()));
 
     if (!handler->supportsInput(_inputType)) {
       FrobbyStringStream errorMsg;
@@ -167,7 +167,7 @@ void IOParameters::validateFormats() const {
   }
 
   if (!_outputType.isNull()) {
-    auto_ptr<IOHandler> handler(createIOHandler(getOutputFormat()));
+    unique_ptr<IOHandler> handler(createIOHandler(getOutputFormat()));
     /*
     if (!handler->supportsOutput(_outputType)) {
       FrobbyStringStream errorMsg;

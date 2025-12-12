@@ -61,7 +61,7 @@ void extractCliValues(SliceParams& slice, const CliParams& cli) {
 void validateSplit(const SliceParams& params,
                    bool allowLabel,
                    bool allowDegree) {
-  auto_ptr<SplitStrategy>
+  unique_ptr<SplitStrategy>
     split(SplitStrategy::createStrategy(params.getSplit()));
   ASSERT(split.get() != 0)
 

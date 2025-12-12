@@ -34,8 +34,8 @@ class IOParameters : public ParameterGroup {
   const string& getInputFormat() const;
   const string& getOutputFormat() const;
 
-  auto_ptr<IOHandler> createInputHandler() const;
-  auto_ptr<IOHandler> createOutputHandler() const;
+  unique_ptr<IOHandler> createInputHandler() const;
+  unique_ptr<IOHandler> createOutputHandler() const;
 
   /** If using the input format, this must be called before validating
    the ideals, since the auto detect format is not a valid format other
@@ -52,8 +52,8 @@ class IOParameters : public ParameterGroup {
   const DataType& _inputType;
   const DataType& _outputType;
 
-  auto_ptr<StringParameter> _inputFormat;
-  auto_ptr<StringParameter> _outputFormat;
+  unique_ptr<StringParameter> _inputFormat;
+  unique_ptr<StringParameter> _outputFormat;
 };
 
 #endif

@@ -88,11 +88,11 @@ void BigattiState::addStep(const Term& pivot) {
 }
 
 void BigattiState::run(TaskEngine& tasks) {
-  _algorithm->processState(auto_ptr<BigattiState>(this));
+  _algorithm->processState(unique_ptr<BigattiState>(this));
 }
 
 void BigattiState::dispose() {
-  _algorithm->freeState(auto_ptr<BigattiState>(this));
+  _algorithm->freeState(unique_ptr<BigattiState>(this));
 }
 
 void BigattiState::print(FILE* out) {

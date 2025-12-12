@@ -36,17 +36,17 @@ class NameFactory {
    generated in general. Used for error messages. */
   NameFactory(const char* abstractName): _abstractName(abstractName) {}
 
-  typedef auto_ptr<AbstractProduct> (*FactoryFunction)();
+  typedef unique_ptr<AbstractProduct> (*FactoryFunction)();
   void registerProduct(const string& name, FactoryFunction function);
 
   /** Calls the function registered to the parameter name and returns
    the result. Returns null if name has not been registered. Can still
    throw an exception for example if out of memory. */
-  auto_ptr<AbstractProduct> createNoThrow(const string& name) const;
+  unique_ptr<AbstractProduct> createNoThrow(const string& name) const;
 
   /** Calls the function registered to the parameter name and returns
    the result. Throws an exception if name has not been registered. */
-  auto_ptr<AbstractProduct> create(const string& name) const;
+  unique_ptr<AbstractProduct> create(const string& name) const;
 
   /** Inserts into names all registered names that have the indicated
    prefix in lexicographic increasing order. */
@@ -73,7 +73,7 @@ void nameFactoryRegister(NameFactory<AbstractProduct>& factory);
  create the actual product that has name equal to the indicated
  prefix. Exceptions thrown are as for getUniqueNamesWithPrefix(). */
 template<class AbstractProduct>
-auto_ptr<AbstractProduct> createWithPrefix
+unique_ptr<AbstractProduct> createWithPrefix
 (const NameFactory<AbstractProduct>& factory, const string& prefix);
 
 /** Returns the unique product name that has the indicated prefix, or
@@ -95,18 +95,18 @@ string getUniqueNameWithPrefix
 // to being templates.
 
 template<class AbstractProduct>
-auto_ptr<AbstractProduct> NameFactory<AbstractProduct>::
+unique_ptr<AbstractProduct> NameFactory<AbstractProduct>::
 createNoThrow(const string& name) const {
   for (const_iterator it = _pairs.begin(); it != _pairs.end(); ++it)
     if (it->first == name)
       return it->second();
-  return auto_ptr<AbstractProduct>();
+  return unique_ptr<AbstractProduct>();
 }
 
 template<class AbstractProduct>
-auto_ptr<AbstractProduct> NameFactory<AbstractProduct>::
+unique_ptr<AbstractProduct> NameFactory<AbstractProduct>::
 create(const string& name) const {
-  auto_ptr<AbstractProduct> product = createNoThrow(name);
+  unique_ptr<AbstractProduct> product = createNoThrow(name);
   if (product.get() == 0)
     throwError<UnknownNameException>(
       "Unknown " + getAbstractProductName() + " \"" + name + "\".");
@@ -141,8 +141,8 @@ string NameFactory<AbstractProduct>::getAbstractProductName() const {
 template<class ConcreteProduct, class AbstractProduct>
 void nameFactoryRegister(NameFactory<AbstractProduct>& factory) {
   struct HoldsFunction {
-    static auto_ptr<AbstractProduct> createConcreteProduct() {
-      return auto_ptr<AbstractProduct>(new ConcreteProduct());
+    static unique_ptr<AbstractProduct> createConcreteProduct() {
+      return unique_ptr<AbstractProduct>(new ConcreteProduct());
     }
   };
   factory.registerProduct(ConcreteProduct::staticGetName(),
@@ -150,7 +150,7 @@ void nameFactoryRegister(NameFactory<AbstractProduct>& factory) {
 }
 
 template<class AbstractProduct>
-auto_ptr<AbstractProduct> createWithPrefix
+unique_ptr<AbstractProduct> createWithPrefix
 (const NameFactory<AbstractProduct>& factory, const string& prefix) {
   return factory.createNoThrow(getUniqueNameWithPrefix(factory, prefix));
 }

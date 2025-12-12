@@ -79,7 +79,7 @@ void SliceFacade::computeMultigradedHilbertSeries() {
   ASSERT(isFirstComputation());
   beginAction("Computing multigraded Hilbert-Poincare series.");
 
-  auto_ptr<CoefTermConsumer> consumer = _common.makeTranslatedPolyConsumer();
+  unique_ptr<CoefTermConsumer> consumer = _common.makeTranslatedPolyConsumer();
 
   consumer->consumeRing(_common.getNames());
   consumer->beginConsuming();
@@ -94,7 +94,7 @@ void SliceFacade::computeUnivariateHilbertSeries() {
   ASSERT(isFirstComputation());
   beginAction("Computing univariate Hilbert-Poincare series.");
 
-  auto_ptr<CoefTermConsumer> consumer =
+  unique_ptr<CoefTermConsumer> consumer =
     _common.makeToUnivariatePolyConsumer();
 
   consumer->consumeRing(_common.getNames());
@@ -186,7 +186,7 @@ void SliceFacade::computePrimaryDecomposition() {
 
   DecomRecorder recorder(&primaryComponent);
 
-  auto_ptr<TermConsumer> consumer = _common.makeTranslatedIdealConsumer();
+  unique_ptr<TermConsumer> consumer = _common.makeTranslatedIdealConsumer();
   consumer->consumeRing(_common.getNames());
   consumer->beginConsumingList();
 
@@ -230,7 +230,7 @@ void SliceFacade::computeMaximalStaircaseMonomials() {
   ASSERT(isFirstComputation());
   beginAction("Computing maximal staircase monomials.");
 
-  auto_ptr<TermConsumer> consumer = _common.makeTranslatedIdealConsumer();
+  unique_ptr<TermConsumer> consumer = _common.makeTranslatedIdealConsumer();
   consumer->consumeRing(_common.getNames());
   MsmStrategy strategy(consumer.get(), _split.get());
   runSliceAlgorithmWithOptions(strategy);
@@ -318,7 +318,7 @@ void SliceFacade::computeAssociatedPrimes() {
 
   // Output associated primes.
   setToZeroOne(_common.getTranslator());
-  auto_ptr<TermConsumer> consumer = _common.makeTranslatedIdealConsumer();
+  unique_ptr<TermConsumer> consumer = _common.makeTranslatedIdealConsumer();
 
   consumer->consumeRing(_common.getNames());
   consumer->beginConsuming();
@@ -414,7 +414,7 @@ bool SliceFacade::solveProgram(const vector<mpz_class>& grading,
 
   const Ideal& solution = strategy.getMaximalSolutions();
 
-  auto_ptr<TermConsumer> consumer = _common.makeTranslatedIdealConsumer();
+  unique_ptr<TermConsumer> consumer = _common.makeTranslatedIdealConsumer();
   consumer->consumeRing(_common.getNames());
   consumer->consume(solution);
 
@@ -471,14 +471,14 @@ void SliceFacade::runSliceAlgorithmWithOptions(SliceStrategy& strategy) {
 
   SliceStrategy* strategyWithOptions = &strategy;
 
-  auto_ptr<SliceStrategy> debugStrategy;
+  unique_ptr<SliceStrategy> debugStrategy;
   if (_params.getPrintDebug()) {
     debugStrategy.reset
       (new DebugStrategy(strategyWithOptions, stderr));
     strategyWithOptions = debugStrategy.get();
   }
 
-  auto_ptr<SliceStrategy> statisticsStrategy;
+  unique_ptr<SliceStrategy> statisticsStrategy;
   if (_params.getPrintStatistics()) {
     statisticsStrategy.reset
       (new StatisticsStrategy(strategyWithOptions, stderr));

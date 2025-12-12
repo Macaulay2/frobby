@@ -48,7 +48,7 @@ TEST(OptimizeStrategy, Simplify) {
   Ideal ideal;
   TermTranslator translator(IdealFactory::xx_yy_zz_t_xz_yz(), ideal, false);
   TermGrader grader(makeVector(0, 100, 10000, mpz_class("300000000000000007")), translator);
-  auto_ptr<SplitStrategy> splitStrategy = SplitStrategy::createStrategy("median");
+  unique_ptr<SplitStrategy> splitStrategy = SplitStrategy::createStrategy("median");
   OptimizeStrategy strategy
     (grader, splitStrategy.get(), false,
      OptimizeStrategy::UseBoundToEliminateAndSimplify);
@@ -61,7 +61,7 @@ TEST(OptimizeStrategy, Simplify) {
 TEST(OptimizeStrategy, ChangedInWayRelevantToBound) {
   TermTranslator translator(4, 10);
   TermGrader grader(makeVector(1, -1, 0, 0), translator);
-  auto_ptr<SplitStrategy> splitStrategy = SplitStrategy::createStrategy("median");
+  unique_ptr<SplitStrategy> splitStrategy = SplitStrategy::createStrategy("median");
   OptimizeStrategy opt
     (grader, splitStrategy.get(), true,
      OptimizeStrategy::UseBoundToEliminateAndSimplify);
@@ -124,7 +124,7 @@ TEST(OptimizeStrategy, ChangedInWayRelevantToBound) {
 TEST(OptimizeStrategy, SimplifyPositiveGrading) {
   TermTranslator translator(4, 10);
   TermGrader grader(makeVector(100, 10, 1, 0), translator);
-  auto_ptr<SplitStrategy> splitStrategy = SplitStrategy::createStrategy("median");
+  unique_ptr<SplitStrategy> splitStrategy = SplitStrategy::createStrategy("median");
 
   OptimizeStrategy all // Report all optimal solutions.
     (grader, splitStrategy.get(), true,
@@ -168,7 +168,7 @@ TEST(OptimizeStrategy, SimplifyPositiveGrading) {
 TEST(OptimizeStrategy, SimplifyNegativeGrading) {
   TermTranslator translator(4, 10);
   TermGrader grader(makeVector(-100, -10, -1, 0), translator);
-  auto_ptr<SplitStrategy> splitStrategy = SplitStrategy::createStrategy("median");
+  unique_ptr<SplitStrategy> splitStrategy = SplitStrategy::createStrategy("median");
 
   OptimizeStrategy all // Report all optimal solutions.
     (grader, splitStrategy.get(), true,

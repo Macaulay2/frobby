@@ -50,7 +50,7 @@ void ColumnPrinter::setPrefix(const string& prefix) {
 
 void ColumnPrinter::addColumn(bool flushLeft,
 							  const string& prefix, const string& suffix) {
-  auto_ptr<Col> col(new Col());
+  unique_ptr<Col> col(new Col());
   col->prefix = prefix;
   col->suffix = suffix;
   col->flushLeft = flushLeft;

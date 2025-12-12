@@ -244,7 +244,7 @@ void computeMlfbs(vector<Mlfb>& mlfbs, const GrobLat& lat) {
   SliceParams params;
   SliceFacade facade(params, initialIdeal, recorder);
   facade.computeIrreducibleDecomposition(true);
-  auto_ptr<BigIdeal> rhsesOwner = recorder.releaseIdeal();
+  unique_ptr<BigIdeal> rhsesOwner = recorder.releaseIdeal();
   BigIdeal& rhses = *rhsesOwner;
   ASSERT(recorder.empty());
 

@@ -38,7 +38,7 @@ class BigTermConsumer : public TermConsumer {
   virtual void consume(const Term& term);
   virtual void consume(const Term& term, const TermTranslator& translator) = 0;
   virtual void consume(const BigIdeal& ideal);
-  virtual void consume(auto_ptr<BigIdeal> ideal);
+  virtual void consume(unique_ptr<BigIdeal> ideal);
 
   // Calling this convenience method is equivalent to
   //   consumeRing(names);

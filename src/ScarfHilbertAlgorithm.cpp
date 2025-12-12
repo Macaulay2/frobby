@@ -92,8 +92,8 @@ private:
 ScarfHilbertAlgorithm::ScarfHilbertAlgorithm
 (const TermTranslator& translator,
  const ScarfParams& params,
- auto_ptr<IdealOrderer> enumerationOrder,
- auto_ptr<IdealOrderer> deformationOrder):
+ unique_ptr<IdealOrderer> enumerationOrder,
+ unique_ptr<IdealOrderer> deformationOrder):
   _translator(translator),
   _params(params),
   _enumerationOrder(std::move(enumerationOrder)),
@@ -105,7 +105,7 @@ ScarfHilbertAlgorithm::ScarfHilbertAlgorithm
 }
 
 ScarfHilbertAlgorithm::~ScarfHilbertAlgorithm() {
-  // Destructor defined so auto_ptr<T> in the header does not need
+  // Destructor defined so unique_ptr<T> in the header does not need
   // definition of T.
 }
 

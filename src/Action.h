@@ -53,7 +53,7 @@ class Action {
   const Parameter& getParam(const string& name) const;
 
   static void getActionNames(vector<string>& names);
-  static auto_ptr<Action> createActionWithPrefix(const string& prefix);
+  static unique_ptr<Action> createActionWithPrefix(const string& prefix);
 
  protected:
   CliParams _params;

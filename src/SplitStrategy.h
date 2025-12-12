@@ -65,7 +65,7 @@ class SplitStrategy {
   /** Returns the strategy whose name has the given prefix. This is
    the only way to create a SplitStrategy.
   */
-  static auto_ptr<SplitStrategy> createStrategy(const string& prefix);
+  static unique_ptr<SplitStrategy> createStrategy(const string& prefix);
 
  protected:
   SplitStrategy();

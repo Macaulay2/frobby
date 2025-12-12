@@ -34,7 +34,7 @@ class CanonicalTermConsumer : public TermConsumer {
   /** The translator, if non-null, is used to identify exponents that
    map to zero, which influences the sorted order.
   */
-  CanonicalTermConsumer(auto_ptr<TermConsumer> consumer,
+  CanonicalTermConsumer(unique_ptr<TermConsumer> consumer,
                         size_t varCount,
                         TermTranslator* translator = 0);
 
@@ -67,7 +67,7 @@ class CanonicalTermConsumer : public TermConsumer {
   bool _storingList;
   vector<Ideal*> _ideals;
   ElementDeleter<vector<Ideal*> > _idealsDeleter;
-  auto_ptr<TermConsumer> _consumer;
+  unique_ptr<TermConsumer> _consumer;
   TermTranslator* _translator;
 };
 

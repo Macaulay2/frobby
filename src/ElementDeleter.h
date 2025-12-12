@@ -32,8 +32,8 @@
 // using this class.
 //
 // The most straight-forward solution may seem to use
-// e.g. vector<auto_ptr<T>> in place of vector<T*>, but this does not
-// work because storing auto_ptr<T> in a standard library container is
+// e.g. vector<unique_ptr<T>> in place of vector<T*>, but this does not
+// work because storing unique_ptr<T> in a standard library container is
 // never safe (look this up on the internet to get the details).
 //
 // The reference counting smart pointer class shared_ptr from Boost or
@@ -104,7 +104,7 @@ class ElementDeleter {
 //
 //   vector<int*> vec;
 //   ElementDeleter<vector<int*> > elementDeleter(vec);
-//   auto_ptr<int> p(new int());
+//   unique_ptr<int> p(new int());
 //   vec.push_back(p.release())
 //
 // This is because push_back can fail by throwing a bad_alloc, and at
@@ -126,7 +126,7 @@ class ElementDeleter {
 //   exceptionSafePushBack(vec, p);
 //
 template<class Container, class Element>
-void exceptionSafePushBack(Container& container, auto_ptr<Element> pointer) {
+void exceptionSafePushBack(Container& container, unique_ptr<Element> pointer) {
   container.push_back(0);
   container.back() = pointer.release();
 }
@@ -138,7 +138,7 @@ void exceptionSafePushBack(Container& container, auto_ptr<Element> pointer) {
 // unchanged. This works well if e.g. adding an element to a cache, where
 // it is no great problem if the element gets deleted rather than added.
 template<class Container, class Element>
-void noThrowPushBack(Container& container, auto_ptr<Element> pointer) throw () {
+void noThrowPushBack(Container& container, unique_ptr<Element> pointer) throw () {
   try {
     exceptionSafePushBack(container, std::move(pointer));
   } catch (const bad_alloc&) {

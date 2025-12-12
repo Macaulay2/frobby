@@ -47,7 +47,7 @@ CommonParamsHelper::CommonParamsHelper():
 }
 
 CommonParamsHelper::~CommonParamsHelper() {
-  // Constructor defined so auto_ptr<T> in the header does not need
+  // Constructor defined so unique_ptr<T> in the header does not need
   // definition of T.
 }
 
@@ -56,7 +56,7 @@ void CommonParamsHelper::readIdealAndSetOutput(const CommonParams& params,
   _produceCanonicalOutput = params.getProduceCanonicalOutput();
 
   Scanner in(params.getInputFormat(), stdin);
-  auto_ptr<IOHandler> outputHandler =
+  unique_ptr<IOHandler> outputHandler =
     createOHandler(in.getFormat(), params.getOutputFormat());
   if (output == DataType::getPolynomialType()) {
     _polyConsumerDeleter = outputHandler->createPolynomialWriter(stdout);
@@ -86,7 +86,7 @@ void CommonParamsHelper::readIdealAndSetPolyOutput(const CommonParams& params) {
   _produceCanonicalOutput = params.getProduceCanonicalOutput();
 
   Scanner in(params.getInputFormat(), stdin);
-  auto_ptr<IOHandler> outputHandler =
+  unique_ptr<IOHandler> outputHandler =
     createOHandler(in.getFormat(), params.getOutputFormat());
   _polyConsumerDeleter = outputHandler->createPolynomialWriter(stdout);
   _polyConsumer = _polyConsumerDeleter.get();
@@ -99,7 +99,7 @@ void CommonParamsHelper::readIdealAndSetIdealOutput
   _produceCanonicalOutput = params.getProduceCanonicalOutput();
 
   Scanner in(params.getInputFormat(), stdin);
-  auto_ptr<IOHandler> outputHandler =
+  unique_ptr<IOHandler> outputHandler =
     createOHandler(in.getFormat(), params.getOutputFormat());
   _idealConsumerDeleter = outputHandler->createIdealWriter(stdout);
   _idealConsumer = _idealConsumerDeleter.get();
@@ -125,11 +125,11 @@ void CommonParamsHelper::setIdealAndPolyOutput(const CommonParams& params,
   setIdeal(params, input);
 }
 
-auto_ptr<TermConsumer> CommonParamsHelper::
+unique_ptr<TermConsumer> CommonParamsHelper::
 makeTranslatedIdealConsumer(bool split) {
-  auto_ptr<TermConsumer> translated;
+  unique_ptr<TermConsumer> translated;
   if (split) {
-    auto_ptr<BigTermConsumer> splitter
+    unique_ptr<BigTermConsumer> splitter
       (new IrreducibleIdealSplitter(*_idealConsumer));
     translated.reset
       (new TranslatingTermConsumer(std::move(splitter), getTranslator()));
@@ -138,7 +138,7 @@ makeTranslatedIdealConsumer(bool split) {
       (new TranslatingTermConsumer(*_idealConsumer, getTranslator()));
 
   if (_produceCanonicalOutput) {
-    return auto_ptr<TermConsumer>
+    return unique_ptr<TermConsumer>
       (new CanonicalTermConsumer(std::move(translated),
                                  getIdeal().getVarCount(),
                                  &getTranslator()));
@@ -146,18 +146,18 @@ makeTranslatedIdealConsumer(bool split) {
     return translated;
 }
 
-auto_ptr<CoefTermConsumer> CommonParamsHelper::makeTranslatedPolyConsumer() {
-  auto_ptr<CoefTermConsumer> translated
+unique_ptr<CoefTermConsumer> CommonParamsHelper::makeTranslatedPolyConsumer() {
+  unique_ptr<CoefTermConsumer> translated
     (new TranslatingCoefTermConsumer(*_polyConsumer, getTranslator()));
   if (_produceCanonicalOutput)
-    return auto_ptr<CoefTermConsumer>
+    return unique_ptr<CoefTermConsumer>
       (new CanonicalCoefTermConsumer(std::move(translated)));
   else
     return translated;
 }
 
-auto_ptr<CoefTermConsumer> CommonParamsHelper::makeToUnivariatePolyConsumer() {
-  return auto_ptr<CoefTermConsumer>
+unique_ptr<CoefTermConsumer> CommonParamsHelper::makeToUnivariatePolyConsumer() {
+  return unique_ptr<CoefTermConsumer>
     (new TotalDegreeCoefTermConsumer(*_polyConsumer, getTranslator()));
 }
 

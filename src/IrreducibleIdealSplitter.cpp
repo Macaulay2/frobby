@@ -27,7 +27,7 @@ IrreducibleIdealSplitter::IrreducibleIdealSplitter
 }
 
 IrreducibleIdealSplitter::IrreducibleIdealSplitter
-(auto_ptr<BigTermConsumer> consumer):
+(unique_ptr<BigTermConsumer> consumer):
   _consumer(*consumer),
   _consumerDeleter(std::move(consumer)),
   _inList(false) {

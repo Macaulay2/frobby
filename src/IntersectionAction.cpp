@@ -64,7 +64,7 @@ void IntersectionAction::perform() {
   in.expectEOF();
 
   IntersectFacade facade(_printActions);
-  auto_ptr<BigIdeal> intersection(facade.intersect(ideals, names));
+  unique_ptr<BigIdeal> intersection(facade.intersect(ideals, names));
   idealsDeleter.deleteElements();
 
   if (_canonical) {
@@ -73,7 +73,7 @@ void IntersectionAction::perform() {
     idealFacade.sortGenerators(*intersection);
   }
 
-  auto_ptr<IOHandler> output = _io.createOutputHandler();
+  unique_ptr<IOHandler> output = _io.createOutputHandler();
   ioFacade.writeIdeal(*intersection, output.get(), stdout);
 }
 

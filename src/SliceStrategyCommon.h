@@ -36,7 +36,7 @@ class SliceStrategyCommon : public SliceStrategy {
   SliceStrategyCommon(const SplitStrategy* splitStrategy);
   virtual ~SliceStrategyCommon();
 
-  virtual void freeSlice(auto_ptr<Slice> slice);
+  virtual void freeSlice(unique_ptr<Slice> slice);
 
   virtual void setUseIndependence(bool use);
   virtual void setUseSimplification(bool use);
@@ -46,7 +46,7 @@ class SliceStrategyCommon : public SliceStrategy {
   virtual bool simplify(Slice& slice);
 
   /** Directly allocate a slice of the correct type using new. */
-  virtual auto_ptr<Slice> allocateSlice() = 0;
+  virtual unique_ptr<Slice> allocateSlice() = 0;
 
   /** Check that this slice is valid for use with this strategy. No
    check need be performed unless DEBUG is defined, making it
@@ -59,12 +59,12 @@ class SliceStrategyCommon : public SliceStrategy {
    allocate a new one using allocateSlice. This method should be
    used in place of allocating new slices directly.
   */
-  auto_ptr<Slice> newSlice();
+  unique_ptr<Slice> newSlice();
 
   /** Takes over ownership of slice. Uses the pivot gotten through
    getPivot.
   */
-  virtual void pivotSplit(auto_ptr<Slice> slice);
+  virtual void pivotSplit(unique_ptr<Slice> slice);
 
   /** Used by pivotSplit to obtain a pivot. */
   virtual void getPivot(Term& pivot, Slice& slice) = 0;

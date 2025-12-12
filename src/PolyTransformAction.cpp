@@ -69,7 +69,7 @@ void PolyTransformAction::perform() {
   if (_sortTerms || _canonicalize)
     polyFacade.sortTerms(polynomial);
 
-  auto_ptr<IOHandler> output = _io.createOutputHandler();
+  unique_ptr<IOHandler> output = _io.createOutputHandler();
   facade.writePolynomial(polynomial, output.get(), stdout);
 }
 

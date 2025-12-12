@@ -42,27 +42,27 @@ class MsmStrategy : public SliceStrategyCommon {
 
   virtual void run(const Ideal& ideal);
 
-  virtual bool processSlice(TaskEngine& tasks, auto_ptr<Slice> slice);
+  virtual bool processSlice(TaskEngine& tasks, unique_ptr<Slice> slice);
 
  protected:
   virtual void getPivot(Term& pivot, Slice& slice);
   virtual void getPivot(Term& pivot, Slice& slice, const TermGrader& grader);
 
  private:
-  auto_ptr<MsmSlice> newMsmSlice();
-  virtual auto_ptr<Slice> allocateSlice();
+  unique_ptr<MsmSlice> newMsmSlice();
+  virtual unique_ptr<Slice> allocateSlice();
   virtual bool debugIsValidSlice(Slice* slice);
 
-  void labelSplit(auto_ptr<Slice> slice);
+  void labelSplit(unique_ptr<Slice> slice);
 
-  void independenceSplit(auto_ptr<Slice> slice);
+  void independenceSplit(unique_ptr<Slice> slice);
 
   size_t getLabelSplitVariable(const Slice& slice);
 
   IndependenceSplitter _indep;
   TermConsumer* _consumer;
 
-  auto_ptr<Ideal> _initialSubtract;
+  unique_ptr<Ideal> _initialSubtract;
 };
 
 #endif

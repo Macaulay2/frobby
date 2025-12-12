@@ -37,8 +37,8 @@ class IdealTree {
  private:
   class Node;
 
-  auto_ptr<Ideal> _storage;
-  auto_ptr<Node> _root;
+  unique_ptr<Ideal> _storage;
+  unique_ptr<Node> _root;
 };
 
 #endif

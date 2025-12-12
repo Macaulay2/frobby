@@ -140,8 +140,8 @@ void OptimizeAction::perform() {
       v[var] = -v[var];
   }
 
-  auto_ptr<IOHandler> handler;
-  auto_ptr<BigTermConsumer> output;
+  unique_ptr<IOHandler> handler;
+  unique_ptr<BigTermConsumer> output;
   if (_displayLevel > 0) {
     handler = _io.createOutputHandler();
     output = handler->createIdealWriter(stdout);

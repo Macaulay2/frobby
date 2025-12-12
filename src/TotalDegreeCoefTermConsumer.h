@@ -34,7 +34,7 @@ class TermTranslator;
 // TODO: get rid of translator in constructor.
 class TotalDegreeCoefTermConsumer : public CoefTermConsumer {
  public:
-  TotalDegreeCoefTermConsumer(auto_ptr<CoefBigTermConsumer> consumer,
+  TotalDegreeCoefTermConsumer(unique_ptr<CoefBigTermConsumer> consumer,
                               const TermTranslator& translator);
   TotalDegreeCoefTermConsumer(CoefBigTermConsumer& consumer,
                               const TermTranslator& translator);
@@ -47,7 +47,7 @@ class TotalDegreeCoefTermConsumer : public CoefTermConsumer {
 
  private:
   CoefBigTermConsumer& _consumer;
-  auto_ptr<CoefBigTermConsumer> _consumerOwner;
+  unique_ptr<CoefBigTermConsumer> _consumerOwner;
   const TermTranslator& _translator;
   mpz_class _tmp;
 

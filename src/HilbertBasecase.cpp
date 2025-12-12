@@ -109,7 +109,7 @@ bool HilbertBasecase::stepComputation(Entry& entry, Entry& newEntry) {
     size_t bestPivotVar = _term.getFirstMaxExponent();
 
     // Handle outer slice.
-    auto_ptr<Ideal> outer = getNewIdeal();
+    unique_ptr<Ideal> outer = getNewIdeal();
     outer->clearAndSetVarCount(varCount);
     outer->insertNonMultiples(bestPivotVar, 1, *entry.ideal);
 
@@ -150,14 +150,14 @@ void HilbertBasecase::computeCoefficient(Ideal& originalIdeal) {
 
     // This should normally point to entry.ideal, but since we do not
     // have ownership of originalIdeal, it starts out pointing nowhere.
-    auto_ptr<Ideal> entryIdealDeleter;
+    unique_ptr<Ideal> entryIdealDeleter;
 
     while (true) {
       // Do an inner loop since there is no reason to add entry to _todo
       // and then immediately take it off again.
       Entry newEntry;
       while (stepComputation(entry, newEntry)) {
-        auto_ptr<Ideal> newEntryIdealDeleter(newEntry.ideal);
+        unique_ptr<Ideal> newEntryIdealDeleter(newEntry.ideal);
         _todo.push_back(newEntry);
         newEntryIdealDeleter.release();
       }
@@ -272,17 +272,17 @@ size_t HilbertBasecase::eliminate1Counts(Ideal& ideal,
   return adj;
 }
 
-auto_ptr<Ideal> HilbertBasecase::getNewIdeal() {
+unique_ptr<Ideal> HilbertBasecase::getNewIdeal() {
   if (_idealCache.empty())
-    return auto_ptr<Ideal>(new Ideal());
+    return unique_ptr<Ideal>(new Ideal());
 
-  auto_ptr<Ideal> ideal(_idealCache.back());
+  unique_ptr<Ideal> ideal(_idealCache.back());
   _idealCache.pop_back();
 
   return ideal;
 }
 
-void HilbertBasecase::freeIdeal(auto_ptr<Ideal> ideal) {
+void HilbertBasecase::freeIdeal(unique_ptr<Ideal> ideal) {
   ASSERT(ideal.get() != 0);
 
   ideal->clear();

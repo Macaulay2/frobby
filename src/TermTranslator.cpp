@@ -61,7 +61,7 @@ TermTranslator::TermTranslator(const vector<BigIdeal*>& bigIdeals,
   initialize(bigIdeals, true);
 
   for (size_t i = 0; i < bigIdeals.size(); ++i) {
-    exceptionSafePushBack(ideals, auto_ptr<Ideal>(new Ideal()));
+    exceptionSafePushBack(ideals, unique_ptr<Ideal>(new Ideal()));
     shrinkBigIdeal(*(bigIdeals[i]), *(ideals.back()));
   }
   idealsDeleter.release();

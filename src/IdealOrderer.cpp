@@ -207,7 +207,7 @@ namespace {
    constructor. */
   class ReverseOrderer : public IdealOrderer {
   public:
-    ReverseOrderer(auto_ptr<IdealOrderer> orderer): _orderer(std::move(orderer)) {}
+    ReverseOrderer(unique_ptr<IdealOrderer> orderer): _orderer(std::move(orderer)) {}
 
   private:
     virtual void doOrder(Ideal& ideal) const {
@@ -218,14 +218,14 @@ namespace {
       _orderer->order(ideal);
       reverse(ideal.begin(), ideal.end());
     }
-    auto_ptr<IdealOrderer> _orderer;
+    unique_ptr<IdealOrderer> _orderer;
   };
 
   class CompositeOrderer : public IdealOrderer {
   public:
     CompositeOrderer(): _orderersDeleter(_orderers) {}
 
-    void refineOrderingWith(auto_ptr<IdealOrderer> orderer) {
+    void refineOrderingWith(unique_ptr<IdealOrderer> orderer) {
       exceptionSafePushBack(_orderers, std::move(orderer));
     }
 
@@ -267,21 +267,21 @@ namespace {
     return factory;
   }
 
-  auto_ptr<IdealOrderer> createNonCompositeOrderer(const string& prefix) {
+  unique_ptr<IdealOrderer> createNonCompositeOrderer(const string& prefix) {
     if (prefix.substr(0, 3) == "rev") {
-      auto_ptr<IdealOrderer> orderer =
+      unique_ptr<IdealOrderer> orderer =
         createWithPrefix(getOrdererFactory(), prefix.substr(3));
-      return auto_ptr<IdealOrderer>(new ReverseOrderer(std::move(orderer)));
+      return unique_ptr<IdealOrderer>(new ReverseOrderer(std::move(orderer)));
     } else
       return createWithPrefix(getOrdererFactory(), prefix);
   }
 }
 
-auto_ptr<IdealOrderer> createIdealOrderer(const string& prefix) {
+unique_ptr<IdealOrderer> createIdealOrderer(const string& prefix) {
   if (prefix.find('_') == string::npos)
     return createNonCompositeOrderer(prefix);
 
-  auto_ptr<CompositeOrderer> composite(new CompositeOrderer());
+  unique_ptr<CompositeOrderer> composite(new CompositeOrderer());
   size_t pos = 0;
   while (true) {
     size_t nextUnderscore = prefix.find('_', pos);
@@ -292,5 +292,5 @@ auto_ptr<IdealOrderer> createIdealOrderer(const string& prefix) {
       break;
     pos = nextUnderscore + 1;
   }
-  return auto_ptr<IdealOrderer>(composite.release());
+  return unique_ptr<IdealOrderer>(composite.release());
 }

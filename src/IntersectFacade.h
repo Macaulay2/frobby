@@ -36,7 +36,7 @@ class IntersectFacade : Facade {
       whole ring is the intersection, which requires knowing the ring,
       and this is what names contains.
   */
-  auto_ptr<BigIdeal> intersect(const vector<BigIdeal*>& ideals,
+  unique_ptr<BigIdeal> intersect(const vector<BigIdeal*>& ideals,
                                const VarNames& names);
 };
 

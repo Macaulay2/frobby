@@ -50,7 +50,7 @@ void HilbertIndependenceConsumer::clear() {
 
 void HilbertIndependenceConsumer::dispose() {
   ASSERT(_strategy != 0);
-  _strategy->freeConsumer(auto_ptr<HilbertIndependenceConsumer>(this));
+  _strategy->freeConsumer(unique_ptr<HilbertIndependenceConsumer>(this));
 }
 
 void HilbertIndependenceConsumer::run(TaskEngine&) {

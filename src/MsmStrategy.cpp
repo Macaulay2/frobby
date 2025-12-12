@@ -48,13 +48,13 @@ void MsmStrategy::run(const Ideal& ideal) {
   _consumer->beginConsuming();
   size_t varCount = ideal.getVarCount();
   if (_initialSubtract.get() == 0)
-    _initialSubtract = auto_ptr<Ideal>(new Ideal(varCount));
+    _initialSubtract = unique_ptr<Ideal>(new Ideal(varCount));
 
   Term sliceMultiply(varCount);
   for (size_t var = 0; var < varCount; ++var)
     sliceMultiply[var] = 1;
 
-  auto_ptr<Slice> slice
+  unique_ptr<Slice> slice
     (new MsmSlice(*this, ideal, *_initialSubtract, sliceMultiply, _consumer));
   simplify(*slice);
 
@@ -64,7 +64,7 @@ void MsmStrategy::run(const Ideal& ideal) {
   _consumer->doneConsuming();
 }
 
-bool MsmStrategy::processSlice(TaskEngine& tasks, auto_ptr<Slice> slice) {
+bool MsmStrategy::processSlice(TaskEngine& tasks, unique_ptr<Slice> slice) {
   ASSERT(slice.get() != 0);
 
   if (slice->baseCase(getUseSimplification())) {
@@ -84,14 +84,14 @@ bool MsmStrategy::processSlice(TaskEngine& tasks, auto_ptr<Slice> slice) {
   return false;
 }
 
-auto_ptr<MsmSlice> MsmStrategy::newMsmSlice() {
-  auto_ptr<Slice> slice(newSlice());
+unique_ptr<MsmSlice> MsmStrategy::newMsmSlice() {
+  unique_ptr<Slice> slice(newSlice());
   ASSERT(dynamic_cast<MsmSlice*>(slice.get()) != 0);
-  return auto_ptr<MsmSlice>(static_cast<MsmSlice*>(slice.release()));
+  return unique_ptr<MsmSlice>(static_cast<MsmSlice*>(slice.release()));
 }
 
-auto_ptr<Slice> MsmStrategy::allocateSlice() {
-  return auto_ptr<Slice>(new MsmSlice(*this));
+unique_ptr<Slice> MsmStrategy::allocateSlice() {
+  return unique_ptr<Slice>(new MsmSlice(*this));
 }
 
 bool MsmStrategy::debugIsValidSlice(Slice* slice) {
@@ -100,10 +100,10 @@ bool MsmStrategy::debugIsValidSlice(Slice* slice) {
   return true;
 }
 
-void MsmStrategy::labelSplit(auto_ptr<Slice> sliceParam) {
+void MsmStrategy::labelSplit(unique_ptr<Slice> sliceParam) {
   ASSERT(sliceParam.get() != 0);
   ASSERT(debugIsValidSlice(sliceParam.get()));
-  auto_ptr<MsmSlice> slice
+  unique_ptr<MsmSlice> slice
     (static_cast<MsmSlice*>(sliceParam.release()));
 
   ASSERT(!slice->adjustMultiply());
@@ -145,7 +145,7 @@ void MsmStrategy::labelSplit(auto_ptr<Slice> sliceParam) {
     }
   }
 
-  auto_ptr<Slice> hasLabelSlice;
+  unique_ptr<Slice> hasLabelSlice;
 
   if (label != stop) {
     term = *label;
@@ -255,25 +255,25 @@ private:
   Term _tmpTerm;
 };
 
-void MsmStrategy::independenceSplit(auto_ptr<Slice> sliceParam) {
+void MsmStrategy::independenceSplit(unique_ptr<Slice> sliceParam) {
   ASSERT(sliceParam.get() != 0);
   ASSERT(debugIsValidSlice(sliceParam.get()));
-  auto_ptr<MsmSlice> slice
+  unique_ptr<MsmSlice> slice
     (static_cast<MsmSlice*>(sliceParam.release()));
 
   // Construct split object
-  auto_ptr<MsmIndependenceSplit> autoSplit(new MsmIndependenceSplit());
+  unique_ptr<MsmIndependenceSplit> autoSplit(new MsmIndependenceSplit());
   autoSplit->reset(slice->getConsumer(), _indep);
   MsmIndependenceSplit* split = autoSplit.release();
   _tasks.addTask(split); // Runs when we are done with all of this split.
 
   // Construct left slice.
-  auto_ptr<MsmSlice> leftSlice(new MsmSlice(*this));
+  unique_ptr<MsmSlice> leftSlice(new MsmSlice(*this));
   leftSlice->setToProjOf(*slice, split->getLeftProjection(), split);
   _tasks.addTask(leftSlice.release());
 
   // Construct right slice.
-  auto_ptr<MsmSlice> rightSlice(new MsmSlice(*this));
+  unique_ptr<MsmSlice> rightSlice(new MsmSlice(*this));
   rightSlice->setToProjOf(*slice, split->getRightProjection(),
                           split->getRightConsumer());
   _tasks.addTask(rightSlice.release());

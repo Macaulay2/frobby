@@ -35,7 +35,7 @@ class PivotEulerAlg {
   const mpz_class& computeEulerCharacteristic(const RawSquareFreeIdeal& ideal);
   const mpz_class& getComputedEulerCharacteristic() const {return _euler;}
 
-  void setPivotStrategy(auto_ptr<PivotStrategy> strategy) {
+  void setPivotStrategy(unique_ptr<PivotStrategy> strategy) {
 	_pivotStrategy = std::move(strategy);
   }
 
@@ -70,7 +70,7 @@ class PivotEulerAlg {
   bool _useAllPairsSimplify;
   bool _autoTranspose;
   bool _initialAutoTranspose;
-  auto_ptr<PivotStrategy> _pivotStrategy;
+  unique_ptr<PivotStrategy> _pivotStrategy;
 };
 
 #endif

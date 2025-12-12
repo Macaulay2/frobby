@@ -27,7 +27,7 @@ class Term;
 // storing all items before any can be passed on.
 class CanonicalCoefTermConsumer : public CoefTermConsumer {
  public:
-  CanonicalCoefTermConsumer(auto_ptr<CoefTermConsumer> consumer);
+  CanonicalCoefTermConsumer(unique_ptr<CoefTermConsumer> consumer);
 
   virtual void consumeRing(const VarNames& names);
 
@@ -36,7 +36,7 @@ class CanonicalCoefTermConsumer : public CoefTermConsumer {
   virtual void doneConsuming();
 
  private:
-  auto_ptr<CoefTermConsumer> _consumer;
+  unique_ptr<CoefTermConsumer> _consumer;
   Polynomial _polynomial;
   VarNames _names;
 };

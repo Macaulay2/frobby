@@ -39,7 +39,7 @@ Scanner::Scanner(const string& formatName, FILE* in):
   _tmpString = new char[16];
 }
 
-auto_ptr<IOHandler> Scanner::createIOHandler() const {
+unique_ptr<IOHandler> Scanner::createIOHandler() const {
   return ::createIOHandler(getFormat());
 }
 

@@ -222,7 +222,7 @@ class SliceFacade : public Facade {
 
   SliceParams _params;
   CommonParamsHelper _common;
-  auto_ptr<SplitStrategy> _split;
+  unique_ptr<SplitStrategy> _split;
 };
 
 #endif
