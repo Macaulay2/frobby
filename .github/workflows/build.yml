@@ -15,3 +15,11 @@ jobs:
         run: make
       - name: Check frobby (make)
         run: make test
+      - name: Clean up
+        run: make clean
+      - name: Build frobby (cmake)
+        run: |
+          mkdir -p build/cmake
+          cd build/cmake
+          cmake -B. -S../.. -GNinja
+          ninja
