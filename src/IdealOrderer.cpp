@@ -54,10 +54,10 @@ namespace {
     static const char* staticGetName() {return "random";}
   private:
     struct URBG {
-        using result_type = int;
-        static constexpr int min() { return 0; }
-        static constexpr int max() { return RAND_MAX; }
-        int operator()() const { return std::rand(); }
+        using result_type = unsigned;
+        static constexpr unsigned min() { return 0; }
+        static constexpr unsigned max() { return RAND_MAX; }
+        unsigned operator()() const { return std::rand(); }
     };
     void doOrder(Ideal& ideal) const {
       URBG g;
