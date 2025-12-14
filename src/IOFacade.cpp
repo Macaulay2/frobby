@@ -44,7 +44,7 @@ bool IOFacade::isValidMonomialIdealFormat(const string& format) {
 
   bool valid = true;
   try {
-    createIOHandler(format).get();
+    (void)createIOHandler(format);
   } catch (const UnknownNameException&) {
     valid = false;
   }
