@@ -202,8 +202,10 @@ add_library(frobby STATIC
 target_link_libraries(frobby ${GMP_LIBRARIES})
 target_include_directories(frobby PUBLIC
   $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src>
-  $<BUILD_INTERFACE:${GMP_INCLUDE_DIRS}>
   $<INSTALL_INTERFACE:include>
+  )
+target_include_directories(frobby SYSTEM PUBLIC
+  $<BUILD_INTERFACE:${GMP_INCLUDE_DIRS}>
   )
 
 set_target_properties(frobby PROPERTIES PUBLIC_HEADER src/frobby.h)
