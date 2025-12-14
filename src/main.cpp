@@ -24,6 +24,7 @@
 
 #include <ctime>
 #include <cstdlib>
+#include <exception>
 #include <sys/types.h>
 #include <unistd.h>
 
