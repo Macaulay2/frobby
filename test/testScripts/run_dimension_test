@@ -1,7 +1,7 @@
 #!/bin/bash
 
 testHelper=../testScripts/testhelper
-frobby=../../bin/frobby
+frobby=$abs_builddir/src/frobby
 test="$1"
 shift
 inputFile="$test.test"

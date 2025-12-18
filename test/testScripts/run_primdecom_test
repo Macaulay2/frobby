@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-frobby=../../bin/frobby
+frobby=$abs_builddir/src/frobby
 testhelper=../testScripts/testhelper
 test="$1"
 shift

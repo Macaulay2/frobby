@@ -19,7 +19,7 @@ params="$*"
 runNormalTests () {
   action="$1"; shift;
   path="$1"; shift;
-  cd test/$path;
+  cd $abs_srcdir/test/$path;
   ../testScripts/runtests $action $params
   if [ $? != 0 ]; then exit 1; fi
   cd ../..;
@@ -54,7 +54,7 @@ done
 for t in $specialTests;
 do
   echo -n "$t "
-  cd test/$t
+  cd $abs_srcdir/test/$t
   ./runtests $*
   if [ $? != 0 ]; then exit 1; fi
   echo

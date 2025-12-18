@@ -39,7 +39,7 @@ runTests () {
   for split in $splits; do
     echo -n " $split ";
     for path in $paths; do
-      cd test/$path;
+      cd $abs_srcdir/test/$path;
       ../testScripts/runtests $action $params -split $split;
       if [ $? != 0 ]; then exit 1; fi
       cd ../..;

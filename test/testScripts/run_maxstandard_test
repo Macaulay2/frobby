@@ -1,6 +1,5 @@
 #!/usr/bin/env sh
 
-frobby=../../bin/frobby
 testhelper=../testScripts/testhelper
 test="$1"
 shift
