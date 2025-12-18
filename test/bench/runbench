@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-frobby=../../bin/frobby
-logFile=../../bin/benchLog
+frobby=$abs_builddir/src/frobby
+logFile=$abs_builddir/benchLog
 
 # Build info in temporary place first, so that if this benchmark gets
 # interrupted, the log file does not contain noise about that.  This

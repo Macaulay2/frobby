@@ -6,7 +6,7 @@
 # specifying the output format.
 
 testhelper=../testScripts/testhelper
-frobby=../../bin/frobby
+frobby=$abs_builddir/src/frobby
 testName="$1"
 shift
 

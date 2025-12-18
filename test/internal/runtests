@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-frobby=../../bin/frobby
+frobby=$abs_builddir/src/frobby
 
 if [ "$1" = "_full" ]; then
   shift;

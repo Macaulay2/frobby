@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-profileFile=../../bin/profile.hilbert
-frobby=../../bin/frobby
+profileFile=$abs_builddir/profile.hilbert
+frobby=$abs_builddir/src/frobby
 if [ "$1" = "_profile" ];
 then
   rm -f gmon.out

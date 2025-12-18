@@ -56,7 +56,7 @@
 # resides.
 
 origParams="$*" # used for debug output below
-origFrobby="../../bin/frobby"
+origFrobby="$abs_builddir/src/frobby"
 origFrobbyOut="./frobbyTestScriptTemporary_standardOutput"
 origFrobbyErr="./frobbyTestScriptTemporary_standardError"
 frobbyChangedErr="./frobbyTestScriptTemporary_standardErrorChanged"
