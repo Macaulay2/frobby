@@ -4,6 +4,8 @@ LT_INIT
 
 AC_SUBST([LIBFROBBY_VERSION_INFO], [1:4:0])
 
+AC_CONFIG_MACRO_DIRS([m4])
+
 AC_PROG_CC
 AC_PROG_CXX
 
@@ -24,5 +26,7 @@ AC_LINK_IFELSE(
     [AC_MSG_RESULT([no])
      FROBBY_NO_GMP])
 
-AC_CONFIG_FILES([Makefile src/Makefile doc/Makefile])
+DX_INIT_DOXYGEN([frobby], [$(builddir)/doc/Doxyfile], [doxygen])
+
+AC_CONFIG_FILES([Makefile src/Makefile doc/Makefile doc/Doxyfile])
 AC_OUTPUT
