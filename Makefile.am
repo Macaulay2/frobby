@@ -1,5 +1,12 @@
 SUBDIRS = src doc
 
+DOC_TARGETS = doc docPs docPdf
+
+$(DOC_TARGETS):
+	$(MAKE) -C doc $@
+
+.PHONY: $(DOC_TARGETS)
+
 # ****************** Testing
 # use TESTARGS of
 #  _valgrind to run under valgrind.
