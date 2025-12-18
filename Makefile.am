@@ -7,6 +7,10 @@ $(DOC_TARGETS):
 
 .PHONY: $(DOC_TARGETS)
 
+@DX_RULES@
+
+MOSTLYCLEANFILES = $(DX_CLEANFILES)
+
 # ****************** Testing
 # use TESTARGS of
 #  _valgrind to run under valgrind.
