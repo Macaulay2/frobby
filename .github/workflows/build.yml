@@ -10,7 +10,7 @@ jobs:
       fail-fast: false
       matrix:
         build-system:
-          - make
+          - autotools
           - cmake
         os:
           - macos-latest
@@ -25,6 +25,14 @@ jobs:
       MODE: ${{ matrix.debug == 'yes' && 'debug' || 'release' }}
     steps:
       - uses: actions/checkout@v6
+      - name: Install dependencies
+        if: matrix.build-system == 'autotools'
+        run: |
+          if test ${{ matrix.os }} = macos-latest
+          then brew install autoconf automake libtool
+          else sudo apt-get install -y texlive-latex-base doxygen \
+                 texlive-latex-recommended texlive-latex-extra graphviz
+          fi
       - name: Set up environment
         run: |
           if test ${{ matrix.os }} = macos-latest
@@ -33,16 +41,25 @@ jobs:
           fi
       - name: Build frobby
         run: |
-          if test ${{ matrix.build-system }} = make
-          then make -j4
-               make -j4 library MODE=shared
+          if test ${{ matrix.build-system }} = autotools
+          then mkdir -p build/autotools
+               cd build/autotools
+               ../../autogen.sh
+               ../../configure
+               make -j4
           else mkdir -p build/cmake
                cd build/cmake
                cmake -B. -S../.. -GNinja
                ninja
           fi
       - name: Check frobby
+        if: matrix.build-system == 'autotools'
         run: |
-          if test ${{ matrix.build-system }} = make
-          then make test
-          fi
+          cd build/autotools
+          make fullTest
+      - name: Build documentation
+        if: matrix.build-system == 'autotools' && matrix.os == 'ubuntu-latest'
+        run: |
+          cd build/autotools
+          make doc
+          make doxygen-pdf
