@@ -1,3 +1,15 @@
+*** Version 0.9.6, 2025-12-22
+ - Several updates for modern C++.  Thanks to Arthur O'Dwyer for the patches!
+ - Fix compilation with GCC 12+.  Thanks to Nico Mexis for the patch!
+ - Build executable in cmake build.  Thanks to Matthias Köppe for the patch!
+ - Library soversion bump from 0 -> 1 since constants::version was renamed
+   to frobby_version.
+
+*** Version 0.9.5, 2021-02-23
+ - Now maintained by the Macaulay2 developers, merging patches from
+   Macaulay2, CoCoA, and Debian.
+ - Add CMake build
+
 *** Version 0.9.4  2018-08-16
  - >>>> UNOFFICIAL <<<<
  - Improved portability
