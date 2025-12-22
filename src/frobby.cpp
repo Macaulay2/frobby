@@ -33,7 +33,7 @@
    - doc/manual.tex
    - test/messages/help-noparam.err
    and update the library version as outlined in Makefile */
-const char* const frobby_version = "0.9.5";
+const char* const frobby_version = "0.9.6";
 
 class ConsumerWrapper {
 protected:
