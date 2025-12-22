@@ -5,20 +5,35 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        build-system:
+          - make
+          - cmake
+        os:
+          - macos-latest
+          - ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - name: Install dependencies
-        run: sudo apt-get install -y libgmp-dev
-      - name: Build frobby (make)
-        run: make
-      - name: Check frobby (make)
-        run: make test
-      - name: Clean up
-        run: make clean
-      - name: Build frobby (cmake)
+      - name: Set up environment
         run: |
-          mkdir -p build/cmake
-          cd build/cmake
-          cmake -B. -S../.. -GNinja
-          ninja
+          if test ${{ matrix.os }} = macos-latest
+          then echo "CPPFLAGS=-I$(brew --prefix)/include" >> $GITHUB_ENV
+               echo "LDFLAGS=-L$(brew --prefix)/lib"      >> $GITHUB_ENV
+          fi
+      - name: Build frobby
+        run: |
+          if test ${{ matrix.build-system }} = make
+          then make -j4
+          else mkdir -p build/cmake
+               cd build/cmake
+               cmake -B. -S../.. -GNinja
+               ninja
+          fi
+      - name: Check frobby
+        run: |
+          if test ${{ matrix.build-system }} = make
+          then make test
+          fi
