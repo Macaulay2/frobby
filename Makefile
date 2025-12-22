@@ -358,7 +358,7 @@ endif
 	rm -fr frobby_v$(VER).tar.gz frobby_v$(VER)
 	mkdir frobby_v$(VER)
 	cp -r changelog.txt frobgrob COPYING Makefile src test doc \
-		cmake CMakeLists.txt frobby_v$(VER)
+		cmake CMakeLists.txt GPL-header frobby_v$(VER)
 	mkdir frobby_v$(VER)/4ti2
 	tar --create --gzip --file=frobby_v$(VER).tar.gz frobby_v$(VER)/
 	rm -fr frobby_v$(VER)	
