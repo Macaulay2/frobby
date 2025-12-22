@@ -263,6 +263,7 @@ PREFIX ?= /usr/local
 BINDIR ?= $(PREFIX)/bin
 MAN1DIR ?= $(PREFIX)/share/man/man1
 LIBDIR ?= $(PREFIX)/lib
+INCLUDEDIR ?= $(PREFIX)/include
 
 # Installation.
 install:
@@ -274,6 +275,8 @@ ifneq ($(wildcard bin/frobby),)
 endif
 ifneq ($(wildcard bin/libfrobby*),)
 	install -d $(DESTDIR)$(LIBDIR)
+	install -d $(DESTDIR)$(INCLUDEDIR)
+	install src/frobby.h $(DESTDIR)$(INCLUDEDIR)
 ifneq ($(wildcard bin/libfrobby.a),)
 	install bin/libfrobby.a $(DESTDIR)$(LIBDIR)
 endif
