@@ -27,6 +27,12 @@
 #include "IdealFacade.h"
 #include "SliceParams.h"
 
+/* also increment the version number in:
+   - CMakeLists.txt
+   - doc/doxygen.conf
+   - doc/manual.tex
+   - test/messages/help-noparam.err
+   and update the library version as outlined in Makefile */
 const char* const frobby_version = "0.9.5";
 
 class ConsumerWrapper {
