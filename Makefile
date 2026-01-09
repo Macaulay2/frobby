@@ -86,6 +86,9 @@ rawTests := LibAlexanderDualTest.cpp LibHilbertPoincareTest.cpp			\
 ifndef CXX
   CXX      = "g++"
 endif
+ifndef STRIP
+  STRIP    = strip
+endif
 
 cxxflags = $(CXXFLAGS) $(CPPFLAGS) -I $(GMP_INC_DIR) -Wno-uninitialized -Wno-unused-parameter
 program = frobby
@@ -223,7 +226,7 @@ ifneq ($(MODE), analysis)
 	fi
 endif
 ifeq ($(MODE), release)
-	strip $@
+	$(STRIP) $@
 endif
 
 # Link object files into library
