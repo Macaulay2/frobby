@@ -1,3 +1,8 @@
+*** Version 0.9.7, 2026-01-09
+ - Install frobby.h during "make install" if library was built
+ - Allow overriding of "strip" during build.  Thanks to Helmut Grohne
+   for the patch!
+
 *** Version 0.9.6, 2025-12-22
  - Several updates for modern C++.  Thanks to Arthur O'Dwyer for the patches!
  - Fix compilation with GCC 12+.  Thanks to Nico Mexis for the patch!
