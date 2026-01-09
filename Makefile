@@ -15,7 +15,7 @@ ldflags_for_gmp=-L/usr/local/lib -lgmpxx -lgmp
 # bump if interfaces added, removed, or changed
 FROBBY_CURRENT = 1
 # bump at every release, set to 0 if any interfaces added, removed, or changed
-FROBBY_REVISION = 1
+FROBBY_REVISION = 2
 # bump if interfaces added, set to 0 if removed or changed
 FROBBY_AGE = 0
 FROBBY_SOVERSION := $(shell expr $(FROBBY_CURRENT) - $(FROBBY_AGE))
