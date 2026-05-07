@@ -1,3 +1,7 @@
+*** Version 0.9.8, 2026-05-07
+ - Change /usr/bin/env to env in Makefile.  Thanks to Ross George for the
+   patch!
+
 *** Version 0.9.7, 2026-01-09
  - Install frobby.h during "make install" if library was built
  - Allow overriding of "strip" during build.  Thanks to Helmut Grohne
