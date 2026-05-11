@@ -27,6 +27,7 @@ jobs:
         run: |
           if test ${{ matrix.build-system }} = make
           then make -j4
+               make -j4 library MODE=shared
           else mkdir -p build/cmake
                cd build/cmake
                cmake -B. -S../.. -GNinja
