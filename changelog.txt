@@ -1,3 +1,6 @@
+*** Version 0.9.9, 2026-05-11
+ - Fix shared library build in macOS.  Thanks to Ross George for the patch!
+
 *** Version 0.9.8, 2026-05-07
  - Change /usr/bin/env to env in Makefile.  Thanks to Ross George for the
    patch!
