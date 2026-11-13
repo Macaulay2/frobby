@@ -18,8 +18,6 @@
 #include "TestAction.h"
 
 #include "error.h"
-#include "test/all.h"
-#include "test/TestSorter.h"
 #include "test/TestRunner.h"
 
 TestAction::TestAction():
@@ -34,17 +32,8 @@ void TestAction::obtainParameters(vector<Parameter*>& parameters) {
 }
 
 void TestAction::perform() {
-  try {
-    TestSorter sorter;
-    GET_TEST_SUITE(root).accept(sorter);
-
-    TestRunner runner;
-    GET_TEST_SUITE(root).accept(runner);
-  } catch (const FrobbyException& e) {
-    fputs(e.what(), stderr);
-  } catch (const AssertException& e) {
-    fputs(e.what(), stderr);
-  }
+  if (!runAllTests())
+    reportError("A unit test failed.");
 }
 
 const char* TestAction::staticGetName() {

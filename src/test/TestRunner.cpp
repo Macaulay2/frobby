@@ -18,7 +18,10 @@
 #include "TestRunner.h"
 
 #include "TestCase.h"
+#include "TestSorter.h"
+#include "all.h"
 #include "../DebugAllocator.h"
+#include "../error.h"
 
 bool TestRunner::visit(TestCase& test) {
   string qualifiedName = getPath() + test.getName();
@@ -34,4 +37,20 @@ bool TestRunner::visit(TestCase& test) {
   fputc('\n', stdout);
   fflush(stdout);
   return true;
+}
+
+bool runAllTests() {
+  try {
+    TestSorter sorter;
+    GET_TEST_SUITE(root).accept(sorter);
+
+    TestRunner runner;
+    GET_TEST_SUITE(root).accept(runner);
+    return true;
+  } catch (const FrobbyException& e) {
+    fputs(e.what(), stderr);
+  } catch (const AssertException& e) {
+    fputs(e.what(), stderr);
+  }
+  return false;
 }
