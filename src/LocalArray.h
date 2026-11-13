@@ -37,7 +37,7 @@ class LocalArray {
  public:
  LocalArray(const size_t sizeParam):
   _size(sizeParam),
-  _range(gccWorkAround(sizeParam)) {
+  _range(ArenaSource::getArena().template allocArray<T>(sizeParam)) {
 	ASSERT(this->size() == static_cast<size_t>(end() - begin()));
   }
 
@@ -56,16 +56,6 @@ class LocalArray {
   size_t size() const {return _size;}
 
  private:
- static const pair<T*, T*> gccWorkAround(const size_t size) {
-   // for some reason Cygwin's GCC 4.3.4 will not accept this code:
-   //   ArenaSource::getArena().allocArray<T>(size)
-   // but arena.allocArray<T>(size) is fine. So don't change it back.
-   // Unfortunately we need to put this in an initializer so it has to
-   // fit on one line so the work-around has to go in a separate function.
-   Arena& arena = ArenaSource::getArena();
-   return arena.allocArray<T>(size);
- }
-
   // Everything is inline and should be on the stack and be unlikely
   // to have its address taken. So the compiler should be able to
   // eliminate any of these member variables that are not used.
