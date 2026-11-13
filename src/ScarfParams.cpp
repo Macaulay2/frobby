@@ -44,7 +44,7 @@ void addScarfParams(CliParams& params) {
   ASSERT(!params.hasParam(DeformToStrongName));
   params.add
     (unique_ptr<Parameter>
-     (new BoolParameter
+     (FROBBY_NEW BoolParameter
       (DeformToStrongName,
        "Deform to a strongly generic ideal if true. "
        "Otherwise deform to a weakly generic ideal.",
@@ -53,7 +53,7 @@ void addScarfParams(CliParams& params) {
   ASSERT(!params.hasParam(EnumerationOrderName));
   params.add
     (unique_ptr<Parameter>
-     (new StringParameter
+     (FROBBY_NEW StringParameter
       (EnumerationOrderName,
        "The enumeration order used for the deformation algorithm.",
        EnumerationOrderDefault)));
@@ -61,7 +61,7 @@ void addScarfParams(CliParams& params) {
   ASSERT(!params.hasParam(DeformationOrderName));
   params.add
     (unique_ptr<Parameter>
-     (new StringParameter
+     (FROBBY_NEW StringParameter
       (DeformationOrderName,
        "The deformation order used for the deformation algorithm.",
        DeformationOrderDefault)));

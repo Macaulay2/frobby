@@ -167,7 +167,7 @@ void TransformAction::perform() {
 
   if (_product) {
     unique_ptr<BigIdeal> ideal;
-    ideal.reset(new BigIdeal(names));
+    ideal.reset(FROBBY_NEW BigIdeal(names));
 
     idealFacade.takeProducts(ideals, *ideal);
 

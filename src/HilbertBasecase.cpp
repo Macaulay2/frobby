@@ -274,7 +274,7 @@ size_t HilbertBasecase::eliminate1Counts(Ideal& ideal,
 
 unique_ptr<Ideal> HilbertBasecase::getNewIdeal() {
   if (_idealCache.empty())
-    return unique_ptr<Ideal>(new Ideal());
+    return unique_ptr<Ideal>(FROBBY_NEW Ideal());
 
   unique_ptr<Ideal> ideal(_idealCache.back());
   _idealCache.pop_back();

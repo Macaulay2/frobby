@@ -704,7 +704,7 @@ class ChunkPool {
 public:
   Exponent* allocate() {
     if (_chunks.empty())
-      return new Exponent[ExponentsPerChunk];
+      return FROBBY_NEW Exponent[ExponentsPerChunk];
 
     Exponent* chunk = _chunks.back();
     _chunks.pop_back();
@@ -750,7 +750,7 @@ Ideal::ExponentAllocator::~ExponentAllocator() {
 Exponent* Ideal::ExponentAllocator::allocate() {
   if (_chunkIterator + _varCount > _chunkEnd) {
     if (useSingleChunking()) {
-      Exponent* term = new Exponent[_varCount];
+      Exponent* term = FROBBY_NEW Exponent[_varCount];
       try {
         _chunks.push_back(term);
       } catch (...) {

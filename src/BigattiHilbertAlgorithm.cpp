@@ -44,7 +44,7 @@ BigattiHilbertAlgorithm
   _baseCase.setPrintDebug(_params.getPrintDebug());
 
   // TODO: use swap to avoid copy of ideal.
-  _tasks.addTask(new BigattiState(this, *ideal, Term(_varCount)));
+  _tasks.addTask(FROBBY_NEW BigattiState(this, *ideal, Term(_varCount)));
 }
 
 void BigattiHilbertAlgorithm::setComputeUnivariate(bool value) {

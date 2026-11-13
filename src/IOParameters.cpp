@@ -66,7 +66,7 @@ IOParameters::IOParameters(const DataType& input, const DataType& output):
       "Type 'frobby help io' for more information on input formats.";
 
     _inputFormat.reset
-      (new StringParameter
+      (FROBBY_NEW StringParameter
        ("iformat", desc.c_str(),
         getFormatNameIndicatingToGuessTheInputFormat()));
     addParameter(_inputFormat.get());
@@ -85,7 +85,7 @@ IOParameters::IOParameters(const DataType& input, const DataType& output):
     desc += "Type 'frobby help io' for more information on output formats.";
 
     _outputFormat.reset
-      (new StringParameter("oformat", desc.c_str(), defaultOutput));
+      (FROBBY_NEW StringParameter("oformat", desc.c_str(), defaultOutput));
     addParameter(_outputFormat.get());
   }
 }

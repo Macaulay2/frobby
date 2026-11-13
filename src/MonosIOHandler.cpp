@@ -79,7 +79,7 @@ namespace IO {
   }
 
   BigTermConsumer* MonosIOHandler::doCreateIdealWriter(FILE* out) {
-    return new MonosIdealWriter(out);
+    return FROBBY_NEW MonosIdealWriter(out);
   }
 
   void MonosIOHandler::doWriteTerm(const vector<mpz_class>& term,

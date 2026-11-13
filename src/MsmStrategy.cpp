@@ -37,7 +37,7 @@ MsmStrategy::MsmStrategy(TermConsumer* consumer,
                          const Ideal& initialSubtract):
   SliceStrategyCommon(splitStrategy),
   _consumer(consumer),
-  _initialSubtract(new Ideal(initialSubtract)) {
+  _initialSubtract(FROBBY_NEW Ideal(initialSubtract)) {
   ASSERT(consumer != 0);
 }
 
@@ -48,14 +48,14 @@ void MsmStrategy::run(const Ideal& ideal) {
   _consumer->beginConsuming();
   size_t varCount = ideal.getVarCount();
   if (_initialSubtract.get() == 0)
-    _initialSubtract = unique_ptr<Ideal>(new Ideal(varCount));
+    _initialSubtract = unique_ptr<Ideal>(FROBBY_NEW Ideal(varCount));
 
   Term sliceMultiply(varCount);
   for (size_t var = 0; var < varCount; ++var)
     sliceMultiply[var] = 1;
 
   unique_ptr<Slice> slice
-    (new MsmSlice(*this, ideal, *_initialSubtract, sliceMultiply, _consumer));
+    (FROBBY_NEW MsmSlice(*this, ideal, *_initialSubtract, sliceMultiply, _consumer));
   simplify(*slice);
 
   _initialSubtract.reset();
@@ -91,7 +91,7 @@ unique_ptr<MsmSlice> MsmStrategy::newMsmSlice() {
 }
 
 unique_ptr<Slice> MsmStrategy::allocateSlice() {
-  return unique_ptr<Slice>(new MsmSlice(*this));
+  return unique_ptr<Slice>(FROBBY_NEW MsmSlice(*this));
 }
 
 bool MsmStrategy::debugIsValidSlice(Slice* slice) {
@@ -262,18 +262,18 @@ void MsmStrategy::independenceSplit(unique_ptr<Slice> sliceParam) {
     (static_cast<MsmSlice*>(sliceParam.release()));
 
   // Construct split object
-  unique_ptr<MsmIndependenceSplit> autoSplit(new MsmIndependenceSplit());
+  unique_ptr<MsmIndependenceSplit> autoSplit(FROBBY_NEW MsmIndependenceSplit());
   autoSplit->reset(slice->getConsumer(), _indep);
   MsmIndependenceSplit* split = autoSplit.release();
   _tasks.addTask(split); // Runs when we are done with all of this split.
 
   // Construct left slice.
-  unique_ptr<MsmSlice> leftSlice(new MsmSlice(*this));
+  unique_ptr<MsmSlice> leftSlice(FROBBY_NEW MsmSlice(*this));
   leftSlice->setToProjOf(*slice, split->getLeftProjection(), split);
   _tasks.addTask(leftSlice.release());
 
   // Construct right slice.
-  unique_ptr<MsmSlice> rightSlice(new MsmSlice(*this));
+  unique_ptr<MsmSlice> rightSlice(FROBBY_NEW MsmSlice(*this));
   rightSlice->setToProjOf(*slice, split->getRightProjection(),
                           split->getRightConsumer());
   _tasks.addTask(rightSlice.release());

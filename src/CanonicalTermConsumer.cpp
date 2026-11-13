@@ -47,7 +47,7 @@ void CanonicalTermConsumer::beginConsumingList() {
 void CanonicalTermConsumer::beginConsuming() {
   ASSERT(_storingList || _ideals.empty());
 
-  unique_ptr<Ideal> ideal(new Ideal(_varCount));
+  unique_ptr<Ideal> ideal(FROBBY_NEW Ideal(_varCount));
   exceptionSafePushBack(_ideals, std::move(ideal));
 }
 

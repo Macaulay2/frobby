@@ -139,8 +139,8 @@ public:
 
         ASSERT(middle != _begin);
 
-        _lessOrEqual = new TreeNode(_begin, middle, _varCount);
-        _greater = new TreeNode(middle, _end, _varCount);
+        _lessOrEqual = FROBBY_NEW TreeNode(_begin, middle, _varCount);
+        _greater = FROBBY_NEW TreeNode(middle, _end, _varCount);
         _end = _begin;
 
         _lessOrEqual->makeTree();

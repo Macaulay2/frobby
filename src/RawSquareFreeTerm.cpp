@@ -138,7 +138,7 @@ namespace SquareFreeTermOps {
 	  with deleteTerm(). */
   Word* newTerm(size_t varCount) {
 	const size_t wordCount = getWordCount(varCount);
-	Word* word = new Word[wordCount];
+	Word* word = FROBBY_NEW Word[wordCount];
 	setToIdentity(word, word + wordCount);
 	return word;
   }

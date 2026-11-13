@@ -50,7 +50,7 @@ void InputConsumer::requireSquareFree() {
 void InputConsumer::beginIdeal() {
   ASSERT(!_inIdeal);
   _inIdeal = true;
-  _sqfIdeal.reset(new SquareFreeIdeal(_names));
+  _sqfIdeal.reset(FROBBY_NEW SquareFreeIdeal(_names));
   _term.resize(_names.getVarCount());
 }
 
@@ -191,7 +191,7 @@ void InputConsumer::endTerm() {
 void InputConsumer::endIdeal() {
   ASSERT(_inIdeal);
   _inIdeal = false;
-  unique_ptr<Entry> entry(new Entry());
+  unique_ptr<Entry> entry(FROBBY_NEW Entry());
   entry->_big = std::move(_bigIdeal);
   entry->_sqf = std::move(_sqfIdeal);
   exceptionSafePushBack(_ideals, std::move(entry));
@@ -248,7 +248,7 @@ void InputConsumer::toBigIdeal(std::unique_ptr<SquareFreeIdeal>& sqf, std::uniqu
   if (big.get() != 0)
     return;
   ASSERT(sqf.get() != 0);
-  big.reset(new BigIdeal(sqf->getNames()));
+  big.reset(FROBBY_NEW BigIdeal(sqf->getNames()));
   big->insert(*sqf);
   sqf.reset(0);
 }

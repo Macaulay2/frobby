@@ -798,7 +798,7 @@ RSFIdeal* newRawSquareFreeIdeal(size_t varCount, size_t capacity) {
   size_t byteCount = RSFIdeal::getBytesOfMemoryFor(varCount, capacity);
   if (byteCount == 0)
 	throw bad_alloc();
-  void* buffer = new char[byteCount];
+  void* buffer = FROBBY_NEW char[byteCount];
   RSFIdeal* ideal = RSFIdeal::construct(buffer, varCount);
   ASSERT(ideal->isValid());
   return ideal;
@@ -809,7 +809,7 @@ RawSquareFreeIdeal* newRawSquareFreeIdeal(const RawSquareFreeIdeal& ideal) {
 												   ideal.getGeneratorCount());
   if (byteCount == 0)
 	throw bad_alloc();
-  void* buffer = new char[byteCount];
+  void* buffer = FROBBY_NEW char[byteCount];
   RawSquareFreeIdeal* p = RSFIdeal::construct(buffer, ideal.getVarCount());
   p->insert(ideal);
   ASSERT(p->isValid());

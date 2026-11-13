@@ -62,7 +62,7 @@ void Arena::growCapacity(const size_t needed) {
   }
 
   // ** Allocate buffer and update _block
-  char* buffer = new char[size + sizeof(Block)];
+  char* buffer = FROBBY_NEW char[size + sizeof(Block)];
   _block._blockBegin = buffer;
   _block._freeBegin = buffer;
   _block._blockEnd = buffer + size;

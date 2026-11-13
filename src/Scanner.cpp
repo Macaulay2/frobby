@@ -36,7 +36,7 @@ Scanner::Scanner(const string& formatName, FILE* in):
   _bufferPos(_buffer.end()) {
   if (getFormat() == getFormatNameIndicatingToGuessTheInputFormat())
     setFormat(autoDetectFormat(*this));
-  _tmpString = new char[16];
+  _tmpString = FROBBY_NEW char[16];
 }
 
 unique_ptr<IOHandler> Scanner::createIOHandler() const {
@@ -243,7 +243,7 @@ void Scanner::readSizeT(size_t& size) {
 void Scanner::growTmpString() {
   ASSERT(_tmpStringCapacity > 0);
   size_t newCapacity = _tmpStringCapacity * 2;
-  char* str = new char[newCapacity];
+  char* str = FROBBY_NEW char[newCapacity];
   for (size_t i = 0; i < _tmpStringCapacity; ++i)
     str[i] = _tmpString[i];
   delete[] _tmpString;

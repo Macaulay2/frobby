@@ -110,11 +110,11 @@ namespace IO {
   }
 
   BigTermConsumer* CountingIOHandler::doCreateIdealWriter(FILE* out) {
-    return new CountingConsumer(out);
+    return FROBBY_NEW CountingConsumer(out);
   }
 
   CoefBigTermConsumer* CountingIOHandler::doCreatePolynomialWriter(FILE* out) {
-    return new CountingConsumer(out);
+    return FROBBY_NEW CountingConsumer(out);
   }
 
   void CountingIOHandler::doWriteTerm(const vector<mpz_class>& term,

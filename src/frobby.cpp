@@ -39,7 +39,7 @@ class ConsumerWrapper {
 protected:
   ConsumerWrapper(size_t varCount):
     _varCount(varCount),
-    _term(new mpz_ptr[varCount]) {
+    _term(FROBBY_NEW mpz_ptr[varCount]) {
   }
 
   virtual ~ConsumerWrapper() {
@@ -199,11 +199,11 @@ namespace FrobbyImpl {
 }
 
 Frobby::Ideal::Ideal(size_t variableCount) {
-  _data = new FrobbyImpl::FrobbyIdealHelper(variableCount);
+  _data = FROBBY_NEW FrobbyImpl::FrobbyIdealHelper(variableCount);
 }
 
 Frobby::Ideal::Ideal(const Ideal& ideal) {
-  _data = new FrobbyImpl::FrobbyIdealHelper(*ideal._data);
+  _data = FROBBY_NEW FrobbyImpl::FrobbyIdealHelper(*ideal._data);
 }
 
 Frobby::Ideal::~Ideal() {
@@ -214,7 +214,7 @@ Frobby::Ideal& Frobby::Ideal::operator=(const Ideal& ideal) {
   // Allocate new object before deleting old object to leave *this
   // in a valid state in case of new throwing an exception.
   FrobbyImpl::FrobbyIdealHelper* newValue =
-    new FrobbyImpl::FrobbyIdealHelper(*ideal._data);
+    FROBBY_NEW FrobbyImpl::FrobbyIdealHelper(*ideal._data);
 
   delete _data;
   _data = newValue;

@@ -54,7 +54,7 @@ void HilbertStrategy::run(const Ideal& ideal) {
   }
 
   unique_ptr<Slice> slice
-    (new HilbertSlice(*this, sliceIdeal, Ideal(varCount),
+    (FROBBY_NEW HilbertSlice(*this, sliceIdeal, Ideal(varCount),
                       Term(varCount), _consumer));
 
   simplify(*slice);
@@ -90,7 +90,7 @@ unique_ptr<HilbertSlice> HilbertStrategy::newHilbertSlice() {
 }
 
 unique_ptr<Slice> HilbertStrategy::allocateSlice() {
-  return unique_ptr<Slice>(new HilbertSlice(*this));
+  return unique_ptr<Slice>(FROBBY_NEW HilbertSlice(*this));
 }
 
 bool HilbertStrategy::debugIsValidSlice(Slice* slice) {
@@ -147,7 +147,7 @@ void HilbertStrategy::independenceSplit(unique_ptr<Slice> sliceParam) {
 unique_ptr<HilbertIndependenceConsumer> HilbertStrategy::newConsumer() {
   if (_consumerCache.empty())
     return unique_ptr<HilbertIndependenceConsumer>
-      (new HilbertIndependenceConsumer(this));
+      (FROBBY_NEW HilbertIndependenceConsumer(this));
 
   unique_ptr<HilbertIndependenceConsumer> consumer(_consumerCache.back());
   _consumerCache.pop_back();

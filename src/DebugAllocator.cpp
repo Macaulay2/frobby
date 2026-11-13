@@ -28,7 +28,6 @@
 // cannot be built as a library as this code calls main.
 // The code only applies to debug builds anyway.
 #ifdef DEBUG
-#undef new
 
 static const size_t AllocationLimitsTryFirst = 500;
 static const size_t AllocationLimitsTryLast = 200;
