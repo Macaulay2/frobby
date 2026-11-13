@@ -187,12 +187,7 @@ void SizeMaxIndepSetAlg::recurse(size_t pos, size_t excluded) {
           _state[undo.back()] = IsMaybeInSet;
           undo.pop_back();
         }
-
-        // On gcc 3.4.4 on Cygwin (at least), putting break here
-        // instead of return is on the order of 15% faster. So that is
-        // why it says break, and then break again below, even though
-        // a return would be more natural.
-        break;
+        return;
       }
 
       varState = IsInSet;
