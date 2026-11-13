@@ -20,79 +20,16 @@
 
 /** \file
 
- The purpose of this file is to provide a definition of a hash map
- whenever possible. This needs to be done separately since various
- compilers put their hash maps in different places. GCC even moves it
- around for different versions and issues warnings for some
- placements. This has been fixed by including GCCs hash_map with
- Frobby to get a consistent and warning-free place to get it from.
-
- If the current compiler is not recognized, we use a comparison-based
- map as a fall-back.
+ Defines HashMap, a hash map whose hash function is FrobbyHash<Key>,
+ which must be specialized for each key type.
 */
+
+#include <unordered_map>
 
 template<class Key>
 class FrobbyHash {};
 
-// *********************************************************
-#if defined(__GNUC__) || defined(__clang__)
-#if 0
-#include "hash_map/hash_map"
-#include <string>
-#endif
-#include <unordered_map>
 template<class Key, class Value>
   class HashMap : public std::unordered_map<Key, Value, FrobbyHash<Key>> { };
-
-#if 0
-template<>
-class FrobbyHash<string> : public __gnu_cxx::hash<string> {
-};
-
-template<class Key, class Value>
-class HashMap : public __gnu_cxx::hash_map<Key, Value,
-  FrobbyHash<Key> > {
-};
-#endif
-#else
-// *********************************************************
-#ifdef _MSC_VER // Only Microsoft C++ defines this macro
-#include <hash_map>
-#include <string>
-
-template<class Key>
-class HashWrapper : public stdext::hash_compare<Key, ::std::less<Key> >, FrobbyHash<Key> {
-public:
-  size_t operator()(const Key& key) const {
-    return FrobbyHash<typename Key>::operator()(key);
-  }
-
-  bool operator()(const Key& a, const Key& b) const {
-    return stdext::hash_compare<Key, ::std::less<Key> >::operator()(a, b);
-  }
-};
-
-template<>
-class HashWrapper<string> : public stdext::hash_compare<string, ::std::less<string> > {
-};
-
-template<class Key, class Value>
-class HashMap : public stdext::hash_map<Key, Value, HashWrapper<Key> > {
-};
-
-// *********************************************************
-#else // Fall-back for unknown compilers
-#include <map>
-template<class Key, class Value>
-class HashMap :
-  #if __cplusplus < 201103
-       public std::map<Key, Value>
-  #else
-       public std::unordered_map<Key, Value>
-#endif
-{};
-#endif
-#endif
-
 
 #endif
