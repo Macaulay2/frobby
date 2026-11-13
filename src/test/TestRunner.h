@@ -26,4 +26,8 @@ class TestRunner : public TestQualifier {
   virtual bool visit(TestCase& test);
 };
 
+/** Sorts and runs every registered test. Returns false after printing
+    the error to standard error if a test fails. */
+bool runAllTests();
+
 #endif
