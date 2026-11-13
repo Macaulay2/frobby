@@ -9,6 +9,12 @@ AC_CONFIG_MACRO_DIRS([m4])
 AC_PROG_CC
 AC_PROG_CXX
 
+AC_ARG_ENABLE([debug],
+  [AS_HELP_STRING([--enable-debug],
+    [enable assertions and build internal unit tests])],
+  [], [enable_debug=no])
+AM_CONDITIONAL([DEBUG], [test "x$enable_debug" = xyes])
+
 # check for GMP
 AC_DEFUN([FROBBY_NO_GMP], [AC_MSG_ERROR([could not find GMP])])
 AC_LANG([C])
