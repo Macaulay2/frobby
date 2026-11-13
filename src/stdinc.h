@@ -21,11 +21,6 @@
  is defined everywhere throughout the code base.
 */
 
-#ifdef _MSC_VER // For Microsoft Compiler in Visual Studio C++.
-#define _SCL_SECURE_NO_WARNINGS
-#pragma warning (push, 1) // Reduce warning level for GMP headers.
-#endif
-
 // Some versions of GMP do not define gmp_fprintf unless cstdio is
 // included first, so we have to include it here.
 #include <cstdio>
@@ -33,35 +28,6 @@
 
 #include <gmp.h>
 #include <gmpxx.h>
-
-#ifdef _MSC_VER // For Microsoft Compiler in Visual Studio C++.
-#pragma warning (pop) // Go back to previous warning level.
-#pragma warning (disable: 4996) // std::copy is flagged as dangerous.
-#pragma warning (disable: 4290) // VC++ ignores throw () specification.
-#pragma warning (disable: 4127) // Warns about using "while (true)".
-#pragma warning (disable: 4100) // Warns about unused parameters.
-#pragma warning (disable: 4800) // Warns on int to bool conversion.
-#pragma warning (disable: 4146) // Warns on unary minus on unsigned (bit trick)
-
-// This warning warns about using the this pointer in base member
-// initializer lists. This is a pretty good warning as that can
-// obviously easily go wrong, but it is pretty useful to do as well,
-// so the warning is turned off.
-#pragma warning (disable: 4355)
-
-#ifdef _DEBUG
-#ifndef DEBUG
-#define DEBUG
-#endif
-#endif
-
-#ifdef DEBUG
-// MSC's map header has an issue where you get a syntax error if you
-// define a macro for new like we do below. We work around this by including
-// map before we define the macro.
-#include <map>
-#endif
-#endif
 
 #include <cstddef>
 #include <memory>
