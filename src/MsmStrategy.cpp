@@ -41,6 +41,10 @@ MsmStrategy::MsmStrategy(TermConsumer* consumer,
   ASSERT(consumer != 0);
 }
 
+MsmStrategy::~MsmStrategy() {
+  _tasks.disposeAll();
+}
+
 void MsmStrategy::run(const Ideal& ideal) {
   ASSERT(_initialSubtract.get() == 0 ||
          _initialSubtract->getVarCount() == ideal.getVarCount());

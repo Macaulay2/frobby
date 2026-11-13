@@ -26,10 +26,7 @@ TaskEngine::TaskEngine():
 }
 
 TaskEngine::~TaskEngine() {
-  while (!_tasks.empty()) {
-    dispose(_tasks.back());
-    _tasks.pop_back();
-  }
+  disposeAll();
 }
 
 void TaskEngine::addTask(Task* task) {
@@ -65,6 +62,13 @@ void TaskEngine::runTasks() {
 
 size_t TaskEngine::getTotalTasksEver() {
   return _totalTasksEver;
+}
+
+void TaskEngine::disposeAll() {
+  while (!_tasks.empty()) {
+    dispose(_tasks.back());
+    _tasks.pop_back();
+  }
 }
 
 void TaskEngine::dispose(Task* task) {

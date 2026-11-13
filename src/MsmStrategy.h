@@ -39,6 +39,7 @@ class MsmStrategy : public SliceStrategyCommon {
   MsmStrategy(TermConsumer* consumer, const SplitStrategy* splitStrategy);
   MsmStrategy(TermConsumer* consumer, const SplitStrategy* splitStrategy,
               const Ideal& initialSubtract);
+  virtual ~MsmStrategy();
 
   virtual void run(const Ideal& ideal);
 

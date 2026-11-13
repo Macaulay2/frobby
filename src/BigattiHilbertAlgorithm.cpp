@@ -47,6 +47,10 @@ BigattiHilbertAlgorithm
   _tasks.addTask(FROBBY_NEW BigattiState(this, *ideal, Term(_varCount)));
 }
 
+BigattiHilbertAlgorithm::~BigattiHilbertAlgorithm() {
+  _tasks.disposeAll();
+}
+
 void BigattiHilbertAlgorithm::setComputeUnivariate(bool value) {
   _computeUnivariate = value;
 }
