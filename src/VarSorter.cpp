@@ -26,6 +26,7 @@ public:
   VarSorterCompare(const VarNames& names):
     _names(names) {
   }
+  VarSorterCompare(const VarSorterCompare&) = default;
 
   bool operator()(size_t a, size_t b) const {
     return _names.getName(a) < _names.getName(b);
