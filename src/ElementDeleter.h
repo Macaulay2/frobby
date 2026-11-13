@@ -138,7 +138,7 @@ void exceptionSafePushBack(Container& container, unique_ptr<Element> pointer) {
 // unchanged. This works well if e.g. adding an element to a cache, where
 // it is no great problem if the element gets deleted rather than added.
 template<class Container, class Element>
-void noThrowPushBack(Container& container, unique_ptr<Element> pointer) throw () {
+void noThrowPushBack(Container& container, unique_ptr<Element> pointer) noexcept {
   try {
     exceptionSafePushBack(container, std::move(pointer));
   } catch (const bad_alloc&) {
