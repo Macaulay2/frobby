@@ -1,5 +1,12 @@
 SUBDIRS = src doc
 
+EXTRA_DIST = autogen.sh README.md changelog.txt GPL-header              \
+  CMakeLists.txt cmake/FindGMP.cmake cmake/FindMPIR.cmake test/bench    \
+  test/bigIdeals test/commonIdeals test/frob test/idealFormats          \
+  test/internal test/intersect test/irrdecom test/latticeFormats        \
+  test/messages test/polyFormats test/runSplitTests test/runTests       \
+  test/specialIdeals test/testScripts
+
 DOC_TARGETS = doc docPs docPdf
 
 $(DOC_TARGETS):

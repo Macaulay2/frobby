@@ -1,4 +1,5 @@
-man1_MANS = frobby.1
+dist_man1_MANS = frobby.1
+EXTRA_DIST = manual.tex frobbyLatex.sty
 
 doc: docPs docPdf
 
