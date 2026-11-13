@@ -21,8 +21,6 @@ jobs:
         exclude:
           - build-system: cmake
             debug: 'yes'
-    env:
-      MODE: ${{ matrix.debug == 'yes' && 'debug' || 'release' }}
     steps:
       - uses: actions/checkout@v6
       - name: Install dependencies
@@ -45,7 +43,7 @@ jobs:
           then mkdir -p build/autotools
                cd build/autotools
                ../../autogen.sh
-               ../../configure
+               ../../configure --enable-debug=${{ matrix.debug }}
                make -j4
           else mkdir -p build/cmake
                cd build/cmake
@@ -58,7 +56,9 @@ jobs:
           cd build/autotools
           make fullTest
       - name: Build documentation
-        if: matrix.build-system == 'autotools' && matrix.os == 'ubuntu-latest'
+        if: >-
+          matrix.build-system == 'autotools' && matrix.os == 'ubuntu-latest'
+          && matrix.debug == 'no'
         run: |
           cd build/autotools
           make doc
