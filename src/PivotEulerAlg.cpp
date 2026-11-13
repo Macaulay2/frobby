@@ -295,16 +295,24 @@ const mpz_class& PivotEulerAlg::computeEulerCharacteristic
 }
 
 void PivotEulerAlg::computeEuler(EulerState* state) {
-  _euler = 0;
-  if (_initialAutoTranspose)
-    autoTranspose(*state);
-  while (state != 0) {
-	EulerState* nextState = processState(*state);
-	if (nextState == 0) {
-	  nextState = state->getParent();
-	  Arena::getArena().freeAndAllAfter(state);
+  EulerState* const root = state;
+  try {
+	_euler = 0;
+	if (_initialAutoTranspose)
+	  autoTranspose(*state);
+	while (state != 0) {
+	  EulerState* nextState = processState(*state);
+	  if (nextState == 0) {
+		nextState = state->getParent();
+		Arena::getArena().freeAndAllAfter(state);
+	  }
+	  state = nextState;
 	}
-	state = nextState;
+  } catch (...) {
+	// The root state is freed only once the computation is
+	// completed, so it and every state after it are still allocated.
+	Arena::getArena().freeAndAllAfter(root);
+	throw;
   }
 }
 

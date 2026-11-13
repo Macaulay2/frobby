@@ -68,10 +68,15 @@ EulerState* EulerState::rawConstruct(size_t varCount, size_t capacity,
 
   EulerState* state =
 	static_cast<EulerState*>(arena->alloc(sizeof(EulerState)));
-  state->_alloc = arena;
-  state->ideal =
-    RawSquareFreeIdeal::construct(arena->alloc(bytesIdeal), varCount);
-  state->eliminated = arena->allocArrayNoCon<Word>(wordsElim).first;
+  try {
+	state->_alloc = arena;
+	state->ideal =
+	  RawSquareFreeIdeal::construct(arena->alloc(bytesIdeal), varCount);
+	state->eliminated = arena->allocArrayNoCon<Word>(wordsElim).first;
+  } catch (...) {
+	arena->freeAndAllAfter(state);
+	throw;
+  }
   state->sign = 1;
   state->_parent = 0;
 
