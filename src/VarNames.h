@@ -17,8 +17,6 @@
 #ifndef VAR_NAMES_GUARD
 #define VAR_NAMES_GUARD
 
-#include "HashMap.h"
-
 #include <vector>
 #include <string>
 #include <unordered_map>
@@ -103,7 +101,6 @@ private:
   static bool compareNames(const string* a, const string* b);
 
   typedef unordered_map<string, size_t> VarNameMap;
-  //typedef HashMap<string, size_t> VarNameMap;
   VarNameMap _nameToIndex;
   vector<const string*> _indexToName;
 };

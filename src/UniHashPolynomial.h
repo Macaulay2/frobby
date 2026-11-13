@@ -18,15 +18,13 @@
 #ifndef UNI_HASH_POLYNOMIAL_GUARD
 #define UNI_HASH_POLYNOMIAL_GUARD
 
-#include "HashMap.h"
+#include <unordered_map>
 
 class CoefBigTermConsumer;
 
-/** This template specialization makes the hash code of an mpz_clas
- available to the implementation of HashMap.
-*/
-template<>
-class FrobbyHash<mpz_class> {
+/** Hash function for using an mpz_class as the key of an
+ unordered_map. */
+class MpzHash {
  public:
   size_t operator()(const mpz_class& i) const {
     // The constant is a prime. This method needs to be improved.
@@ -55,7 +53,7 @@ class UniHashPolynomial {
   size_t getTermCount() const;
 
  private:
-  typedef HashMap<mpz_class, mpz_class> TermMap;
+  typedef unordered_map<mpz_class, mpz_class, MpzHash> TermMap;
   TermMap _terms;
 };
 

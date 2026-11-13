@@ -19,16 +19,13 @@
 #define HASH_POLYNOMIAL_GUARD
 
 #include "Term.h"
-#include "HashMap.h"
+#include <unordered_map>
 
 class CoefBigTermConsumer;
 class TermTranslator;
 
-/** This template specialization makes the hash code of a term
- available to the implementation of HashMap.
-*/
-template<>
-class FrobbyHash<Term> {
+/** Hash function for using a term as the key of an unordered_map. */
+class TermHash {
  public:
   size_t operator()(const Term& t) const {
     return t.getHashCode();
@@ -61,7 +58,7 @@ class HashPolynomial {
  private:
   size_t _varCount;
 
-  typedef HashMap<Term, mpz_class> TermMap;
+  typedef unordered_map<Term, mpz_class, TermHash> TermMap;
   TermMap _terms;
 };
 
