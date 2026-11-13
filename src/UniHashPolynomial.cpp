@@ -54,7 +54,7 @@ namespace {
   /** Helper class for feedTo. */
   class RefCompare {
   public:
-    typedef HashMap<mpz_class, mpz_class> TermMap;
+    typedef unordered_map<mpz_class, mpz_class, MpzHash> TermMap;
     bool operator()(TermMap::const_iterator a, TermMap::const_iterator b) {
       return a->first > b->first;
     }
@@ -81,7 +81,7 @@ void UniHashPolynomial::feedTo(CoefBigTermConsumer& consumer, bool inCanonicalOr
   } else {
 
     // Fill refs with references in order to sort them. We can't sort
-    // _terms since HashMap doesn't support that, so we have to sort
+    // _terms since unordered_map doesn't support that, so we have to sort
     // references into _terms instead.
     vector<TermMap::const_iterator> refs;
     refs.reserve(_terms.size());

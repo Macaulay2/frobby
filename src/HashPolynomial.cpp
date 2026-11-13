@@ -66,7 +66,7 @@ namespace {
   /** Helper class for feedTo. */
   class RefCompare {
   public:
-    typedef HashMap<Term, mpz_class> TermMap;
+    typedef unordered_map<Term, mpz_class, TermHash> TermMap;
     bool operator()(TermMap::const_iterator a, TermMap::const_iterator b) {
       return lexCompare(a->first, b->first) > 0;
     }
@@ -90,7 +90,7 @@ void HashPolynomial::feedTo
   } else {
 
     // Fill refs with references to the terms in order to sort
-    // them. We can't sort _terms since HashMap doesn't support that,
+    // them. We can't sort _terms since unordered_map doesn't support that,
     // so we have to sort references into _terms instead.
     vector<TermMap::const_iterator> refs;
     refs.reserve(_terms.size());
