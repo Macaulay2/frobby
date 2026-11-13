@@ -174,6 +174,7 @@ public:
     _lcm(lcm) {
   }
   DoubleLcmPredicate(const DoubleLcmPredicate&) = default;
+  DoubleLcmPredicate& operator=(const DoubleLcmPredicate&) = delete;
 
   bool operator()(const Exponent* term) {
     bool seenMatch = false;
@@ -188,8 +189,6 @@ public:
   }
 
 private:
-  void operator=(const DoubleLcmPredicate&); // To make it inaccessible.
-
   const Term& _lcm;
 };
 

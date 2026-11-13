@@ -30,6 +30,7 @@ public:
   OffsetTermCompare(const BigIdeal& ideal): _ideal(ideal) {
   }
   OffsetTermCompare(const OffsetTermCompare&) = default;
+  OffsetTermCompare& operator=(const OffsetTermCompare&) = delete;
 
   bool operator()(size_t aa, size_t bb) const {
     const vector<mpz_class>& a = _ideal.getTerm(aa);
@@ -46,8 +47,6 @@ public:
   }
 
 private:
-  void operator=(const OffsetTermCompare&); // To make this inaccessible.
-
   const BigIdeal& _ideal;
 };
 

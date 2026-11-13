@@ -27,14 +27,13 @@ public:
     _names(names) {
   }
   VarSorterCompare(const VarSorterCompare&) = default;
+  VarSorterCompare& operator=(const VarSorterCompare&) = delete;
 
   bool operator()(size_t a, size_t b) const {
     return _names.getName(a) < _names.getName(b);
   }
 
 private:
-  void operator=(const VarSorterCompare&); // To make unaccessible.
-
   const VarNames& _names;
 };
 
