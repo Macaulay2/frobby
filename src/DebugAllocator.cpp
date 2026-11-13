@@ -266,6 +266,14 @@ void operator delete[](void* buffer) noexcept {
   free(buffer);
 }
 
+void operator delete(void* buffer, size_t) noexcept {
+  free(buffer);
+}
+
+void operator delete[](void* buffer, size_t) noexcept {
+  free(buffer);
+}
+
 /** Note that these overloads to operator delete are strictly
  necessary, even though they will only be called in the very special
  circumstance where an exception gets thrown while an object
