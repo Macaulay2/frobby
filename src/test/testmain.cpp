@@ -15,41 +15,19 @@
    along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #include "stdinc.h"
-#include "all.h"
-
 #include "TestRunner.h"
-#include "asserts.h"
 
-TEST(root, qbob) {
-  cout << "inside qbob" << endl;
-}
+#ifdef DEBUG
+#include "../error.h"
 
-TEST(bob1, bab1) {
-  cout << "inside bob11" << endl;
+// A DEBUG build of libfrobby calls frobbyMain, which only main.cpp
+// defines, so the unit tests need one to link.
+int frobbyMain(int, const char**) {
+  reportInternalError("frobbyMain called from the unit tests.");
+  return 1;
 }
-TEST(bob1, bab2) {
-  cout << "inside bob12" << endl;
-}
-TEST(bob2, bab1) {
-  cout << "inside bob21" << endl;
-  ASSERT_EQ(3,4);
-}
-
-TEST(bob2, bab2) {
-  cout << "inside bob22" << endl;
-}
-
-TEST_SUITE2(bob2,bob1)
-TEST_SUITE(bob2)
+#endif
 
 int main() {
-  try {
-  TestRunner runner;
-  GET_TEST_SUITE(root).accept(runner);
-  } catch (std::exception& e) {
-    cout << "caught exception!" << endl;
-    cout << e.what() << endl;
-  }
-
-  return 0;
+  return runAllTests() ? 0 : 1;
 }

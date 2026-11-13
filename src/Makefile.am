@@ -2,16 +2,34 @@ bin_PROGRAMS = frobby
 frobby_SOURCES =  main.cpp
 frobby_LDADD = libfrobby.la
 
-if DEBUG
-AM_CPPFLAGS = -DDEBUG
-frobby_SOURCES += LibAlexanderDualTest.cpp LibHilbertPoincareTest.cpp  \
+unit_test_sources = LibAlexanderDualTest.cpp LibHilbertPoincareTest.cpp \
   LibIrreducibleDecomTest.cpp LibMaxStdTest.cpp LibStdProgramTest.cpp  \
   LibTest.cpp OptimizeStrategyTest.cpp TermTest.cpp                     \
   TermTranslatorTest.cpp RawSquareFreeTermTest.cpp                      \
   RawSquareFreeIdealTest.cpp LibPrimaryDecomTest.cpp                    \
   LibAssociatedPrimesTest.cpp MatrixTest.cpp IdealTest.cpp              \
   LibDimensionTest.cpp TermGraderTest.cpp ArenaTest.cpp
+
+if DEBUG
+AM_CPPFLAGS = -DDEBUG
+frobby_SOURCES += $(unit_test_sources)
 endif
+
+check_PROGRAMS = frobby-unit-tests
+frobby_unit_tests_SOURCES = test/testmain.cpp $(unit_test_sources)
+frobby_unit_tests_LDADD = libfrobby.la
+TESTS = frobby-unit-tests
+
+EXTRA_PROGRAMS = frobby-installed-unit-tests
+frobby_installed_unit_tests_SOURCES = $(frobby_unit_tests_SOURCES)
+frobby_installed_unit_tests_LDADD = -L$(libdir) -lfrobby
+frobby_installed_unit_tests_LDFLAGS = -Wl,-rpath,$(libdir)
+frobby_installed_unit_tests_LINK = $(CXX) $(AM_CXXFLAGS) $(CXXFLAGS) \
+  $(AM_LDFLAGS) $(frobby_installed_unit_tests_LDFLAGS) $(LDFLAGS) -o $@
+CLEANFILES = $(EXTRA_PROGRAMS)
+
+installcheck-local: frobby-installed-unit-tests$(EXEEXT)
+	./frobby-installed-unit-tests$(EXEEXT)
 
 libfrobby_la_LDFLAGS = -version-info @LIBFROBBY_VERSION_INFO@
 
