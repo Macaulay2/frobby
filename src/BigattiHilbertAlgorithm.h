@@ -40,6 +40,7 @@ public:
                           const BigattiParams& params,
                           unique_ptr<BigattiPivotStrategy> pivot,
                           CoefBigTermConsumer& consumer);
+  ~BigattiHilbertAlgorithm();
 
   void setPrintStatistics(bool value);
   void setPrintDebug(bool value);

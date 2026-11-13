@@ -34,6 +34,10 @@ HilbertStrategy::HilbertStrategy(CoefTermConsumer* consumer,
   _consumer(consumer) {
 }
 
+HilbertStrategy::~HilbertStrategy() {
+  _tasks.disposeAll();
+}
+
 void HilbertStrategy::run(const Ideal& ideal) {
   ASSERT(_consumer != 0);
 

@@ -70,6 +70,9 @@ class TaskEngine {
   */
   size_t getTotalTasksEver();
 
+  /** Dispose of all pending tasks without running them. */
+  void disposeAll();
+
  private:
   void dispose(Task* task);
 
