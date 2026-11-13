@@ -1,6 +1,18 @@
 bin_PROGRAMS = frobby
 frobby_SOURCES =  main.cpp
 frobby_LDADD = libfrobby.la
+
+if DEBUG
+AM_CPPFLAGS = -DDEBUG
+frobby_SOURCES += LibAlexanderDualTest.cpp LibHilbertPoincareTest.cpp  \
+  LibIrreducibleDecomTest.cpp LibMaxStdTest.cpp LibStdProgramTest.cpp  \
+  LibTest.cpp OptimizeStrategyTest.cpp TermTest.cpp                     \
+  TermTranslatorTest.cpp RawSquareFreeTermTest.cpp                      \
+  RawSquareFreeIdealTest.cpp LibPrimaryDecomTest.cpp                    \
+  LibAssociatedPrimesTest.cpp MatrixTest.cpp IdealTest.cpp              \
+  LibDimensionTest.cpp TermGraderTest.cpp ArenaTest.cpp
+endif
+
 libfrobby_la_LDFLAGS = -version-info @LIBFROBBY_VERSION_INFO@
 
 lib_LTLIBRARIES = libfrobby.la
