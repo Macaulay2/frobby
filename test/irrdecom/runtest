@@ -3,9 +3,13 @@
 testName="$1"
 shift
 
+if [ "$1" = "_full" ]; then
+  shift;
+fi
+
 inputFile="$testName.test"
 params="$*"
 
 outputFile="$testName.irrdecom"
-../testhelper irrdecom $inputFile $outputFile $params -encode -canon
+../testScripts/testhelper irrdecom $inputFile $outputFile $params -encode -canon
 if [ $? != 0 ]; then exit 1; fi
