@@ -61,7 +61,7 @@ TermTranslator::TermTranslator(const vector<BigIdeal*>& bigIdeals,
   initialize(bigIdeals, true);
 
   for (size_t i = 0; i < bigIdeals.size(); ++i) {
-    exceptionSafePushBack(ideals, unique_ptr<Ideal>(new Ideal()));
+    exceptionSafePushBack(ideals, unique_ptr<Ideal>(FROBBY_NEW Ideal()));
     shrinkBigIdeal(*(bigIdeals[i]), *(ideals.back()));
   }
   idealsDeleter.release();
@@ -365,7 +365,7 @@ void TermTranslator::makeStrings(bool includeVar) const {
             out << '^' << _exponents[i][j];
         }
 
-        str = new char[out.str().size() + 1];
+        str = FROBBY_NEW char[out.str().size() + 1];
         strcpy(str, out.str().c_str());
       }
       strings[i][j] = str;

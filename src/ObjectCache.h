@@ -68,7 +68,7 @@ inline ObjectCache<T>::ObjectCache():
 template<class T>
 unique_ptr<T> ObjectCache<T>::newObject() {
   if (_cache.empty())
-    return unique_ptr<T>(new T());
+    return unique_ptr<T>(FROBBY_NEW T());
 
   unique_ptr<T> object(_cache.back());
   _cache.pop_back();
@@ -78,7 +78,7 @@ unique_ptr<T> ObjectCache<T>::newObject() {
 template<class T> template<class S>
 unique_ptr<T> ObjectCache<T>::newObjectCopy(const S& copyOf) {
   if (_cache.empty())
-    return unique_ptr<T>(new T(copyOf));
+    return unique_ptr<T>(FROBBY_NEW T(copyOf));
 
   unique_ptr<T> object(_cache.back());
   _cache.pop_back();

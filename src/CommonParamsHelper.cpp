@@ -68,9 +68,9 @@ void CommonParamsHelper::readIdealAndSetOutput(const CommonParams& params,
     _idealConsumerDeleter = outputHandler->createIdealListWriter(stdout);
     _idealConsumer = _idealConsumerDeleter.get();
   } else if (output == DataType::getNullType()) {
-    _idealConsumerDeleter.reset(new NullTermConsumer());
+    _idealConsumerDeleter.reset(FROBBY_NEW NullTermConsumer());
     _idealConsumer = _idealConsumerDeleter.get();
-    _polyConsumerDeleter.reset(new NullCoefTermConsumer());
+    _polyConsumerDeleter.reset(FROBBY_NEW NullCoefTermConsumer());
     _polyConsumer = _polyConsumerDeleter.get();
   } else {
     string msg = "Unsupported output type of ";
@@ -130,16 +130,16 @@ makeTranslatedIdealConsumer(bool split) {
   unique_ptr<TermConsumer> translated;
   if (split) {
     unique_ptr<BigTermConsumer> splitter
-      (new IrreducibleIdealSplitter(*_idealConsumer));
+      (FROBBY_NEW IrreducibleIdealSplitter(*_idealConsumer));
     translated.reset
-      (new TranslatingTermConsumer(std::move(splitter), getTranslator()));
+      (FROBBY_NEW TranslatingTermConsumer(std::move(splitter), getTranslator()));
   } else
     translated.reset
-      (new TranslatingTermConsumer(*_idealConsumer, getTranslator()));
+      (FROBBY_NEW TranslatingTermConsumer(*_idealConsumer, getTranslator()));
 
   if (_produceCanonicalOutput) {
     return unique_ptr<TermConsumer>
-      (new CanonicalTermConsumer(std::move(translated),
+      (FROBBY_NEW CanonicalTermConsumer(std::move(translated),
                                  getIdeal().getVarCount(),
                                  &getTranslator()));
   } else
@@ -148,17 +148,17 @@ makeTranslatedIdealConsumer(bool split) {
 
 unique_ptr<CoefTermConsumer> CommonParamsHelper::makeTranslatedPolyConsumer() {
   unique_ptr<CoefTermConsumer> translated
-    (new TranslatingCoefTermConsumer(*_polyConsumer, getTranslator()));
+    (FROBBY_NEW TranslatingCoefTermConsumer(*_polyConsumer, getTranslator()));
   if (_produceCanonicalOutput)
     return unique_ptr<CoefTermConsumer>
-      (new CanonicalCoefTermConsumer(std::move(translated)));
+      (FROBBY_NEW CanonicalCoefTermConsumer(std::move(translated)));
   else
     return translated;
 }
 
 unique_ptr<CoefTermConsumer> CommonParamsHelper::makeToUnivariatePolyConsumer() {
   return unique_ptr<CoefTermConsumer>
-    (new TotalDegreeCoefTermConsumer(*_polyConsumer, getTranslator()));
+    (FROBBY_NEW TotalDegreeCoefTermConsumer(*_polyConsumer, getTranslator()));
 }
 
 void CommonParamsHelper::addPurePowersAtInfinity() {
@@ -178,8 +178,8 @@ void CommonParamsHelper::setIdeal(const CommonParams& params,
   ActionPrinter printer(params.getPrintActions());
 
   printer.beginAction("Translating ideal to internal data structure.");
-  _ideal.reset(new Ideal());
-  _translator.reset(new TermTranslator(bigIdeal, *_ideal, false));
+  _ideal.reset(FROBBY_NEW Ideal());
+  _translator.reset(FROBBY_NEW TermTranslator(bigIdeal, *_ideal, false));
   printer.endAction();
 
   if (!params.getIdealIsMinimal()) {

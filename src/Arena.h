@@ -258,7 +258,6 @@ pair<T*, T*> Arena::allocArrayNoCon(size_t elementCount) {
   return make_pair(array, arrayEnd);
 }
 
-#undef new
 template<class T>
 pair<T*, T*> Arena::allocArray(size_t elementCount) {
   pair<T*, T*> p = allocArrayNoCon<T>(elementCount);
@@ -272,9 +271,6 @@ pair<T*, T*> Arena::allocArray(size_t elementCount) {
   }
   return p;
 }
-#ifdef NEW_MACRO
-#define new NEW_MACRO
-#endif
 
 template<class T>
 void Arena::freeTopArray(T* array, T* arrayEnd) {

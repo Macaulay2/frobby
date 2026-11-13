@@ -36,7 +36,7 @@ void BigTermRecorder::consume(unique_ptr<BigIdeal> ideal) {
 }
 
 void BigTermRecorder::beginConsuming() {
-  unique_ptr<BigIdeal> ideal(new BigIdeal(_names));
+  unique_ptr<BigIdeal> ideal(FROBBY_NEW BigIdeal(_names));
   exceptionSafePushBack(_ideals, std::move(ideal));
 }
 

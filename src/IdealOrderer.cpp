@@ -271,7 +271,7 @@ namespace {
     if (prefix.substr(0, 3) == "rev") {
       unique_ptr<IdealOrderer> orderer =
         createWithPrefix(getOrdererFactory(), prefix.substr(3));
-      return unique_ptr<IdealOrderer>(new ReverseOrderer(std::move(orderer)));
+      return unique_ptr<IdealOrderer>(FROBBY_NEW ReverseOrderer(std::move(orderer)));
     } else
       return createWithPrefix(getOrdererFactory(), prefix);
   }
@@ -281,7 +281,7 @@ unique_ptr<IdealOrderer> createIdealOrderer(const string& prefix) {
   if (prefix.find('_') == string::npos)
     return createNonCompositeOrderer(prefix);
 
-  unique_ptr<CompositeOrderer> composite(new CompositeOrderer());
+  unique_ptr<CompositeOrderer> composite(FROBBY_NEW CompositeOrderer());
   size_t pos = 0;
   while (true) {
     size_t nextUnderscore = prefix.find('_', pos);

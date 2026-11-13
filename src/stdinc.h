@@ -43,11 +43,11 @@ void* operator new(size_t s, const char* file, size_t line);
 void* operator new[](size_t s, const char* file, size_t line);
 void operator delete(void* s, const char* file, size_t line);
 void operator delete[](void* s, const char* file, size_t line);
-#define NEW_MACRO new (__FILE__, __LINE__)
-#define new NEW_MACRO
+#define FROBBY_NEW new (__FILE__, __LINE__)
 #else
 #define IF_DEBUG(X)
 #define ASSERT(X)
+#define FROBBY_NEW new
 #endif
 
 typedef unsigned int Exponent;

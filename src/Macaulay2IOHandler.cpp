@@ -147,11 +147,11 @@ namespace IO {
   }
 
   BigTermConsumer* Macaulay2IOHandler::doCreateIdealWriter(FILE* out) {
-    return new M2IdealWriter(out);
+    return FROBBY_NEW M2IdealWriter(out);
   }
 
   CoefBigTermConsumer* Macaulay2IOHandler::doCreatePolynomialWriter(FILE* out) {
-    return new M2PolyWriter(out);
+    return FROBBY_NEW M2PolyWriter(out);
   }
 
   void Macaulay2IOHandler::doWriteTerm(const vector<mpz_class>& term,

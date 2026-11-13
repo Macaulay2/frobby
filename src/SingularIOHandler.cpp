@@ -118,12 +118,12 @@ namespace IO {
   }
 
   BigTermConsumer* SingularIOHandler::doCreateIdealWriter(FILE* out) {
-    return new SingularIdealWriter(out);
+    return FROBBY_NEW SingularIdealWriter(out);
   }
 
   CoefBigTermConsumer* SingularIOHandler::
   doCreatePolynomialWriter(FILE* out) {
-    return new SingularPolyWriter(out);
+    return FROBBY_NEW SingularPolyWriter(out);
   }
 
   void SingularIOHandler::doWriteTerm(const vector<mpz_class>& term,

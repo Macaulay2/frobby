@@ -46,7 +46,7 @@ void addDebugParam(CliParams& params) {
   ASSERT(!params.hasParam(PrintDebugName));
   params.add
     (unique_ptr<Parameter>
-     (new BoolParameter
+     (FROBBY_NEW BoolParameter
       ("debug",
        "Print what the algorithm does at each step.",
        false)));

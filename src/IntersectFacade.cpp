@@ -34,7 +34,7 @@ unique_ptr<BigIdeal> IntersectFacade::intersect(const vector<BigIdeal*>& ideals,
   beginAction("Intersecting ideals.");
 
   if (ideals.empty()) {
-    unique_ptr<BigIdeal> entireRing(new BigIdeal(emptyNames));
+    unique_ptr<BigIdeal> entireRing(FROBBY_NEW BigIdeal(emptyNames));
     entireRing->newLastTerm();
     return entireRing;
   }
@@ -46,7 +46,7 @@ unique_ptr<BigIdeal> IntersectFacade::intersect(const vector<BigIdeal*>& ideals,
   const VarNames& names = translator.getNames();
   size_t variableCount = names.getVarCount();
 
-  unique_ptr<Ideal> intersection(new Ideal(variableCount));
+  unique_ptr<Ideal> intersection(FROBBY_NEW Ideal(variableCount));
   Term identity(variableCount);
   intersection->insert(identity);
 
@@ -54,14 +54,14 @@ unique_ptr<BigIdeal> IntersectFacade::intersect(const vector<BigIdeal*>& ideals,
     ideals2[i]->minimize();
 
     // Compute intersection
-    unique_ptr<Ideal> tmp(new Ideal(variableCount));
+    unique_ptr<Ideal> tmp(FROBBY_NEW Ideal(variableCount));
     ::intersect(tmp.get(), intersection.get(), ideals2[i]);
 
     // Handle bookkeeping
     intersection = std::move(tmp);
   }
 
-  unique_ptr<BigIdeal> bigIdeal(new BigIdeal(names));
+  unique_ptr<BigIdeal> bigIdeal(FROBBY_NEW BigIdeal(names));
   bigIdeal->insert(*intersection, translator);
 
   endAction();

@@ -142,7 +142,7 @@ template<class ConcreteProduct, class AbstractProduct>
 void nameFactoryRegister(NameFactory<AbstractProduct>& factory) {
   struct HoldsFunction {
     static unique_ptr<AbstractProduct> createConcreteProduct() {
-      return unique_ptr<AbstractProduct>(new ConcreteProduct());
+      return unique_ptr<AbstractProduct>(FROBBY_NEW ConcreteProduct());
     }
   };
   factory.registerProduct(ConcreteProduct::staticGetName(),

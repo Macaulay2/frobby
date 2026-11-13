@@ -45,11 +45,11 @@ namespace IO {
   }
 
   BigTermConsumer* NullIOHandler::doCreateIdealWriter(FILE* out) {
-    return new NullTermConsumer();
+    return FROBBY_NEW NullTermConsumer();
   }
 
   CoefBigTermConsumer* NullIOHandler::doCreatePolynomialWriter(FILE* out) {
-    return new NullCoefTermConsumer();
+    return FROBBY_NEW NullCoefTermConsumer();
   }
 
   void NullIOHandler::doWriteTerm(const vector<mpz_class>& term,

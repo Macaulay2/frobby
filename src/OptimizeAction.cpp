@@ -146,7 +146,7 @@ void OptimizeAction::perform() {
     handler = _io.createOutputHandler();
     output = handler->createIdealWriter(stdout);
   } else
-    output.reset(new NullTermConsumer());
+    output.reset(FROBBY_NEW NullTermConsumer());
 
   SliceFacade facade(params, ideal, *output);
 

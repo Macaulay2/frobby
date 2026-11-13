@@ -910,7 +910,7 @@ unique_ptr<PivotStrategy> newStdPivotStrategy(const string& name) {
 
   unique_ptr<StdStrategy> subStrat =
 	getStdStratFactory().create(name.substr(6, name.size() - 6));
-  return unique_ptr<PivotStrategy>(new StdWiden(std::move(subStrat)));
+  return unique_ptr<PivotStrategy>(FROBBY_NEW StdWiden(std::move(subStrat)));
 }
 
 unique_ptr<PivotStrategy> newGenPivotStrategy(const string& name) {
@@ -920,7 +920,7 @@ unique_ptr<PivotStrategy> newGenPivotStrategy(const string& name) {
 	return unique_ptr<PivotStrategy>(strat.release());
   }
 
-  unique_ptr<GenComposite> composite(new GenComposite());
+  unique_ptr<GenComposite> composite(FROBBY_NEW GenComposite());
 
   size_t pos = 0;
   string part;
@@ -942,18 +942,18 @@ unique_ptr<PivotStrategy> newGenPivotStrategy(const string& name) {
 
 unique_ptr<PivotStrategy> newHybridPivotStrategy
 (unique_ptr<PivotStrategy> stdStrat, unique_ptr<PivotStrategy> genStrat) {
-  PivotStrategy* strat = new HybridPivotStrategy(std::move(stdStrat), std::move(genStrat));
+  PivotStrategy* strat = FROBBY_NEW HybridPivotStrategy(std::move(stdStrat), std::move(genStrat));
   return unique_ptr<PivotStrategy>(strat);
 }
 
 unique_ptr<PivotStrategy> newDebugPivotStrategy(unique_ptr<PivotStrategy> strat,
 											  FILE* out) {
-  return unique_ptr<PivotStrategy>(new DebugStrategy(std::move(strat), out));
+  return unique_ptr<PivotStrategy>(FROBBY_NEW DebugStrategy(std::move(strat), out));
 }
 
 unique_ptr<PivotStrategy> newStatisticsPivotStrategy
 (unique_ptr<PivotStrategy> strat, FILE* out) {
-  return unique_ptr<PivotStrategy>(new StatisticsStrategy(std::move(strat), out));
+  return unique_ptr<PivotStrategy>(FROBBY_NEW StatisticsStrategy(std::move(strat), out));
 }
 
 unique_ptr<PivotStrategy> newDefaultPivotStrategy() {

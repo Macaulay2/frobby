@@ -443,7 +443,7 @@ createStrategy(const string& prefix, bool widen) {
   ASSERT(strategy.get() != 0);
 
   if (widen)
-    strategy = unique_ptr<BigattiPivotStrategy>(new WidenPivot(std::move(strategy)));
+    strategy = unique_ptr<BigattiPivotStrategy>(FROBBY_NEW WidenPivot(std::move(strategy)));
 
   return strategy;
 }

@@ -27,7 +27,7 @@ Partition::Partition(const Partition& partition):
   _size(partition._size),
   _capacity(partition._size),
   _setCount(partition._setCount) {
-  _partitions = new int[_size];
+  _partitions = FROBBY_NEW int[_size];
   std::copy(partition._partitions,
             partition._partitions + _size, _partitions);
 }
@@ -39,7 +39,7 @@ Partition::~Partition() {
 void Partition::reset(size_t size) {
   if (size > _capacity) {
     delete[] _partitions;
-    _partitions = new int[size];
+    _partitions = FROBBY_NEW int[size];
     _capacity = size;
   }
 

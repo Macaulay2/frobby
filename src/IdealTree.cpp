@@ -122,8 +122,8 @@ void IdealTree::Node::makeTree() {
     ASSERT((*middle)[_var] > _pivot);
     ASSERT((*(middle - 1))[_var] <= _pivot);
 
-    _lessOrEqual.reset(new Node(_begin, middle, _varCount));
-    _greater.reset(new Node(middle, _end, _varCount));
+    _lessOrEqual.reset(FROBBY_NEW Node(_begin, middle, _varCount));
+    _greater.reset(FROBBY_NEW Node(middle, _end, _varCount));
 
     _lessOrEqual->makeTree();
     _greater->makeTree();
@@ -148,9 +148,9 @@ bool IdealTree::Node::strictlyContains(const Exponent* term) const {
 IdealTree::IdealTree(const Ideal& ideal) {
   // not using initialization for this to avoid depending on order of
   // initialization of members.
-  _storage.reset(new Ideal(ideal));
+  _storage.reset(FROBBY_NEW Ideal(ideal));
   _root.reset
-    (new Node(_storage->begin(), _storage->end(), ideal.getVarCount()));
+    (FROBBY_NEW Node(_storage->begin(), _storage->end(), ideal.getVarCount()));
 }
 
 IdealTree::~IdealTree() {

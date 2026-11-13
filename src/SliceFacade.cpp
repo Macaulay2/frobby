@@ -474,14 +474,14 @@ void SliceFacade::runSliceAlgorithmWithOptions(SliceStrategy& strategy) {
   unique_ptr<SliceStrategy> debugStrategy;
   if (_params.getPrintDebug()) {
     debugStrategy.reset
-      (new DebugStrategy(strategyWithOptions, stderr));
+      (FROBBY_NEW DebugStrategy(strategyWithOptions, stderr));
     strategyWithOptions = debugStrategy.get();
   }
 
   unique_ptr<SliceStrategy> statisticsStrategy;
   if (_params.getPrintStatistics()) {
     statisticsStrategy.reset
-      (new StatisticsStrategy(strategyWithOptions, stderr));
+      (FROBBY_NEW StatisticsStrategy(strategyWithOptions, stderr));
     strategyWithOptions = statisticsStrategy.get();
   }
 

@@ -162,11 +162,11 @@ namespace IO {
   }
 
   BigTermConsumer* CoCoA4IOHandler::doCreateIdealWriter(FILE* out) {
-    return new CoCoA4IdealWriter(out);
+    return FROBBY_NEW CoCoA4IdealWriter(out);
   }
 
   CoefBigTermConsumer* CoCoA4IOHandler::doCreatePolynomialWriter(FILE* out) {
-    return new CoCoA4PolyWriter(out);
+    return FROBBY_NEW CoCoA4PolyWriter(out);
   }
 
   void CoCoA4IOHandler::doWriteTerm(const vector<mpz_class>& term,

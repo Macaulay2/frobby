@@ -45,7 +45,7 @@ namespace {
 
     void ensureInit() {
       if (objects == 0)
-        objects = new Exponent*[ObjectPoolSize];
+        objects = FROBBY_NEW Exponent*[ObjectPoolSize];
     }
 
     bool empty() const {
@@ -92,7 +92,7 @@ Exponent* Term::allocate(size_t size) {
       return pools[size].removeObject();
   }
 
-  return new Exponent[size];
+  return FROBBY_NEW Exponent[size];
 }
 
 void Term::deallocate(Exponent* p, size_t size) {
