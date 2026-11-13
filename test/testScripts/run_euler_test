@@ -17,20 +17,20 @@ if [ "$1" = "_full" ];
 then
   shift;
   # try hybrid too
-  $testhelper euler $tmpFile $test.euler -pivot hybrid $*
+  $testhelper euler $tmpFile $test.euler $* -pivot hybrid
   if [ $? != 0 ]; then exit 1; fi
 
   # inverting twice should give the same answer
   $frobby transform -swap01 < $tmpFile > $tmpFileInverted 2>/dev/null
-  $testhelper euler $tmpFileInverted $test.euler -swap01 $*
+  $testhelper euler $tmpFileInverted $test.euler $* -swap01
   if [ $? != 0 ]; then exit 1; fi
 
   # no transpose
-  $testhelper euler $tmpFile $test.euler -pivot gen -autotranspose off $*
+  $testhelper euler $tmpFile $test.euler $* -pivot gen -autotranspose off
   if [ $? != 0 ]; then exit 1; fi
-  $testhelper euler $tmpFile $test.euler -pivot std -autotranspose off $*
+  $testhelper euler $tmpFile $test.euler $* -pivot std -autotranspose off
   if [ $? != 0 ]; then exit 1; fi
-  $testhelper euler $tmpFile $test.euler -pivot hybrid -autotranspose off $*
+  $testhelper euler $tmpFile $test.euler $* -pivot hybrid -autotranspose off
   if [ $? != 0 ]; then exit 1; fi
 
   # e2, e4, e13, e15, e16 and t24 are mathematical counterexamples
@@ -43,43 +43,43 @@ then
   if [ "$test" != "t24" ]; then
     # forced transpose
     $frobby transform -transpose < $tmpFile > $tmpFileTransposed 2>/dev/null
-    $testhelper euler $tmpFileTransposed $test.euler \
-      -pivot gen -autotranspose off $*
+    $testhelper euler $tmpFileTransposed $test.euler $* \
+      -pivot gen -autotranspose off
     if [ $? != 0 ]; then exit 1; fi
-    $testhelper euler $tmpFileTransposed $test.euler \
-      -pivot std -autotranspose off $*
+    $testhelper euler $tmpFileTransposed $test.euler $* \
+      -pivot std -autotranspose off
     if [ $? != 0 ]; then exit 1; fi
-    $testhelper euler $tmpFileTransposed $test.euler \
-      -pivot hybrid -autotranspose off $*
+    $testhelper euler $tmpFileTransposed $test.euler $* \
+      -pivot hybrid -autotranspose off
     if [ $? != 0 ]; then exit 1; fi
   fi fi fi fi fi fi
 
   # try gen pivot selection strategies
   for genp in $genPivots; do
-    $testhelper euler $tmpFile $test.euler -pivot gen -genPivot $genp $*
+    $testhelper euler $tmpFile $test.euler $* -pivot gen -genPivot $genp
     if [ $? != 0 ]; then exit 1; fi
-    $testhelper euler $tmpFile $test.euler -pivot gen -genPivot $genp -stats $*
+    $testhelper euler $tmpFile $test.euler $* -pivot gen -genPivot $genp -stats
     if [ $? != 0 ]; then exit 1; fi
-    $testhelper euler $tmpFile $test.euler -pivot gen \
-      -genPivot ${genp}_maxsupp_${genp}_any $* # composite strategy
+    $testhelper euler $tmpFile $test.euler $* -pivot gen \
+      -genPivot ${genp}_maxsupp_${genp}_any # composite strategy
     if [ $? != 0 ]; then exit 1; fi
   done
 
   # try std pivot selection strategies
   for stdp in $stdPivots; do
-    $testhelper euler $tmpFile $test.euler -pivot std -stdPivot $stdp $*
+    $testhelper euler $tmpFile $test.euler $* -pivot std -stdPivot $stdp
     if [ $? != 0 ]; then exit 1; fi
-    $testhelper euler $tmpFile $test.euler -pivot std -stdPivot $stdp -stats $*
+    $testhelper euler $tmpFile $test.euler $* -pivot std -stdPivot $stdp -stats
     if [ $? != 0 ]; then exit 1; fi
-    $testhelper euler $tmpFile $test.euler -pivot std \
-      -stdPivot widen_${stdp} $* # composite strategy
+    $testhelper euler $tmpFile $test.euler $* -pivot std \
+      -stdPivot widen_${stdp} # composite strategy
     if [ $? != 0 ]; then exit 1; fi
   done
 fi
 
-$testhelper euler $tmpFile $test.euler -pivot gen $*
+$testhelper euler $tmpFile $test.euler $* -pivot gen
 if [ $? != 0 ]; then exit 1; fi
-$testhelper euler $tmpFile $test.euler -pivot std $*
+$testhelper euler $tmpFile $test.euler $* -pivot std
 if [ $? != 0 ]; then exit 1; fi
 
 rm -f $tmpFile $tmpFileInverted $tmpFileTransposed
