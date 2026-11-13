@@ -173,6 +173,7 @@ public:
   DoubleLcmPredicate(const Term& lcm):
     _lcm(lcm) {
   }
+  DoubleLcmPredicate(const DoubleLcmPredicate&) = default;
 
   bool operator()(const Exponent* term) {
     bool seenMatch = false;

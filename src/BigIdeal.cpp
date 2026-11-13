@@ -29,6 +29,7 @@ class OffsetTermCompare {
 public:
   OffsetTermCompare(const BigIdeal& ideal): _ideal(ideal) {
   }
+  OffsetTermCompare(const OffsetTermCompare&) = default;
 
   bool operator()(size_t aa, size_t bb) const {
     const vector<mpz_class>& a = _ideal.getTerm(aa);

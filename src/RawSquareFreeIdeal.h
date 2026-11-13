@@ -221,6 +221,7 @@ class RawSquareFreeIdeal {
   const_iterator(const Word* term, size_t wordsPerTerm):
 	_term(term), _wordsPerTerm(wordsPerTerm) {
 	}
+	const_iterator(const const_iterator&) = default;
 
 	const Word* operator*() const {return _term;}
 	const_iterator operator++() {_term += _wordsPerTerm; return *this;}
@@ -261,6 +262,7 @@ class RawSquareFreeIdeal {
   iterator(Word* term, size_t wordsPerTerm):
 	_term(term), _wordsPerTerm(wordsPerTerm) {
 	}
+	iterator(const iterator&) = default;
 
 	operator const_iterator() const {
 	  return const_iterator(_term, _wordsPerTerm);

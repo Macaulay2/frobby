@@ -88,6 +88,7 @@ class Neighbor {
   Neighbor(); // invalid
   Neighbor(const GrobLat& lat); // zero
   Neighbor(const GrobLat& lat, const size_t row); // row of lat
+  Neighbor(const Neighbor&) = default;
 
   Neighbor& operator=(const Neighbor& neighbor) {
 	_lat = neighbor._lat;
