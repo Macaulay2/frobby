@@ -73,10 +73,8 @@ using namespace std;
 #define IF_DEBUG(X) X
 #include <cassert>
 #define ASSERT(X) assert(X);
-void* operator new(size_t s, const char* file, size_t line)
-  throw (std::bad_alloc);
-void* operator new[](size_t s, const char* file, size_t line)
-  throw (std::bad_alloc);
+void* operator new(size_t s, const char* file, size_t line);
+void* operator new[](size_t s, const char* file, size_t line);
 void operator delete(void* s, const char* file, size_t line);
 void operator delete[](void* s, const char* file, size_t line);
 #define NEW_MACRO new (__FILE__, __LINE__)

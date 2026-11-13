@@ -243,29 +243,27 @@ DebugAllocator::DebugAllocator():
   _allocationLimit(0) {
 }
 
-void* operator new(size_t size, const char* file, size_t lineNumber)
-  throw(bad_alloc) {
+void* operator new(size_t size, const char* file, size_t lineNumber) {
   return DebugAllocator::getSingleton().allocate(size, file, lineNumber);
 }
 
-void* operator new[](size_t size, const char* file, size_t lineNumber)
-  throw(bad_alloc) {
+void* operator new[](size_t size, const char* file, size_t lineNumber) {
   return DebugAllocator::getSingleton().allocate(size, file, lineNumber);
 }
 
-void* operator new(size_t size) throw (bad_alloc) {
+void* operator new(size_t size) {
   return DebugAllocator::getSingleton().allocate(size);
 }
 
-void* operator new[](size_t size) throw (bad_alloc) {
+void* operator new[](size_t size) {
   return DebugAllocator::getSingleton().allocate(size);
 }
 
-void operator delete(void* buffer) throw() {
+void operator delete(void* buffer) noexcept {
   free(buffer);
 }
 
-void operator delete[](void* buffer) throw() {
+void operator delete[](void* buffer) noexcept {
   free(buffer);
 }
 
