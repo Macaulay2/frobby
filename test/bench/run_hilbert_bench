@@ -1,18 +1,5 @@
 #!/usr/bin/env bash
 
-profileFile=$abs_builddir/profile.hilbert
-frobby=$abs_builddir/src/frobby
-if [ "$1" = "_profile" ];
-then
-  rm -f gmon.out
-fi
-
 ./benchHelper hilbert nearGenericV15G50.test $*
 ./benchHelper hilbert nearGenericV15G50.test $*
 ./benchHelper hilbert n8d30.test $*
-
-if [ "$1" = "_profile" ];
-then
-  gprof $frobby > $profileFile
-  rm -f gmon.out
-fi

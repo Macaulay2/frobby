@@ -74,10 +74,6 @@ int main(int argc, const char** argv) {
 #endif
           (unsigned int)clock());
 
-#ifdef PROFILE
-    fputs("This is a PROFILE build of Frobby. It is therefore SLOW.\n",
-          stderr);
-#endif
 #ifdef DEBUG
     fputs("This is a DEBUG build of Frobby. It is therefore SLOW.\n",
           stderr);

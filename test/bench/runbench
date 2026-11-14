@@ -8,7 +8,7 @@ logFile=$abs_builddir/benchLog
 # also allows a nice column organization using the column tool.
 echo -e "\n********************************"|tee /tmp/benchHeader
 
-# to indicate DEBUG or PROFILE builds
+# to indicate DEBUG builds
 $frobby transform -iformat null -oformat null 2>&1|tee -a /tmp/benchHeader
 echo -ne "Options: $*\nDate: "|tee -a /tmp/benchHeader
 date|tee -a /tmp/benchHeader

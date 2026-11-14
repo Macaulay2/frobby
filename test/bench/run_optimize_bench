@@ -1,12 +1,5 @@
 #!/usr/bin/env bash
 
-profileFile=$abs_builddir/profile.optimize
-frobby=$abs_srcdir/build/frobby
-if [ "$1" = "_profile" ];
-then
-  rm -f gmon.out
-fi
-
 ./benchHelper optimize nearGenericV15G50.test $* \
   -displayLevel 0 -displayValue off
 
@@ -17,9 +10,3 @@ cat n11d11.test n11d11 > /tmp/n11d11.test
 ./benchHelper optimize /tmp/n11d11.test $* \
   -displayLevel 0 -displayValue off -chopFirstAndSubtract
 rm -f /tmp/n11d11.test
-
-if [ "$1" = "_profile" ];
-then
-  gprof $frobby > $profileFile
-  rm -f gmon.out
-fi
