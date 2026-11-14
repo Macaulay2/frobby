@@ -48,8 +48,7 @@ installcheck-local:
 export abs_srcdir
 export abs_builddir
 
-# Run benchmarks to detect performance regressions. When MODE=profile,
-# profile files for the benchmarked actions will be placed in bin/.
+# Run benchmarks to detect performance regressions.
 bench: all
 	cd $(srcdir)/test/bench; ./runbench $(benchArgs)
 benchHilbert: all

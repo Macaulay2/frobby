@@ -1,20 +1,7 @@
 #!/usr/bin/env bash
 
-profileFile=../../bin/profile.codim
-frobby=../../bin/frobby
-if [ "$1" = "_profile" ];
-then
-  rm -f gmon.out
-fi
-
 ./benchHelper dimension edgeV90G600.test _noOFormat $*
 
 ./benchHelper dimension sqfreeV80G1000.test _noOFormat $*
 
 ./benchHelper dimension king9.test _noOFormat $*
-
-if [ "$1" = "_profile" ];
-then
-  gprof $frobby > $profileFile
-  rm -f gmon.out
-fi

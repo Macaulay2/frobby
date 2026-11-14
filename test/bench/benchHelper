@@ -11,9 +11,6 @@
 # Parameter 2 can contain more than one file if this script has been called
 # as e.g. "../thisscript action "file1 file2"
 #
-# If $3 is _profile, then the warning Frobby issues on running
-# a profile build is not displayed.
-#
 # If $3 is _runs, then $4 must be an integer, and the benchmark will
 # be run that many times
 #
@@ -33,7 +30,6 @@ shift
 shift
 
 runsToMake=1;
-suppresProfile=0;
 displayDetails=1;
 oformat="-oformat null"
 
@@ -41,13 +37,6 @@ changed=1;
 while [ $changed = 1 ];
 do
   changed=0;
-
-  if [ "$1" = "_profile" ];
-  then
-    changed=1;
-    suppressProfile=1;
-    shift;
-  fi
 
   if [ "$1" = "_runs" ];
   then
@@ -78,20 +67,12 @@ function runFrobby {
   cat $inputFile|$frobby $action $oformat $params 1>/dev/null 2>&1
 }
 
-function suppressFrobby {
-  if [ "$suppressProfile" = "1" ]; then
-    runFrobby|sed /PROFILE/d
-  else
-    runFrobby
-  fi
-}
-
 function timeFrobby {
   # Creating a subshell and using tr is the only way I know of to get
   # rid of the trailing newline that time appends to the end. We have
   # to get rid of this to put more than one benchmark time on the same
   # line.
-  (time suppressFrobby) 2>&1|tr -d '\012'
+  (time runFrobby) 2>&1|tr -d '\012'
 }
 
 if [ "$displayDetails" = "1" ]; then

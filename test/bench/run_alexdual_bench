@@ -1,18 +1,5 @@
 #!/usr/bin/env bash
 
-profileFile=$abs_builddir/src/profile.alexdual
-frobby=$abs_builddir/src/frobby
-if [ "$1" = "_profile" ];
-then
-  rm -f gmon.out
-fi
-
 ./benchHelper alexdual nearGenericV15G50.test $*
 ./benchHelper alexdual sqfreeV25G1000.test $*
 ./benchHelper alexdual n11d11.test $*
-
-if [ "$1" = "_profile" ];
-then
-  gprof $frobby > $profileFile
-  rm -f gmon.out
-fi
