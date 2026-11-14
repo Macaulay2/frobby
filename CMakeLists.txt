@@ -241,6 +241,6 @@ if(BUILD_TESTING)
     )
   target_link_libraries(frobby-tests frobby)
 
-  # TODO: see testing section in Makefile
+  # TODO: see testing section in Makefile.am
   # add_test()
 endif()
