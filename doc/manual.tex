@@ -820,10 +820,13 @@ The frobdyn action uses an obscenely slow dynamic programming
 algorithm to compute the Frobenius number. If you install the program
 4ti2 and put it into the empty 4ti2 subfolder of the Frobby folder,
 you can use an algorithm that is much faster when the Frobenius number
-itself is moderately large.
+itself is moderately large. If 4ti2 is already installed elsewhere,
+set the environment variable FOURTI2\_PREFIX instead to what goes in
+front of the names of its programs groebner and zbasis, e.g. 4ti2- if
+your system calls them 4ti2-groebner and 4ti2-zbasis.
 
-Assume that you have installed 4ti2 in that folder. Then, within the
-Frobby folder, type
+Assume that you have installed 4ti2 in one of these ways. Then, within
+the Frobby folder, type
 \begin{verbatim}
 ./frobgrob frob
 \end{verbatim}
@@ -853,9 +856,11 @@ in increasing order.
 
 Note that ./frobgrob is a script that uses 4ti2 and the frobgrob
 action of Frobby. This is a bit annoying to get right, which is why
-there is a script doing it. To get a hint on how to do this yourself
-directly without using the script, take a look at the script, look at
-the documentation for 4ti2, and type
+there is a script doing it. The script runs the frobby program in your
+path, or the one that the environment variable FROBBY gives. To get a
+hint on how to do this yourself directly without using the script,
+take a look at the script, look at the documentation for 4ti2, and
+type
 \begin{verbatim}
 frobby help frobgrob
 \end{verbatim}
