@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-frobby=$abs_builddir/src/frobby
+frobby=$FROBBY
 testhelper=../testScripts/testhelper
 test="$1"
 shift
@@ -21,21 +21,21 @@ then
   if [ $? != 0 ]; then exit 1; fi
 
   # Check that double dual on the same point is identity.
-  $frobby transform < `ls $test.*test` > /tmp/$test.test \
+  $frobby transform < `ls $test.*test` > $FROBBY_TEST_TMPDIR/$test.test \
     -canon -minimize 2>/dev/null
   if [ -e "$test.alexdual_point" ];
   then
     pointFile="$test.alexdual_point";
   else
-    $frobby analyze < /tmp/$test.test 2>/dev/null > /tmp/alexdual_point \
+    $frobby analyze < $FROBBY_TEST_TMPDIR/$test.test 2>/dev/null > $FROBBY_TEST_TMPDIR/alexdual_point \
       -lcm -summaryLevel 0
-    pointFile="/tmp/alexdual_point";
+    pointFile="$FROBBY_TEST_TMPDIR/alexdual_point";
   fi
 
-  $testhelper alexdual "$test.alexdual $pointFile" /tmp/$test.test $* -canon
+  $testhelper alexdual "$test.alexdual $pointFile" $FROBBY_TEST_TMPDIR/$test.test $* -canon
   if [ $? != 0 ]; then exit 1; fi
 
-  rm -f /tmp/$test.test /tmp/alexdual_point
+  rm -f $FROBBY_TEST_TMPDIR/$test.test $FROBBY_TEST_TMPDIR/alexdual_point
 fi
 
 $testhelper alexdual "$input" $test.alexdual $* -canon

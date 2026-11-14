@@ -3,9 +3,8 @@ SUBDIRS = src doc
 EXTRA_DIST = autogen.sh README.md changelog.txt GPL-header              \
   CMakeLists.txt cmake/FindGMP.cmake cmake/FindMPIR.cmake test/bench    \
   test/bigIdeals test/commonIdeals test/frob test/idealFormats          \
-  test/internal test/intersect test/irrdecom test/latticeFormats        \
-  test/messages test/polyFormats test/runSplitTests test/runTests       \
-  test/specialIdeals test/testScripts
+  test/intersect test/irrdecom test/latticeFormats test/messages        \
+  test/polyFormats test/runTestGroup test/specialIdeals test/testScripts
 
 DOC_TARGETS = doc docPs docPdf
 
@@ -19,43 +18,34 @@ $(DOC_TARGETS):
 MOSTLYCLEANFILES = $(DX_CLEANFILES)
 
 # ****************** Testing
-# use TESTARGS of
+# make check runs the unit tests in src and these groups of tests of
+# the frobby executable, which make installcheck runs on the installed
+# frobby.  Set TEST_LEVEL=few for fewer tests or TEST_LEVEL=full for
+# more, including the split_* groups, which are skipped otherwise, and
+# TESTARGS for options to test/testScripts/testhelper, e.g.
 #  _valgrind to run under valgrind.
-#  _debugAlloc to test recovery when running out of memory.
-#  _full to obtain extra tests by verifying relations
-#    between outputs of different actions, and generally testing
-#    everything that can be tested.
-# _full cannot follow the other options because it is picked up at an earlier
-# point in the test system than they are. There are more options - see
-# test/testScripts/testhelper for a full list.
-#
-# Only miniTest and bareTest support TESTARGS, and some options are not
-# available unless MODE=debug.
+#  _debugAlloc to test recovery from running out of memory, which
+#    needs --enable-debug.
+# To run only some groups, use e.g. make check-TESTS TESTS=euler, since
+# make check would also pass TESTS to src.
+TESTS = euler alexdual hilbert_deform hilbert_bigatti hilbert_slice     \
+  dimension primdecom intersect assoprimes minimize irrdecom radical    \
+  frob maxstandard optimize idealFormats polyFormats latticeFormats     \
+  messages split_hilbert_bigatti split_optimize split_irrdecom          \
+  split_assoprimes split_alexdual split_hilbert_slice split_frob
+LOG_COMPILER = $(srcdir)/test/runTestGroup
+FROBBY = $(abs_top_builddir)/src/frobby$(EXEEXT)
+AM_TESTS_ENVIRONMENT = FROBBY='$(FROBBY)' TEST_LEVEL='$(TEST_LEVEL)'    \
+  TESTARGS='$(TESTARGS)'; export FROBBY TEST_LEVEL TESTARGS;
 
-# The correct choice to do a reasonably thorough test of an
-# installation of Frobby.
+# The tests are names of groups for test/runTestGroup, not files.
+$(TESTS):
+
+installcheck-local:
+	$(MAKE) $(AM_MAKEFLAGS) check-TESTS FROBBY='$(bindir)/frobby$(EXEEXT)'
 
 export abs_srcdir
 export abs_builddir
-
-test: all
-	$(srcdir)/test/runTests
-
-# Run all tests that it makes sense to run.
-fullTest: all
-	$(srcdir)/test/runTests _full
-	$(srcdir)/test/runSplitTests _full
-
-# Good for testing Frobby after a small change.
-microTest: all
-	$(srcdir)/test/runTests _few $(TESTARGS)
-miniTest: all
-	$(srcdir)/test/runTests $(TESTARGS)
-
-# Runs all tests and allows full control over the arguments.
-bareTest: all
-	$(srcdir)/test/runTests $(TESTARGS)
-	$(srcdir)/test/runSplitTests $(TESTARGS)
 
 # Run benchmarks to detect performance regressions. When MODE=profile,
 # profile files for the benchmarked actions will be placed in bin/.

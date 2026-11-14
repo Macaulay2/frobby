@@ -1,11 +1,11 @@
 #!/usr/bin/env sh
 
-frobby=$abs_builddir/src/frobby
+frobby=$FROBBY
 testhelper=../testScripts/testhelper
 test="$1"
-tmpFile=./frobbyEulerRadicalTmp
-tmpFileInverted=./frobbyEulerRadicalInvertedTmp
-tmpFileTransposed=./frobbyEulerRadicalTransposedTmp
+tmpFile=$FROBBY_TEST_TMPDIR/frobbyEulerRadicalTmp
+tmpFileInverted=$FROBBY_TEST_TMPDIR/frobbyEulerRadicalInvertedTmp
+tmpFileTransposed=$FROBBY_TEST_TMPDIR/frobbyEulerRadicalTransposedTmp
 genPivots="rarevar popvar maxsupp minsupp any random rarest raremax"
 stdPivots="popvar rarevar popgcd any random"
 shift

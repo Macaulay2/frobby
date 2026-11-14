@@ -6,7 +6,7 @@
 # specifying the output format.
 
 testhelper=../testScripts/testhelper
-frobby=$abs_builddir/src/frobby
+frobby=$FROBBY
 testName="$1"
 shift
 
@@ -24,8 +24,8 @@ then
   # Inverting twice should give same answer
   for format in $formats; do
     $frobby transform -swap01 -oformat $format < $inputFile \
-      > /tmp/frobbyTestInvert 2>/dev/null $null;
-    $testhelper transform /tmp/frobbyTestInvert $testName.$format \
+      > $FROBBY_TEST_TMPDIR/frobbyTestInvert 2>/dev/null $null;
+    $testhelper transform $FROBBY_TEST_TMPDIR/frobbyTestInvert $testName.$format \
       -iformat $format -swap01;
     if [ $? != 0 ]; then exit 1; fi
   done
@@ -66,17 +66,17 @@ then
 
   for format in $formats; do
     id="-$testName-$format";
-    $frobby intersect < $inputFile > /tmp/frobby_intersect$id \
+    $frobby intersect < $inputFile > $FROBBY_TEST_TMPDIR/frobby_intersect$id \
        -oformat $format 2>/dev/null $null;
-    $frobby alexdual < /tmp/frobby_intersect$id \
-      > /tmp/frobby_alex_out$id 2>/dev/null -canon;
-    $frobby transform < /tmp/frobby_intersect$id -minimize 2>/dev/null| \
+    $frobby alexdual < $FROBBY_TEST_TMPDIR/frobby_intersect$id \
+      > $FROBBY_TEST_TMPDIR/frobby_alex_out$id 2>/dev/null -canon;
+    $frobby transform < $FROBBY_TEST_TMPDIR/frobby_intersect$id -minimize 2>/dev/null| \
 	  $frobby analyze -summaryLevel 0 -lcm 2>/dev/null| \
-      cat /tmp/frobby_intersect$id - > /tmp/frobby_alex_in$id;
-    $testhelper alexdual /tmp/frobby_alex_in$id \
-      /tmp/frobby_alex_out$id -canon;
+      cat $FROBBY_TEST_TMPDIR/frobby_intersect$id - > $FROBBY_TEST_TMPDIR/frobby_alex_in$id;
+    $testhelper alexdual $FROBBY_TEST_TMPDIR/frobby_alex_in$id \
+      $FROBBY_TEST_TMPDIR/frobby_alex_out$id -canon;
     if [ $? != 0 ]; then exit 1; fi
-	rm /tmp/frobby_intersect$id /tmp/frobby_alex_in$id /tmp/frobby_alex_out$id
+	rm $FROBBY_TEST_TMPDIR/frobby_intersect$id $FROBBY_TEST_TMPDIR/frobby_alex_in$id $FROBBY_TEST_TMPDIR/frobby_alex_out$id
   done
 fi
 

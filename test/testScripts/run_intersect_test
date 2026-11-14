@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-frobby=$abs_builddir/src/frobby
+frobby=$FROBBY
 testhelper=../testScripts/testhelper
 test="$1"
 shift
@@ -18,16 +18,16 @@ then
   # other ideals that should contain the intersection, yields the same
   # result.
   cat $test.*test $test.intersection $test.radical \
-     $test.minimize $test.*test > /tmp/$test.test
-  $testhelper intersection /tmp/$test.test $test.intersection $* -canon
+     $test.minimize $test.*test > $FROBBY_TEST_TMPDIR/$test.test
+  $testhelper intersection $FROBBY_TEST_TMPDIR/$test.test $test.intersection $* -canon
   if [ $? != 0 ]; then exit 1; fi
 
   # Try again after a canonicalization.
-  $frobby transform < /tmp/$test.test > /tmp/$test.test2 2>/dev/null
-  $testhelper intersection /tmp/$test.test2 $test.intersection $* -canon
+  $frobby transform < $FROBBY_TEST_TMPDIR/$test.test > $FROBBY_TEST_TMPDIR/$test.test2 2>/dev/null
+  $testhelper intersection $FROBBY_TEST_TMPDIR/$test.test2 $test.intersection $* -canon
   if [ $? != 0 ]; then exit 1; fi
 
-  rm /tmp/$test.test /tmp/$test.test2
+  rm $FROBBY_TEST_TMPDIR/$test.test $FROBBY_TEST_TMPDIR/$test.test2
 fi
 
 $testhelper intersection $test.*test $test.intersection $* -canon

@@ -9,7 +9,7 @@
 action="$1"
 shift
 
-tmpFile="./errorTestHelperTmp"
+tmpFile="$FROBBY_TEST_TMPDIR/errorTestHelperTmp"
 echo "$1" > $tmpFile
 shift
 
