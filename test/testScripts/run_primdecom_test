@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-frobby=$abs_builddir/src/frobby
+frobby=$FROBBY
 testhelper=../testScripts/testhelper
 test="$1"
 shift
@@ -14,11 +14,11 @@ then
   if [ $? != 0 ]; then exit 1; fi
 
   # Check that intersection is inverse of primdecom.
-  $frobby transform < `ls $test.*test` > /tmp/$test.test \
+  $frobby transform < `ls $test.*test` > $FROBBY_TEST_TMPDIR/$test.test \
     -canon -minimize 2>/dev/null
-  $testhelper intersect $test.primdecom /tmp/$test.test -canon
+  $testhelper intersect $test.primdecom $FROBBY_TEST_TMPDIR/$test.test -canon
   if [ $? != 0 ]; then exit 1; fi
-  rm /tmp/$test.test
+  rm $FROBBY_TEST_TMPDIR/$test.test
 fi
 
 $testhelper primdecom $test.*test $test.primdecom $* -canon

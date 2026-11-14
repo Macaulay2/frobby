@@ -53,14 +53,15 @@
 # Frobby.
 #
 # This script is designed to be run from a sub-directory of where it
-# resides.
+# resides. It runs $FROBBY and writes temporary files to
+# $FROBBY_TEST_TMPDIR, both of which ../runTestGroup sets.
 
 origParams="$*" # used for debug output below
-origFrobby="$abs_builddir/src/frobby"
-origFrobbyOut="./frobbyTestScriptTemporary_standardOutput"
-origFrobbyErr="./frobbyTestScriptTemporary_standardError"
-frobbyChangedErr="./frobbyTestScriptTemporary_standardErrorChanged"
-frobbyChangedInput="./frobbyTestScriptTemporary_standardInput"
+origFrobby="$FROBBY"
+origFrobbyOut="$FROBBY_TEST_TMPDIR/frobbyTestScriptTemporary_standardOutput"
+origFrobbyErr="$FROBBY_TEST_TMPDIR/frobbyTestScriptTemporary_standardError"
+frobbyChangedErr="$FROBBY_TEST_TMPDIR/frobbyTestScriptTemporary_standardErrorChanged"
+frobbyChangedInput="$FROBBY_TEST_TMPDIR/frobbyTestScriptTemporary_standardInput"
 
 frobby="$origFrobby"
 frobbyOut="$origFrobbyOut"

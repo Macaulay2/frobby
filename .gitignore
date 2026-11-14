@@ -14,8 +14,6 @@ ex/
 ideals/
 bin/
 tmp/
-*_standard*
-test/messages/errorTestHelperTmp
 Makefile.in
 aclocal.m4
 autom4te.cache/

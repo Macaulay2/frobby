@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+
+# Runs one group of tests of the frobby executable, e.g. "runTestGroup
+# euler". This is the test driver for make check and make
+# installcheck. Groups named after an action, e.g. euler, run that
+# action on the test ideals, and groups named split_ACTION run it with
+# each of its split strategies, but only when TEST_LEVEL is full.
+#
+# Environment:
+#   FROBBY      the frobby executable to test
+#   TEST_LEVEL  few, normal (the default) or full
+#   TESTARGS    options for testScripts/testhelper, e.g. _valgrind
+
+group=$(basename "$1")
+testdir=$(cd "$(dirname "$0")" && pwd)
+
+if [ -z "$FROBBY" ]; then
+  echo "runTestGroup: FROBBY is not set" >&2
+  exit 99
+fi
+
+case "$TEST_LEVEL" in
+  few|normal|"") params="$TESTARGS" ;;
+  full) params="_full $TESTARGS" ;;
+  *) echo "runTestGroup: unknown TEST_LEVEL $TEST_LEVEL" >&2; exit 99 ;;
+esac
+
+FROBBY_TEST_TMPDIR=$(mktemp -d) || exit 99
+trap 'rm -rf "$FROBBY_TEST_TMPDIR"' EXIT
+export FROBBY FROBBY_TEST_TMPDIR
+
+# Runs testScripts/runtests for an action on the ideals in a directory.
+runAction () {
+  action="$1"; dir="$2"; shift 2
+  echo -n " $dir "
+  (cd "$testdir/$dir" && ../testScripts/runtests "$action" $params "$@") ||
+    exit 1
+  echo
+}
+
+# Runs the runtests script in a directory.
+runOwnTests () {
+  dir="$1"
+  echo -n " $dir "
+  (cd "$testdir/$dir" && ./runtests $params) || exit 1
+  echo
+}
+
+runNormalTest () {
+  action="$1"
+  runAction $action specialIdeals
+  if [ "$TEST_LEVEL" = few ] && [ "$action" != frob ]; then return; fi
+  runAction $action commonIdeals
+  runAction $action frob
+  if [ "$action" = euler ]; then runAction $action bigIdeals; fi
+  if [ -x "$testdir/$action/runtests" ]; then
+    runOwnTests $action
+  elif [ -d "$testdir/$action" ]; then
+    runAction $action $action
+  fi
+}
+
+runSplitTest () {
+  action="$1"; shift
+  for split in "$@"; do
+    echo "-split $split:"
+    for dir in specialIdeals commonIdeals frob; do
+      runAction $action $dir -split $split
+    done
+  done
+}
+
+case "$group" in
+  split_*) if [ "$TEST_LEVEL" != full ]; then exit 77; fi ;;
+esac
+
+pivotSplits="minimum median maximum gcd indep"
+labelSplits="maxlabel varlabel minlabel $pivotSplits"
+
+case "$group" in
+  euler|alexdual|hilbert_deform|hilbert_bigatti|hilbert_slice|dimension|\
+  primdecom|intersect|assoprimes|minimize|irrdecom|radical|frob|\
+  maxstandard|optimize)
+    runNormalTest $group ;;
+  idealFormats|polyFormats|latticeFormats|messages)
+    runOwnTests $group ;;
+  split_hilbert_bigatti)
+    runSplitTest hilbert_bigatti median mostNGPure mostNGGcd mostNGTight \
+      typicalPure typicalGcd typicalTight typicalNGPure typicalNGGcd \
+      typicalNGTight someNGPure someNGGcd someNGTight ;;
+  split_optimize|split_irrdecom|split_assoprimes|split_alexdual)
+    runSplitTest ${group#split_} $labelSplits ;;
+  split_hilbert_slice)
+    runSplitTest hilbert_slice $pivotSplits ;;
+  split_frob)
+    runSplitTest frob frob $labelSplits ;;
+  *)
+    echo "runTestGroup: unknown test group $group" >&2
+    exit 99 ;;
+esac

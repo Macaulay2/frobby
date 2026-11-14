@@ -1,7 +1,7 @@
 #!/bin/bash
 
 testHelper=../testScripts/testhelper
-frobby=$abs_builddir/src/frobby
+frobby=$FROBBY
 test="$1"
 shift
 
@@ -15,7 +15,7 @@ fi
 if [ "$1" = "_full" ]; then
   shift;
 
-  tmpFile="/tmp/frobby_optTmp"
+  tmpFile="$FROBBY_TEST_TMPDIR/frobby_optTmp"
   # Check that -canon agrees with transform. Transform does not understand
   # the value at the end, so generate a file without that.
   $frobby optimize < "$inputFile" > $tmpFile 2> /dev/null \
