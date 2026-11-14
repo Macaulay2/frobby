@@ -1,3 +1,0 @@
-#!/bin/bash
-
-cat test/frob/$1.out.gro test/frob/$1 | bin/frobby frobgrob $2 $3 $4 $5 $6 $7 $8 $9
