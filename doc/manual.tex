@@ -97,61 +97,39 @@ mathematical meaning of the computations that Frobby performs.
 
 \section{Installation}
 
-Frobby is tested to work on Linux, Mac OS 10.5 and Cygwin on
-Windows. It may work on other platforms, but that has not been
-tested. Although the procedure to install Frobby is the same on these
-platforms, Frobby requires the GMP library, which is installed in
-different ways depending on platform.
+Frobby is tested to work on Linux and macOS. It may work on other
+platforms, but that has not been tested. Although the procedure to
+install Frobby is the same on these platforms, Frobby requires the GMP
+library, which is installed in different ways depending on platform.
 
-\subsection{Cygwin preparation}
+\subsection{Installation of GMP}
 
-Before installing Frobby, first run the Cygwin file setup.exe, and
-then install the following Cygwin packages.
-
-\begin{description}
-\item[libgmp-devel] In category libs. For infinite-precision integers.
-\item[make] In category devel. To build Frobby.
-\item[gcc-g++] In category devel. To compile Frobby.
-\item[diffutils] In category utils. For Frobby's test system, which uses diff.
-\end{description}
-
-\subsection{Mac OS 10.5 preparation using Fink}
-
-If you have fink installed on your system, simply type
-
-\begin{verbatim}
-fink install gmp-shlibs libgmpxx-shlibs
-\end{verbatim}
-
-\subsection{Linux or Mac preparation without Fink}
-
-Download the newest version of GMP from \url{http://gmplib.org/} and
-unpack it somewhere. Then start a terminal, go to the directory where
-you unpacked it, and type
-
-\begin{verbatim}
-./configure --enable-cxx
-make
-make check
-make install
-\end{verbatim}
-
-Typing ``make check'' is optional but recommended to make sure that
-your system compiled GMP properly. If you have trouble installing GMP,
-first consult the GMP manual and then ask for help on the
-gmp-discuss@gmplib.org mailing list.
+Frobby requires GMP with C++ support. Most systems provide it as a
+package, for example libgmp-dev on Debian and Ubuntu, or gmp in
+Homebrew on macOS. Otherwise, build it from source from
+\url{https://gmplib.org/}, configuring it with \verb|--enable-cxx|.
 
 \subsection{Installation of Frobby}
 
 This step is the same on all platforms. First download the latest
-version of Frobby from \url{http://www.broune.com/frobby/}. Then open
-a terminal, go to the directory where you downloaded Frobby, and type
+version of Frobby from \url{https://github.com/Macaulay2/frobby/releases}.
+Then open a terminal, go to the directory where you downloaded Frobby,
+and type
 \begin{verbatim}
-tar -xvf frobby_v0.8.2.tar.gz
-cd frobby_v0.8.2
+tar -xzf frobby-VERSION.tar.gz
+cd frobby-VERSION
+./configure
 make
+make check
 make install
 \end{verbatim}
+where VERSION is the version of Frobby that you downloaded. If you
+are building Frobby from a git checkout instead, first type
+``./autogen.sh'', which requires autoconf, automake and libtool.
+
+Typing ``make check'' is optional but recommended to make sure that
+Frobby compiled correctly. It runs a comprehensive battery of tests
+on Frobby, which can take a while.
 
 To see if your installation of Frobby is working, type
 \begin{verbatim}
@@ -159,24 +137,11 @@ frobby
 \end{verbatim}
 You should now be looking at information about Frobby and its help
 system. If you instead get a message along the lines of ``command not
-found'', type
-\begin{verbatim}
-bin/frobby
-\end{verbatim}
-If that works, the install script was not able to place Frobby in a
-convenient place on your system, probably because you don't have the
-access rights to install programs centrally on your system. In that
-case you can simply call Frobby as bin/frobby from the directory where
-you unpacked it, or you can place the binary somewhere on your path
-where you do have access rights to put it.
-
-If you want to check that your Frobby compiled correctly, type
-\begin{verbatim}
-make test
-\end{verbatim}
-This will run a comprehensive battery of tests on Frobby, which can
-take a while, especially on Cygwin, which is generally a slower
-platform.
+found'', check that ``make install'' succeeded. By default it installs
+Frobby in /usr/local, which usually requires administrator access. If
+you don't have that, run configure with the option
+\verb|--prefix=$HOME/frobby| to install Frobby in your home directory
+instead, and then add \verb|$HOME/frobby/bin| to your path.
 
 \section{Tutorial}
 
