@@ -1,23 +1,24 @@
 #!/usr/bin/env bash
 
-frobby=$abs_builddir/src/frobby
+frobby=$FROBBY
 logFile=$abs_builddir/benchLog
+tmpdir=$(mktemp -d)
+trap 'rm -rf "$tmpdir"' EXIT
 
 # Build info in temporary place first, so that if this benchmark gets
 # interrupted, the log file does not contain noise about that.  This
 # also allows a nice column organization using the column tool.
-echo -e "\n********************************"|tee /tmp/benchHeader
+echo -e "\n********************************"|tee $tmpdir/benchHeader
 
 # to indicate DEBUG builds
-$frobby transform -iformat null -oformat null 2>&1|tee -a /tmp/benchHeader
-echo -ne "Options: $*\nDate: "|tee -a /tmp/benchHeader
-date|tee -a /tmp/benchHeader
-echo|tee -a /tmp/benchHeader
+$frobby transform -iformat null -oformat null 2>&1|tee -a $tmpdir/benchHeader
+echo -ne "Options: $*\nDate: "|tee -a $tmpdir/benchHeader
+date|tee -a $tmpdir/benchHeader
+echo|tee -a $tmpdir/benchHeader
 
-./run_alexdual_bench $* 2>&1|tee /tmp/bench
-./run_hilbert_bench $* 2>&1|tee -a /tmp/bench
-./run_optimize_bench $* 2>&1|tee -a /tmp/bench
-./run_dimension_bench $* 2>&1|tee -a /tmp/bench
+./run_alexdual_bench $* 2>&1|tee $tmpdir/bench
+./run_hilbert_bench $* 2>&1|tee -a $tmpdir/bench
+./run_optimize_bench $* 2>&1|tee -a $tmpdir/bench
+./run_dimension_bench $* 2>&1|tee -a $tmpdir/bench
 
-column -t /tmp/bench|cat /tmp/benchHeader - >> $logFile
-rm -f /tmp/bench /tmp/benchHeader
+column -t $tmpdir/bench|cat $tmpdir/benchHeader - >> $logFile

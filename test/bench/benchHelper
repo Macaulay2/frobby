@@ -20,7 +20,7 @@
 # If $3 is _noOFormat, then -oformat null is not applied to
 # Frobby. This is useful in case the action does not support oformat.
 
-frobby=../../bin/frobby
+frobby=$FROBBY
 TIMEFORMAT="%1Us "
 
 action="$1"

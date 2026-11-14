@@ -48,12 +48,14 @@ installcheck-local:
 export abs_srcdir
 export abs_builddir
 
-# Run benchmarks to detect performance regressions.
+# Run benchmarks to detect performance regressions. Set benchArgs to
+# pass options to test/bench/benchHelper, e.g. benchArgs="_runs 3".
+BENCH = cd $(srcdir)/test/bench && FROBBY='$(FROBBY)'
 bench: all
-	cd $(srcdir)/test/bench; ./runbench $(benchArgs)
+	$(BENCH) ./runbench $(benchArgs)
 benchHilbert: all
-	cd $(srcdir)/test/bench; ./run_hilbert_bench $(benchArgs)
+	$(BENCH) ./run_hilbert_bench $(benchArgs)
 benchOptimize: all
-	cd $(srcdir)/test/bench; ./run_optimize_bench $(benchArgs)
+	$(BENCH) ./run_optimize_bench $(benchArgs)
 benchAlexdual: all
-	cd $(srcdir)/test/bench; ./run_alexdual_bench $(benchArgs)
+	$(BENCH) ./run_alexdual_bench $(benchArgs)
