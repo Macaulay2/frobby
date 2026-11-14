@@ -54,7 +54,14 @@ jobs:
         if: matrix.build-system == 'autotools'
         run: |
           cd build/autotools
-          make fullTest
+          make -j4 check TEST_LEVEL=full VERBOSE=1
+      - name: Check distribution and installation
+        if: >-
+          matrix.build-system == 'autotools' && matrix.os == 'ubuntu-latest'
+          && matrix.debug == 'no'
+        run: |
+          cd build/autotools
+          make -j4 distcheck
       - name: Build documentation
         if: >-
           matrix.build-system == 'autotools' && matrix.os == 'ubuntu-latest'
