@@ -2,4 +2,5 @@
 
 ./benchHelper hilbert nearGenericV15G50.test $*
 ./benchHelper hilbert nearGenericV15G50.test $*
-./benchHelper hilbert n8d30.test $*
+# Disabled because it takes about an hour.
+#./benchHelper hilbert n8d30.test $*
