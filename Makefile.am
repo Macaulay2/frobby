@@ -1,10 +1,11 @@
 SUBDIRS = src doc
 
-EXTRA_DIST = autogen.sh README.md changelog.txt GPL-header              \
-  CMakeLists.txt cmake/FindGMP.cmake cmake/FindMPIR.cmake test/bench    \
-  test/bigIdeals test/commonIdeals test/frob test/idealFormats          \
-  test/intersect test/irrdecom test/latticeFormats test/messages        \
-  test/polyFormats test/runTestGroup test/specialIdeals test/testScripts
+EXTRA_DIST = autogen.sh README.md changelog.txt GPL-header frobgrob     \
+  4ti2/README CMakeLists.txt cmake/FindGMP.cmake cmake/FindMPIR.cmake   \
+  test/bench test/bigIdeals test/commonIdeals test/frob                 \
+  test/idealFormats test/intersect test/irrdecom test/latticeFormats    \
+  test/messages test/polyFormats test/runTestGroup test/specialIdeals   \
+  test/testScripts
 
 DOC_TARGETS = doc docPs docPdf
 
