@@ -1,8 +1,8 @@
-AC_INIT([frobby], [0.9.9])
+AC_INIT([frobby], [0.10.0])
 AM_INIT_AUTOMAKE([foreign subdir-objects])
 LT_INIT
 
-AC_SUBST([LIBFROBBY_VERSION_INFO], [1:4:0])
+AC_SUBST([LIBFROBBY_VERSION_INFO], [1:5:0])
 
 AC_CONFIG_MACRO_DIRS([m4])
 
