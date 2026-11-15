@@ -63,7 +63,7 @@ namespace {
   class RawSquareFreeTerm {
   public:
 	RawSquareFreeTerm(): _term(0), _capacity(0) {}
-	~RawSquareFreeTerm() {delete _term;}
+	~RawSquareFreeTerm() {Ops::deleteTerm(_term);}
 
 	operator Word*() {return _term;}
 	operator const Word*() const {return _term;}
