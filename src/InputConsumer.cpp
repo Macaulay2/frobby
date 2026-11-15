@@ -227,7 +227,8 @@ unique_ptr<SquareFreeIdeal> InputConsumer::releaseSquareFreeIdeal() {
 void InputConsumer::releaseIdeal(Entry& entry) {
   ASSERT(!_inIdeal);
   ASSERT(!empty());
-  entry = std::move(*_ideals.front());
+  unique_ptr<Entry> front(_ideals.front());
+  entry = std::move(*front);
   _ideals.pop_front();
 }
 
