@@ -1,3 +1,14 @@
+*** Version 0.10.0, 2026-11-15
+ - Replace the legacy Makefile with an autotools build.  Build with
+   "./configure && make" (run ./autogen.sh first in a git checkout), use
+   --enable-debug for a debug build, and run the tests with "make check".
+ - Add -minimal option to the euler action, merged from the original
+   upstream repository at https://github.com/broune/frobby.
+ - Fix the debug build and several bugs found by the debug allocator.
+ - Fix memory errors found by AddressSanitizer.
+ - Remove support for Microsoft Visual C++ and old Cygwin compilers.
+ - More updates for modern C++.
+
 *** Version 0.9.9, 2026-05-11
  - Fix shared library build in macOS.  Thanks to Ross George for the patch!
 
