@@ -21,6 +21,9 @@
  is defined everywhere throughout the code base.
 */
 
+#ifndef STDINC_GUARD
+#define STDINC_GUARD
+
 // Some versions of GMP do not define gmp_fprintf unless cstdio is
 // included first, so we have to include it here.
 #include <cstdio>
@@ -61,3 +64,5 @@ static const size_t BitsPerWord = 8 * sizeof(Word);
 /// allocators must return pointer addresses that are divisible by
 /// MemoryAlignment. MemoryAlignment must be a power of 2.
 static const size_t MemoryAlignment = sizeof(long);
+
+#endif
