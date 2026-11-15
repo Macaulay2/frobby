@@ -64,7 +64,7 @@ namespace {
 
   /** Removes those elements of [begin, end) that are not minimal. The
    result is in the sub-range [begin, newEnd) where newEnd is the
-   returned value. */
+   returned value. @todo: use sort */
    RSFIdeal::iterator minimize(RSFIdeal::iterator begin,
 							  RSFIdeal::iterator end,
 							  const size_t wordCount) {
