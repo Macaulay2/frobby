@@ -32,6 +32,8 @@ AC_LINK_IFELSE(
     [AC_MSG_RESULT([no])
      FROBBY_NO_GMP])
 
+DX_PDF_FEATURE([OFF])
+DX_PS_FEATURE([OFF])
 DX_INIT_DOXYGEN([frobby], [$(builddir)/doc/Doxyfile], [doxygen])
 
 AC_CONFIG_FILES([Makefile src/Makefile doc/Makefile doc/Doxyfile])
