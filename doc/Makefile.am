@@ -1,5 +1,5 @@
 dist_man1_MANS = frobby.1
-EXTRA_DIST = manual.tex frobbyLatex.tex
+EXTRA_DIST = manual.tex frobbyLatex.tex website.html
 
 doc: docPs docPdf
 
