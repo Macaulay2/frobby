@@ -1,5 +1,0 @@
-(let* ((file (vector-ref command-line-arguments 0))
-       (input (open-input-file file))
-       (generator (eval (read input)) ) 
-       (decomposition (decompose-ideal generator method: 'scarf-complex) ) )
-   (write decomposition) )
