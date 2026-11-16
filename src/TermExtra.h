@@ -21,8 +21,9 @@
 
 #include "Term.h"
 
-/** @file This file contains additional operations involving Term that
- are less commonly used. This makes Term.h smaller which cuts down on
+/** @file
+ This file contains additional operations involving Term that are
+ less commonly used. This makes Term.h smaller which cuts down on
  compilation and especially recompilation time since Term.h is
  included in many places. */
 
