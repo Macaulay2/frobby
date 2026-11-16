@@ -116,9 +116,8 @@ Facade.
 
 The bottom layer consists of various classes and functions that
 perform calculations on monomial ideals. The main functionality is
-accessed by using the function \ref runSliceAlgorithm, which runs the
-Slice Algorithm on a monomial ideal. The Slice Algorithm can be
-specialized to compute a number of things, and these specializations
-are implemented as derived classes of SliceStrategy, which
-can be passed as a parameter to \ref runSliceAlgorithm.
+accessed by using the method SliceStrategy::run, which runs the Slice
+Algorithm on a monomial ideal. The Slice Algorithm can be specialized
+to compute a number of things, and these specializations are
+implemented as derived classes of SliceStrategy.
 */

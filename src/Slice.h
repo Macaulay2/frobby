@@ -184,7 +184,7 @@ class Slice : public Task {
   /** Removes those generators of getIdeal() that are strictly
    divisible by some generator of getSubtract(). Note that this does
    not change the content of the slice. Returns true if any generators
-   were removed. See ::strictlyDivides for the definition of strict
+   were removed. See Term::strictlyDivides for the definition of strict
    divisibility.
   */
   bool normalize();
