@@ -1,3 +1,0 @@
-#!/bin/bash
-
-echo "printPoly(uniHilbert I, \"$2\");"|cat $1 hilbert.m2 -|M2
