@@ -28,8 +28,7 @@ jobs:
         run: |
           if test ${{ matrix.os }} = macos-latest
           then brew install autoconf automake libtool
-          else sudo apt-get install -y texlive-latex-base doxygen \
-                 texlive-latex-recommended texlive-latex-extra graphviz
+          else sudo apt-get install -y texlive-latex-base doxygen
           fi
       - name: Set up environment
         run: |
@@ -69,4 +68,4 @@ jobs:
         run: |
           cd build/autotools
           make doc
-          make doxygen-pdf
+          make doxygen-doc
