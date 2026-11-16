@@ -18,6 +18,22 @@ $(DOC_TARGETS):
 
 MOSTLYCLEANFILES = $(DX_CLEANFILES)
 
+# Assemble the website in website/: a landing page made from README.md
+# with pandoc, the PDF manual and the doxygen documentation.
+website: docPdf doxygen-doc
+	rm -rf website
+	$(MKDIR_P) website
+	pandoc $(srcdir)/README.md --standalone                             \
+	  --template $(srcdir)/doc/website.html --metadata pagetitle=Frobby \
+	  --output website/index.html
+	cp doc/manual.pdf website/
+	cp -R $(DX_DOCDIR)/html website/doxygen
+
+clean-local:
+	rm -rf website
+
+.PHONY: website
+
 # ****************** Testing
 # make check runs the unit tests in src and these groups of tests of
 # the frobby executable, which make installcheck runs on the installed
