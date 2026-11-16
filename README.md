@@ -10,13 +10,13 @@ The systems [Macaulay2](https://macaulay2.com/) and [CoCoA](https://sites.google
 
 Download Frobby from the [GitHub releases page](https://github.com/Macaulay2/frobby/releases).
 
-Frobby works with Linux and MacOS X. The short description for getting a Frobby executable is to download Frobby, unpack it with tar and type `./configure`, `make` and then `make install`. If you are building from a git checkout, type `./autogen.sh` first. This requires that you have installed [GMP](https://gmplib.org/) with C++ support. There are more detailed installation instructions in the [Frobby manual](https://macaulay2.com/Downloads/OtherSourceCode/manual.pdf).
+Frobby works with Linux and MacOS X. The short description for getting a Frobby executable is to download Frobby, unpack it with tar and type `./configure`, `make` and then `make install`. If you are building from a git checkout, type `./autogen.sh` first. This requires that you have installed [GMP](https://gmplib.org/) with C++ support. There are more detailed installation instructions in the [Frobby manual](https://macaulay2.github.io/frobby/manual.pdf).
 
 To try Frobby out after installation, you might generate a random monomial ideal and decompose it into irreducible components by typing
 
     frobby genideal|frobby irrdecom
 
-See the [Frobby manual](https://macaulay2.com/Downloads/OtherSourceCode/manual.pdf) for a tutorial that shows how to do most of what Frobby can do. Frobby also has a built-in help system which contains complete information about what Frobby can do, though in a more compact and perhaps less accessible way. You access the built-in help system by typing
+See the [Frobby manual](https://macaulay2.github.io/frobby/manual.pdf) for a tutorial that shows how to do most of what Frobby can do. Frobby also has a built-in help system which contains complete information about what Frobby can do, though in a more compact and perhaps less accessible way. You access the built-in help system by typing
 
     frobby help
 
