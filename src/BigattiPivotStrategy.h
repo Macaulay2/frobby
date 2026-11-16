@@ -43,7 +43,7 @@ class BigattiPivotStrategy {
       function is the only way to create a BigattiPivotStrategy.
 
       A pivot p is widened by replacing it by
-      \f$\gcd(\min(I)\cap\langle p\rangle/f$. This may be an
+      \f$\gcd(\min(I)\cap\langle p\rangle)\f$. This may be an
       improvement for the state with colon while being almost as good
       for the state with add.
   */

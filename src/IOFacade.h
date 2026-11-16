@@ -32,7 +32,7 @@ class SquareFreeIdeal;
 
 /** A facade for input and output of mathematical objects.
 
-    @TODO: Consider letting Scanner play the role of IOFacade.
+    @todo Consider letting Scanner play the role of IOFacade.
     @ingroup Facade
     @ingroup IO
 */
