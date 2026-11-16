@@ -290,7 +290,7 @@ namespace Frobby {
       dimension -1. The sum of the dimension and codimension is the
       number of variables in the ambient polynomial ring of the ideal.
 
-      @param codim This mpz_t must be initialized before calling this
+      @param dim This mpz_t must be initialized before calling this
       function. It will be set to the dimension.
    */
   void dimension(const Ideal& ideal, mpz_t dim);
