@@ -79,7 +79,7 @@ noinst_HEADERS = Action.h ActionPrinter.h AlexanderDualAction.h         \
   TranslatingCoefTermConsumer.h TranslatingTermConsumer.h               \
   UniHashPolynomial.h VarNames.h VarSorter.h display.h                  \
   dynamicFrobeniusAlgorithm.h error.h fourti2.h fplllIO.h               \
-  hash_map/hash_fun.h hash_map/hashtable.h intersect.h lattice.h        \
+  intersect.h lattice.h                                                 \
   main.h randomDataGenerators.h stdinc.h test/Test.h test/TestCase.h    \
   test/TestQualifier.h test/TestRunner.h test/TestSorter.h              \
   test/TestSuite.h test/TestVisitor.h test/all.h test/asserts.h         \
