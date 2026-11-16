@@ -108,7 +108,7 @@ public:
     /** Read an integer and set it to zero if it is negative. This is
       more efficient because the sign can be detected before the
       integer is read. */
-  void readIntegerAndNegativeAsZero(std::string& integer);
+  void readIntegerAndNegativeAsZero(string& integer);
 
   /** Reads a size_t, where the representable range of that type
       determines when the number is too big. The number is required to
