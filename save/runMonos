@@ -1,1 +1,0 @@
-java -cp $frobby/monos.jar com.milowski.monos.run $frobby/$*

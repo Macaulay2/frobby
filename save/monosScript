@@ -1,6 +1,0 @@
-cp $1 ~/Desktop/monos/src
-cd ~/Desktop/monos/src
-run $3 decompose.ms $1 > $2
-rm $1
-cd ~/Desktop/frobby
-mv ~/Desktop/monos/src/$2 $2
